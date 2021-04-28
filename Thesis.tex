@@ -12,7 +12,39 @@
 \usepackage[backend=biber, natbib=true, style=numeric]{biblatex}
 \addbibresource{../ZoteroLibUpdated/ZoteroLibUpdated.bib}
 \usepackage{xargs}
-\renewcommandx{\cite}[3][1={0pt},2={}]{\sidenote[][#1]{\fullcite[#2]{#3}}}
+
+% from me: Remove the visited on https://tex.stackexchange.com/questions/400384/how-to-disable-biblatex-showing-visited-on-on-the-references
+\AtEveryBibitem{
+    \clearfield{urlyear}
+    \clearfield{urlmonth}
+}
+
+% from me: short citation in sideline: https://tex.stackexchange.com/questions/414716/options-for-styling-fullcite
+\DeclareCiteCommand{\fullcite}
+  {\usebibmacro{prenote}}
+  {\clearfield{url}%
+   \clearfield{pages}%
+   \clearfield{pagetotal}%
+   \clearfield{edition}%
+       \clearfield{labelyear}%
+        \clearfield{doi}%
+    \clearfield{labelyear}%
+       \clearfield{urlyear}
+    \clearfield{urlmonth}
+      \clearfield{eprinttype}
+      \clearfield{eprint}
+      \clearfield{issn}
+      \clearfield{volume}
+      \clearfield{journaltitle}
+       \clearfield{number}
+       \clearfield{date}
+   \usedriver
+     {\DeclareNameAlias{sortname}{default}}
+     {\thefield{entrytype}}}
+     \multicitedelim
+  {\usebibmacro{postnote}}
+  %disable side bar
+%\renewcommandx{\cite}[3][1={0pt},2={}]{\sidenote[][#1]{\fullcite[#2]{#3}}}
 
 %%
 % Book metadata
