@@ -21,31 +21,46 @@
 }
 
 % from me: short citation in sideline: https://tex.stackexchange.com/questions/414716/options-for-styling-fullcite
+% No space: https://tex.stackexchange.com/questions/25891/fullcite-without-indent-in-biblatex
 \DeclareCiteCommand{\fullcite}
-  {\usebibmacro{prenote}}
-  {\clearfield{url}%
-   \clearfield{pages}%
-   \clearfield{pagetotal}%
-   \clearfield{edition}%
-       \clearfield{labelyear}%
-        \clearfield{doi}%
-    \clearfield{labelyear}%
-       \clearfield{urlyear}
-    \clearfield{urlmonth}
-      \clearfield{eprinttype}
-      \clearfield{eprint}
-      \clearfield{issn}
-      \clearfield{volume}
-      \clearfield{journaltitle}
-       \clearfield{number}
-       \clearfield{date}
-   \usedriver
-     {\DeclareNameAlias{sortname}{default}}
-     {\thefield{entrytype}}}
-     \multicitedelim
-  {\usebibmacro{postnote}}
+{\usebibmacro{prenote}}%
+{\clearfield{url}%
+\clearfield{pages}%
+\clearfield{pagetotal}%
+\clearfield{edition}%
+\clearfield{labelyear}%
+\clearfield{doi}%
+\clearfield{labelyear}%
+\clearfield{urlyear}%
+\clearfield{urlmonth}%
+\clearfield{eprinttype}%
+\clearfield{eprint}%
+\clearfield{issn}%
+\clearfield{volume}%
+\clearfield{journaltitle}%
+\clearfield{journal}%
+\clearfield{number}%
+\clearfield{date}%
+\usedriver
+{\DeclareNameAlias{sortname}{default}}
+{\thefield{entrytype}}}
+\multicitedelim
+{\usebibmacro{postnote}}
   %disable side bar
-%\renewcommandx{\cite}[3][1={0pt},2={}]{\sidenote[][#1]{\fullcite[#2]{#3}}}
+\renewcommandx{\cite}[3][1={0pt},2={}]{\sidenote[][#1]{\scriptsize\fullcite[#2]{#3}}}
+
+%% From me: 
+\usepackage{ebgaramond}
+%\usepackage{fontspec}
+%\setromanfont{EB Garamond}
+%\setsansfont{Arial}
+%\setmonofont[Color={0019D4}]{Courier New}
+%Tittle in Smal cap, to change
+\usepackage{titlesec}
+\makeatletter
+\titleformat{\chapter}[display]{\huge\scshape}{\@chapapp~\thechapter}{1\baselineskip}{}
+\titleformat{\section}{\large\scshape}{\thesection}{1em}{}
+\makeatother
 
 %%
 % Book metadata
@@ -89,20 +104,7 @@
 % Prints a trailing space in a smart way.
 \usepackage{xspace}
 
-%%
-% Some shortcuts for Tufte's book titles.  The lowercase commands will
-% produce the initials of the book title in italics.  The all-caps commands
-% will print out the full title of the book in italics.
-\newcommand{\vdqi}{\textit{VDQI}\xspace}
-\newcommand{\ei}{\textit{EI}\xspace}
-\newcommand{\ve}{\textit{VE}\xspace}
-\newcommand{\be}{\textit{BE}\xspace}
-\newcommand{\VDQI}{\textit{The Visual Display of Quantitative Information}\xspace}
-\newcommand{\EI}{\textit{Envisioning Information}\xspace}
-\newcommand{\VE}{\textit{Visual Explanations}\xspace}
-\newcommand{\BE}{\textit{Beautiful Evidence}\xspace}
 
-\newcommand{\TL}{Tufte-\LaTeX\xspace}
 
 % Prints the month name (e.g., January) and the year (e.g., 2008)
 \newcommand{\monthyear}{%
@@ -221,7 +223,8 @@
     [\vspace*{0.5\baselineskip}]% after
 %%%% End additional code by Kevin Godby
 
- \renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
+%%% Needed for compilation.
+\renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
 \renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
 
 
@@ -230,6 +233,8 @@
 \usepackage{amssymb}
 \usepackage{amsbsy}
 \usepackage{makecell}
+\usepackage{amsmath}
+\newcommand{\eqname}[1]{\tag*{#1}} %tag equations by name
 
 \begin{document}
 
@@ -290,24 +295,24 @@
 
 
 % r.9 introduction
-\cleardoublepage
-\chapter*{Introduction}
-
+%\cleardoublepage
+\chapter*{Introduction}\input{introduction}
 
 %%
 % Start the main matter (normal chapters)
 \mainmatter
 
-\part{Modeling of Cholera: rainfall, vaccination}
+\part{Cholera modeling}\input{cholera}
 
-\chapter{Rainfall as a driver of epidemic cholera: Comparative model assessments of the effect of intra-seasonal precipitation events}
+
+\chapter{Rainfall as a driver of epidemic cholera: Comparative modeling assessments of the effect of intra-seasonal precipitation events}
 \label{ch:cholera-rainfall}
 
 \input{cholera-rainfall}
 
-\part{Scientific and Public-Health response to the COVID-19 pandemic}
+%\part{Scientific and Public-Health response to the COVID-19 pandemic}
 
-\chapter{Assessing the impact of non-pharmaceutical interventions on SARS-CoV-2 transmission in Switzerland}
+%\chapter{Assessing the impact of non-pharmaceutical interventions on SARS-CoV-2 transmission in Switzerland}
 \label{ch:covid-switzerland-npi}
 
 %\input{covid-switzerland-npi}
