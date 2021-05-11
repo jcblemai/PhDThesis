@@ -1,0 +1,14 @@
+*.DS_Store
+.texpadtmp/
+Template/
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.idx
+Thesis.pdf
+*.run.xml
+*.log
+*.synctex.gz
