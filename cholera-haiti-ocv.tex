@@ -1,0 +1,263 @@
+\chapter{Achieving coordinated national immunity and cholera elimination in Haiti through vaccination, a modeling study}
+\label{ch:cholera-haiti-ocv}
+
+This section is adapted from work published in The Lancet Global Health:
+\fullcite{Lee:AchievingCoordinatedNational:2020}. 
+
+
+
+\section{Spatial stochatic model for modeling cholera elimination}
+% Describe structure of their model and make appropriate references to their previous work. Ideally this will include at least one diagram illustrating the assumed natural history of disease and how vaccination works within the model and appropriate ODE/PDEs
+\paragraph{General Principles} The cholera model we adopted to study the Haitian epidemic is a stochastic compartmental model applied at the level of the ten Haitian departments. 
+It is the stochastic translation of a deterministic SIRB model based on Ordinary Differential Equations (ODEs) which has been extensively used to simulate the Haitian cholera epidemic in previous studies\cite{Rinaldo:Reassessment20102011:2012, Bertuzzo:PredictionSpatialEvolution:2011,Bertuzzo:ProbabilityExtinctionHaiti:2016,Pasetto:RealtimeForecastingCholera:2018, Lemaitre:RainfallDriverEpidemic:2019}. 
+Here the model has been implemented as a discrete-state model based on a Partially-Observed Markov Process (POMP), simulating the stochastic transitions between compartments as discrete events\cite{King:InapparentInfectionsCholera:2008}.
+
+The model subdivides the population of each department into compartments counting the number of individuals at the different stages of the disease: susceptible individuals ($S$), symptomatic ($I$) and asymptomatic ($A$) infected and recovered individuals ($R$). The main feature of our model is that it contains an environmental compartment describing the bacterial concentration ($B$) in the local environment, which is used to estimate the force of infection\cite{Rinaldo:Reassessment20102011:2012, Bertuzzo:PredictionSpatialEvolution:2011}. Precipitation has been shown to be an important environmental driver of cholera transmission\cite{Camacho:CholeraEpidemicYemen:2018}, especially in Haiti\cite{Rinaldo:Reassessment20102011:2012}. In our model, it increases the rate at which bacteria shed by infected individuals enter the environmental reservoir and thus increases the bacterial concentration and finally the force of infection\cite{Lemaitre:RainfallDriverEpidemic:2019}. A diagram of the model is given in Fig.~\ref{figEPFL}.
+\subsection{Model Dynamics} 
+The following dynamics characterize the model (see Figure \ref{figEPFL}):
+\begin{description}
+    \item[Infection] The force of infection governs the rate at which susceptible individuals become infected. A proportion $\sigma$ become symptomatically infected, and the rest asymptomatically infected. 
+    \item[Force of Infection and mobility] The force of infection in each department contains an additional term representing the number of cholera cases in the rest of Haiti. This allows for a possible introduction of cholera due to  human mobility between departments. The force of infection in each department is composed of two parts. The first is related to the local bacterial concentration of the department. The second is related to case importation from other departments through human-to-human transmission. The corresponding equation for the $i^{th}$ department reads:
+    \begin{equation*}
+    F^i_0(t)=\beta^i\frac{B_i(t)}{1+B_i(t)}+c^i \sum_{j\ne i} (I_j(t)+A_j(t)).
+    \end{equation*}
+    The first term in the sum represents local transmission governed by the department-specific exposure parameter $\beta^i$ which multiplies the logistic dose-response of the rescaled local bacterial concentration $B = B^*/K$, where $B^*$ is the unscaled concentration of vibrios and $K$ the half-saturation constant of the logistic function $\frac{B^*_i(t)}{K+B^*_i(t)}$.
+    Case importation from other departments is given by the sum of the asymptomatically and symptomatically infected in department $j$, modulated by a parameter $c^i$ which represents the intensity of case introduction from other departments in Haiti  to department $i$.
+    \item[Shedding] Symptomatically and asymptomatically infected individuals shed bacteria. The shedding rate of asymtomatics, $\theta_A$, is modeled as a fraction of the shedding rate of symptomatic individuals  $\theta_I$\cite{Kuhn:GlucoseNotRiceBased:2014}.
+    \item[Recovery rate] The recovery rate is the same for both asymptomatic and symptomatic individuals ($\gamma_I=\gamma_A=0.2$ d$^{-1}$,\cite{Kaper:Cholera:1995, Codeco:EndemicEpidemicDynamics:2001}).
+    \item[Acquired immunity] Individuals acquire natural immunity and remain in the recovered compartment ($R$) for a period that lasts for $1/\rho=$ 8 years on average, before reintegrating the susceptible compartment.
+    \item[Gamma-distributed immunity loss] To better approximate the gamma distribution that typically characterizes the duration of immunity\cite{King:InapparentInfectionsCholera:2008}, recovered individuals pass through a succession of 3 separate recovered compartments ($R_1$, $R_2$, $R_3$) characterized by the same transition rate $\rho_1=\rho_2=\rho_3=3\rho$.
+    \item[Bacterial Dynamics] The size of the bacterial reservoir is proportional to the population density $D_i$ of the department. Bacteria die at rate $\mu_B$. Rainfall influences the bacteria concentration by increasing the rate at which bacteria enter the environmental reservoir.
+    \item[Measurement Process] The reported cases are modelled by a negative-binomial distribution with dispersion parameter $p$. We accounts for over- or under-reporting through the reporting parameter $\epsilon$.
+\end{description}
+    
+    
+\paragraph{Stochasticity} Overdispersion in the infection process is introduced by multiplying the force of infection $F_0$ by a time-continuous white noise process \(\xi(t)\) defined as the differentiation of an integrated noise process \(\xi(t) = \frac{d}{dt}\Gamma(t)\), here taken to be have a Gamma distribution with mean \(\Delta t\) and variance \(\sigma^2 \Delta t\)\cite{Breto:CompoundMarkovCounting:2011}:
+
+\[
+\xi(t) = \Gamma (t+\Delta t) - \Gamma (t) \sim \text{Gamma}\left( \frac{\Delta t}{\sigma^2}, \sigma^2\right).
+\]
+
+Since \(\xi(t)\) is non-negative it can serve as a multiplicative noise on
+the force of infection: \[
+F_i(t) = F^i_0(t) \xi(t),
+\]
+which yields to over-dispersion in the transitions.
+%\(\Delta N_{SE}(t), \Delta N_{SR}(t), \Delta N_{V^SV^E}(t), and \Delta N_{V^SV^R}(t)\).
+
+
+\paragraph{Vaccination dynamics} At each vaccination campaign, the available vaccine doses are uniformly distributed among susceptible ($S$), asymptomatic infected ($A$) and recovered ($R_{1}$, $R_2$, $R_3$) individuals. The rate of vaccination is indicated with $r_V$. Individuals can receive either one or two doses of OCV, which yield respective efficacies of $\eta_{1d}(t)$ and $\eta_{2d}(t)$, as defined in the main text. There is no age structure but the efficacy is set to be the population-weighted average of estimated efficacy for those under 5 years old and those over 5 years old.
+ The model considers ten additional compartments for each vaccination campaign, in order to distinguish among individuals who received one (compartments $V^S_{1d}$, $V^A_{1d}$, $V^{R_k}_{1d}$, $k=$1, 2, 3) or two (compartments $V^S_{2d}$, $V^A_{2d}$, $V^{R_k}_{2d}$, $k=$1, 2, 3) doses of OCV. Vaccinated susceptible individuals ($V^S_{1d}$ and $V^S_{2d}$) have a lower probability to become infected (and thus entering classes $I$ or $A$) than non-vaccinated susceptibles. This is modeled through the multiplicative reduction of the force of infection by a  factor $(1-\eta_{1d}(t))$ or $(1-\eta_{2d}(t))$ respectively.
+The vaccination campaign window is split equally between departments (i.e for a vaccination campaign of 5 years duration, each department will be vaccinated during a 6 month period). Vaccine efficacy starts waning after the first half of the duration of the department's vaccination campaign. For example, if for department $i$ the vaccination campaign $j$ spans from $t^{i,j}_a$ to $t^{i,j}_b$, then:
+    \begin{equation}
+\eta^{i,j}(t) = \left\{
+    \begin{array}{ll}
+        \eta_0(0) & \mbox{if t $<  t^{i,j}_a + \frac{t^{i,j}_b - t^{i,j}_a}{2}$} \\
+        \eta_0(t -  (t^{i,j}_a +  \frac{t^{i,j}_b - t^{i,j}_a}{2}) ) & \mbox{if t $>  t^{i,j}_a + \frac{t^{i,j}_b - t^{i,j}_a}{2}$} \\
+    \end{array}
+\right.
+\end{equation}
+where $\eta_0(t)$ is the scenario dependant vaccine efficacy as defined in the meta-supplement.
+The rates at which individuals leave compartments $V^A$ and $V^{R_k}$ ($k=$1, 2, 3) are equivalent to $A$ and $R_i$. Individuals enter the compartment $V^S$ with a vaccine efficacy reduced according to the amount of time they spent in $V^A$ and $V^{R_k}$. The actual deployment of the vaccine doses in shown in figure \ref{figDeploy}.
+
+\paragraph{Other interventions} WaSH and other intervention efforts are not explicitly considered in the model, but their impact is implicitly taken into account by calibrating of the exposure rates $\beta^i$ to disease incidence that occurred while interventions were taking place. $\beta^i$ is modelled to be constant in time, meaning that changes in number or type interventions or population behaviour\cite{Bertuzzo:ProbabilityExtinctionHaiti:2016} over time are not taken into account. %The goal is to see if elimination is possible independently of WaSH improvement. for discussion
+
+\begin{figure*}[htbp]
+\begin{center}
+\includegraphics[width=1.0\textwidth]{fig_cholera-haiti-ocv/compartiments.png}
+\caption{Schematic diagram of the cholera transmission in a single department. Dynamics of vaccinated compartments are not shown.}
+\label{figEPFL}
+\end{center}
+\end{figure*}
+\subsection{Model equations}\label{sec:stoch}
+The model is implemented as a stochastic counting process\cite{Breto:TimeSeriesAnalysis:2009}. Let \(N_{AB}(t)\) be the number of individuals transiting between compartments \(A,B\in \mathcal{X}\) in the time interval \([0,t)\)  where $\mathcal{X}$ is the state vector,
+$$\mathcal{X} = \{S, I, A, R_k, V^S_{j,1d},V^A_{j,1d}, V^{R_k}_{j,1d}, V^S_{j,2d},V^A_{j,2d}, V^{R_k}_{j,2d}\} 
+\text{ for } j = 1, ..., J, \text{ and } k = 1, 2, 3,
+$$
+and $J$ is the number of vaccination campaigns in the department.
+The number of transitions during a time-step $\Delta t$ is
+\(\Delta N_{AB}(t) = N_{AB}(t+\Delta t) - N_{AB}(t)\). Given the state of the system at time \(t\), \(\mathcal{X}_t\), and a force of infection $F_j(t)$ the transition rates read (transitions written only for 1 dose of OCV and one vaccination campaign):
+
+\begin{gather}
+\label{eq:stochsys}
+\begin{aligned}
+    \mathbb{P}\left[ \Delta N_{SI}(t) = 1 \right|\mathcal{X}_t] &= \sigma F_j(t) S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{SA}(t) = 1 \right|\mathcal{X}_t] &= (1-\sigma) F_j(t) S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{SV_{1d}^S}(t) = 1 \right|\mathcal{X}_t] &= r_{V_{1d}}(t) S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{S\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu  S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{IR_1}(t) = 1 \right|\mathcal{X}_t] &= \gamma I(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{I\bullet}(t) = 1 \right|\mathcal{X}_t] &= (\mu+\alpha)I(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{AR_1}(t) = 1 \right|\mathcal{X}_t] &= \gamma A(t) \Delta t + o(\Delta t)\\
+      \mathbb{P}\left[ \Delta N_{AV_{1d}^A}(t) = 1 \right|\mathcal{X}_t] &= r_{V_{1d}}(t) A(t) \Delta t + o(\Delta t)\\
+      \mathbb{P}\left[ \Delta N_{A\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu  A(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{R_kR_{k+1}}(t) = 1 \right|\mathcal{X}_t] &= 3\rho R_k(t) \Delta t + o(\Delta t),\quad k=1,2\\
+    \mathbb{P}\left[ \Delta N_{R_3S}(t) = 1 \right|\mathcal{X}_t] &= 3\rho R_3(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{R_kV_{1d}^{R_k}}(t) = 1 \right|\mathcal{X}_t] &= r_{V_{1d}}(t) R_k(t) \Delta t + o(\Delta t)\quad k=1,2,3\\
+    \mathbb{P}\left[ \Delta N_{R_k\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu  R_k(t) \Delta t + o(\Delta t)\quad k=1,2,3\\
+    \mathbb{P}\left[ \Delta N_{V_{1d}^SI}(t) = 1 \right|\mathcal{X}_t] &=  \sigma (1-\eta_{1d}^{i,j}(t)) F_j(t) V_{1d}^S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{V_{1d}^SA}(t) = 1 \right|\mathcal{X}_t] &=  (1-\sigma) (1-\eta_{1d}^{i,j}(t)) F_j(t) V_{1d}^S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{V_{1d}^S\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu  V_{1d}^S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{V_{1d}^AV_{1d}^{R_1}}(t) = 1 \right|\mathcal{X}_t] &= \gamma V_{1d}^A(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{V_{1d}^A\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu  V_{1d}^A(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{V^{R_k}V^{R_{k+1}}}(t) = 1 \right|\mathcal{X}_t] &= 3\rho V^{R_k}(t) \Delta t + o(\Delta t),\quad k=1,2\\
+    \mathbb{P}\left[ \Delta N_{V_{1d}^{R_3}V_{1d}^S}(t) = 1 \right|\mathcal{X}_t] &= 3\rho V_{1d}^{R_3}(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{V^{R_k}\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu  V^{R_k}(t) \Delta t + o(\Delta t)\quad k=1,2,3\\
+\end{aligned}
+\end{gather}
+
+assuming that \(\mathbb{P}[\Delta N_{XY} > 1|\mathcal{X}_t] = o(\Delta t) \; \forall X,Y \in \mathcal{X}\) and \(\mathbb{P}[\Delta N_{X\bullet} > 1|\mathcal{X}_t] = o(\Delta t) \; \forall X \in \mathcal{X}\). Note that \(\mathbb{P}\left[ \Delta N_{X\bullet}(t) = 1 \right|\mathcal{X}_t]\) denotes probability that individuals die and it is governed by the same parameter $\mu$ for all compartments except $I$. 
+
+The ensuing stochastic variations of the state variables are:
+
+\begin{gather}
+\label{eq:stochstates}
+\begin{aligned}
+    \Delta I(t) &= \Delta N_{SI}(t) -  \Delta N_{IR_1}(t) -  \Delta N_{I\bullet}(t)\\
+    \Delta A(t) &= \Delta N_{SA}(t) -  \Delta N_{AR_1}(t) -  \Delta N_{AV^A}(t) - \Delta N_{A\bullet}(t)\\
+    \Delta R_1(t) &= \Delta N_{IR_1}(t) + \Delta N_{AR_1}(t) -  \Delta N_{R_1 R_2}(t) -  \Delta N_{R_1V^{R_1}}(t) -  \Delta N_{R_1\bullet}(t)\\
+    \Delta R_2(t) &= \Delta N_{R_1R_2}(t) - \Delta N_{R_2 R_3}(t) -  \Delta N_{R_2V^{R_2}}(t) -  \Delta N_{R_2\bullet}(t)\\
+    \Delta R_3(t) &= \Delta N_{R_2R_3}(t) - \Delta N_{R_3 S}(t) -  \Delta N_{R_3V^{R_3}}(t) -  \Delta N_{R_3\bullet}(t)\\
+    \Delta V^S(t) &= \Delta N_{SV^S}(t) -  \Delta N_{V^S I}(t)-  \Delta N_{V^S A}(t) - \Delta N_{V^S\bullet}(t)\\
+    \Delta V^A(t) &= \Delta N_{AV^A}(t) -  \Delta N_{V^AV^{R_1}}(t) - \Delta N_{V^A\bullet}(t)\\
+    \Delta V^{R_1}(t) &= \Delta N_{R_1V^{R_1}}(t) +  \Delta N_{V^AV^{R_1}}(t) - \Delta N_{V^{R_1}V^{R_2}}(t) - \Delta N_{V^{R_1}\bullet}(t)\\
+    \Delta V^{R_2}(t) &=\Delta N_{R_2V^{R_2}}(t)+\Delta N_{V^{R_1} V^{R_2}}(t) -  \Delta N_{V^{R_2}V^{R_3}}(t) -  \Delta N_{R_2\bullet}(t)\\
+    \Delta V^{R_3}(t) &= \Delta N_{R_3V^{R_3}}(t)+\Delta N_{V^{R_2}V^{R_3}}(t) - \Delta N_{V^{R_3}V^ S}(t) - \Delta N_{V^{R_3}\bullet}(t)\\
+    S(t) &= H_i - \sum_{X \in \mathcal{X} \backslash \{S\}} X(t),
+\end{aligned}
+\end{gather}
+where the equation for $S(t)$ enforces a constant total population. 
+The rescaled bacterial concentration $B$ is necessary to estimate the force of infection and is computed using the following ODE:
+\begin{equation}
+\frac{dB}{dt} = - \mu_B B +  \left(1 + \lambda\left( J(t)\right)^{r} \right)  D_i \left[\theta_I I + \theta_A A\right] 
+\end{equation}
+with $D_i$ the average population density of the department (total department population over department area) and $J(t)$ the precipitation over time. Parameter $\mu_B$ expresses the mortality rate of the bacteria in the environment, $\theta_I$ and $\theta_A$ are the shedding rates of symptomatically and asymptomatically infected individuals, and $\lambda$ and $r$ are the parameters of the power-law that controls the non-linear impact of precipitation.
+
+
+Let \(C(t_j)\) denote the number of people that develop symptoms and seek healthcare during the
+observation interval \([t_j, t_{j+1})\) (i.e. the true incidence). Thus:
+
+\begin{equation}
+    C(t_j) = [N_{SI}(t_{j+1}) - N_{SI}(t_j)] + [N_{V^SI}(t_{j+1}) - N_{V^SI}(t_j)].
+\end{equation}
+
+A full partially observed Markov process formulation requires a measurement model linking the time series of the reported incidence to \(C(t_j)\), in addition to the process model in (\ref{eq:stochsys}). We use a negative-binomial measurement model accounting for over- or under-reporting of cholera incidence, i.e.
+\[
+	\text{cases}(t_j) \sim \text{NB}(\epsilon(t) C(t_j), p).
+\]
+where \(\epsilon(t) > 0\) represents the proportion of cases reported. To account for the change of the case definition that occurred on January 1st, 2018, the reporting rate changes over time:
+\begin{equation}
+\epsilon(t) = \left\{
+    \begin{array}{ll}
+        \epsilon_1 & \mbox{if t $<$ Jan 1st, 2018} \\
+        \epsilon_2 & \mbox{otherwise}
+    \end{array}
+\right.
+\end{equation}
+
+The parameters of the model are shown in Table \ref{paramEPFL}.
+
+
+
+% Table with all model parameters indicating whether each is fit or assumed (with some description of assumptions) and appropriate references to primary literature (please don't cite previous parameters used in modeling studies).
+
+\begin{table*}
+\caption{Parameters of the model. References. \fullcite{Levine:DurationInfectionDerivedImmunity:1981, Koelle:DisentanglingExtrinsicIntrinsic:2004, Bertuzzo:SpacetimeEvolutionCholera:2008, Kaper:Cholera:1995}}
+\begin{tabular}{lcccl}
+\toprule
+Parameter & Calibration & Value or bound & Unit & description \\
+\midrule
+$\beta^i$ ($\times 10$ dept.) & yes & $[0,\infty]$ & -- & Exposure  \\
+$c^i$ ($\times 10$ dept.) & yes & $[0,\infty]$& -- & Force of infection in dept. $i$ from cases in other depts. \\
+$\epsilon_1$& yes & $[0,2]$ & --& reporting fraction before January 1st, 2018\\
+$\epsilon_2$& yes & $[0,2]$ & --& reporting fraction after January 1st, 2018\\
+$\sigma_w$ & yes& $[0,0.1]$ & --&  std-dev of the perturbation of $F(t)$\\
+$p$& yes &$[0,\infty]$ & --&  dispersion parameter of reporting\\
+$\theta_I$  & yes &   $[0,\infty]$ & --& Shedding sympt.  \\
+$\theta_A$  & yes &  $[0,\theta_I]$ &  --& Shedding asympt. \\ 
+$\mu_B$   & yes & $[0,\infty]$ &d$^{-1}$ & Bacterial mortality in environment \\ 
+$r$       & yes &  $[0,\infty]$ & --& Exponent rainfall \\ 
+$\lambda$  & yes &   $[0,\infty]$ & --& Coef. rainfall \\ 
+$\rho$  & no & $1/(8\cdot365)$ &d$^{-1}$ & Loss of immunity (Levine et al.,1981 and Koelle et al, 2004)\\ 
+$\sigma$  & no & $0.25$ & -- & Symptomatic/exposed \\  
+$\alpha$  & no &  0.004 & d$^{-1}$& Mortality due to cholera (Bertuzzo et al., 2008)\\ %estimated based on data in Enrico's paper
+$\gamma$  & no & $1/5$& d$^{-1}$ & Recovery rate  sympt. (Kaper, 1995)\\  
+$k$    & no  & 3 & --& number of recovered compartments \\
+$\mu$  & no &  $1/(63.6\cdot365)$ &d$^{-1}$ & mortality rate from life expectancy (World bank, 2017)\\  
+$\eta_{1d}(t), \eta_{2d}(t)$ & no  & as in spec. & --& VE for 1 and 2 doses \\
+\bottomrule
+\end{tabular}
+\label{paramEPFL}
+\end{table*}
+
+
+
+% Description of additional data
+\subsection{Additional Data}
+
+\begin{itemize}
+\item Satellite-based daily precipitation measurements from October 2010 to March 2015: TRMM 3B42 RT Derived Daily Product\cite{Huffman:TRMMMultisatellitePrecipitation:2007}, \url{https://disc2.gesdisc.eosdis.nasa.gov/dods/TRMM_3B42RT_Daily_7.info}
+\item GPM satellite-based precipitation measurements from April 2015 to December 2019 \url{https://disc.gsfc.nasa.gov/datacollection/GPM_3IMERGDL_04.html}. % TODO: cite
+\item Population of Haitian departements: from the Institut Haitien de Statistique et d'Informatique (IHSI): \url{http://www.ihsi.ht/pdf/projection/Estimat_PopTotal_18ans_Menag2015.pdf}
+\item Departmental level cholera cases October 2010 - January 2019: extracted from the Ministère de la Santé Publique et de la Population (MSPP) reports, \url{https://mspp.gouv.ht/newsite/documentation.php}, obtained in the MSF dashboard \url{https://epicentre-msf.shinyapps.io/haiti-2016-cholera/}.
+\end{itemize}
+
+Rainfall measurements are provided on a regular grid. To get a value for each department we averaged the measurements over the extent of the department.
+
+\subsection{Model runs}
+
+We construct a future rainfall time series up to the year 2030 by sampling from the past 20 years of data  with replacement blocks of 15 days. To keep the correct seasonality the day of the year of each block is preserved.
+
+The model was simulated with a constant time-step of $4.8$h, and the ODE for the bacterial concentration was integrated using a Runge-Kutta 4 scheme.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=.6\textwidth]{fig_cholera-haiti-ocv/deploy.png}
+\caption{Deployment over time of the vaccination doses in the four scenario with vaccination.}\label{figDeploy}
+\end{center}
+\end{figure}
+
+
+The deployment of vaccination for each scenario is shown in figure \ref{figDeploy}.
+
+
+\subsection{Model Selection and Fitting/Calibration}
+
+%Describe any model selection that took place (though not sure this relevant for any team)
+
+
+% Describe fitting/calibration routine and which data/time periods were used
+The model is calibrated separately for each department on the weekly reported cases from 2014-03-01 to 2019-01-12. The calibration procedure is based on a frequentist multiple iterated filtering algorithm (MIF2\cite{Ionides:InferenceDynamicLatent:2015}). The initial conditions on March 1st, 2014 are derived by enforcing the model dynamics on the reported cases from the start of the epidemic in 2010. The MIF2 algorithm performance deteriorates quickly with the spatial dimension of the model as the number of particles needed for calibration increase exponentially\cite{Park:GuidedIntermediateResampling:2017}. To address this problem we first calibrate each department independently. In a second step, using the departmental calibration as a starting point, we calibrate the entire spatial model.
+The department-specific calibration procedure is as follow:
+
+\begin{enumerate}
+    \item All unknown parameters (see Table \ref{paramEPFL}) are calibrated on the reported cases of Artibonite, where the epidemic had a clear seasonal dynamic from 2014 to 2018 with a sufficiently large number of cases, thus providing a good signal for the model.  This allows to calibrate the unknown epidemiological and rainfall-related parameters on the most informative time series available.
+    \item For the other nine departments, we calibrate the most sensitive parameters, the exposure $\beta^i$ and the mobility parameter $c^i$ only, while fixing the remaining parameters to their best fit found for Artibonite.
+    \item We exclude the large, rainfall unrelated cholera outbreak in the Ouest department in 2015-2016 (mainly Port-au-Prince)\cite{Rebaudet:NationalAlertresponseStrategy:2018} from the calibration since we consider that it's not part of the endemic dynamics we are focusing on in this study.
+\end{enumerate}
+
+During this phase, the mobility coefficients $c_i$ are calibrated using the reported cholera cases (data) from the other departments (appropriatly scaled with the reporting rate and symptomatic fraction).
+
+After visual convergence is reached in each departements, we now use the departmental best fits as starting points for a country-wide calibration. This mainly affects the mobility parameter $c_i$, which governs the departmental interdependence, as it now calibrated on the actual simulated incidence from other departments.
+
+The final parameters are shown in Table \ref{calibrationEPFL}.
+
+\subsection{Assessment of Model Fit}
+The calibrated parameters are shown in table \ref{calibrationEPFL}. The model fit is shown in Figure \ref{fitEPFL}. An example of the number of individuals in the different compartments over time is shown in Figure \ref{figCompartiment}.
+% Give an overview of the fit of his/her model in whatever way they feel is appropriate.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=1.0\textwidth]{fig_cholera-haiti-ocv/fit.png}
+\caption{Fit on calibration data for the best parameter of the model. The median (blue line) and the q025 and q975 quantiles (shaded area) over 1000 realization of the stochastic model are shown. Weekly reported cholera cases are shown as black dots.}
+\label{fitEPFL}
+\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=1.0\textwidth]{fig_cholera-haiti-ocv/comps.png}
+\caption{Total number of individual belonging to each compartment in the Ouest department, for vaccination scenario S3. Median values over 500 runs are shown in blue. The uncertainty bands represent the 2.5th and the 97.5th quantiles. Compartments with the suffix "\_alt" indicate already conducted vaccination campaigns that took place in Haiti (see the meta-supplement). Other vaccination compartments concern the potential future mass vaccination campaigns that are the subject of this study.}
+\label{figCompartiment}
+\end{center}
+\end{figure}
+

@@ -234,7 +234,10 @@
 \usepackage{amsbsy}
 \usepackage{makecell}
 \usepackage{amsmath}
+%Intro
 \newcommand{\eqname}[1]{\tag*{#1}} %tag equations by name
+% 
+\usepackage{tabularx}
 
 \begin{document}
 
@@ -302,20 +305,14 @@
 % Start the main matter (normal chapters)
 \mainmatter
 
-\part{Cholera modeling}\input{cholera}
-
-
-\chapter{Rainfall as a driver of epidemic cholera: Comparative modeling assessments of the effect of intra-seasonal precipitation events}
-\label{ch:cholera-rainfall}
-
+\part{Cholera modeling}
+\input{cholera}
 \input{cholera-rainfall}
+\input{cholera-haiti-ocv}
 
-%\part{Scientific and Public-Health response to the COVID-19 pandemic}
 
-%\chapter{Assessing the impact of non-pharmaceutical interventions on SARS-CoV-2 transmission in Switzerland}
-\label{ch:covid-switzerland-npi}
-
-%\input{covid-switzerland-npi}
+\part{Scientific and Public-Health response to the COVID-19 pandemic}
+\input{covid-switzerland-npi}
 
 
 %%
@@ -325,7 +322,6 @@
 
 % \bibliography{sample-handout}
 % \bibliographystyle{plainnat}
-
 
 \printindex
 
