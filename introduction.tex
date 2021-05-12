@@ -39,9 +39,71 @@ At the end of the thesis, the final deliverable will be a platform able to provi
 \subsection{Model design}
 Compartimental + spatially explicit
 \subsection{Inference and calibration} 
+Model parameters in the SIRB cholera models represent physical rates. However, in the literature there is no consensus on their values or on their  probability distribution. Numerical calibration is therefore required to assess their value in any particular application. Parameter identifiability is one of the major problems during the calibration of SIR-like epidemiological models. This is mainly due to the impossibility to directly measure the exact figures of individual infections in each compartment, the uncertainty associated to epidemiological data and the net effect of possible model over-parametrization. Calibration thus often results in combination of parameters that produce almost identical fits, termed equifinality\footnote{For a cholera example, Eisenberg et al. (\fullcite{eisenberg_identifiability_2013}) highlighted that the presence of uncertain measurements might generate strongly correlated parameters, which cannot be unambiguously  identified.}.
+
  Filtering
 \subsection{Vizualisation and communication}
 \subsection{Optimal control}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OK
+\paragraph{Optimal Control Theory}
+Optimal control theory describes the application of control variables to a system for the purpose of maximizing some measure of performance. The system is subject to its dynamics, with possible constraints on state and control variables. Let $\textbf{x}(t)$ be the state of a system at time $t$, and $\textbf{u}(t)$ be the control (or input) variable. 
+
+In the general form, a continuous time optimal control problem (OCP) is written as the minimization of a cost functional $J$  with respect to the control variable $u(t)$:
+\begin{equation}
+\text{Minimize~~~} \min_{u(\cdot)} J=\Phi\,[\,\textbf{x}(t_0),t_0,\textbf{x}(t_f),t_f\,] + \int_{t_0}^{t_f} \mathcal{L}\,[\,\textbf{x}(t),\textbf{u}(t),t\,] \,dt
+\end{equation}
+subject to the system dynamics, path constraints and boundary conditions:
+\begin{align}
+\dot{\textbf{x}}(t) & =  \textbf{g}\,[\,\textbf{x}(t),\textbf{u}(t),t\,] \eqname{System dynamics}\\
+\textbf{b}\,[\,\textbf{x}(t),\textbf{u}(t),t\,]  & \leq  \textbf{0} \eqname{Path constraints} \\
+\boldsymbol{\phi}\,[\,\textbf{x}(t_0),t_0,\textbf{x}(t_f),t_f\,] & =  0 \eqname{Boundary conditions} 
+\end{align}
+
+The objective $J$ is the sum of the endpoint cost function $\Phi$ and the so called Lagrangian functional $\mathcal{L}$ that represent the cost along the path followed by the system.
+
+The first constraints of the system are its dynamics, here a general ordinary differential equation $\textbf{g}$. In the case of cholera application, this is the spatially-explicit SIRB model. Path constraints $\textbf{b}$ in the form of inequalities are said inactive, and may be active when imposed as equalities. Finally, boundary conditions allow for forcing the system to end in a certain state, and to specify initial conditions.
+
+Note that it is also possible to optimize the end time $t_f$. A simple change of variable transforms the OCP above into a free-end time problem. This possibility might result fundamental to optimize for the time of cholera extinction.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OK
+\paragraph{Solving an Optimal Control Problem}
+Solving an OCP is a difficult task, but it  has received large attention during the cold war to guide rockets and missiles. Except for simple problems, like the linear quadratic  control, OCPs do not have analytical solutions and numerical solutions are typically sought. We highlight here two general methods for solving OCPs:
+
+\par Indirect methods (or ``optimize then discretize'') use the calculus of variation to obtain first-order optimal conditions. The OCP is transformed in a multi-point boundary value problem (BVP) that has the form of a Hamiltonian system. Pontryagin's maximum principle guarantees the optimality of the solution. While this solution is elegant, the BVP may be difficult to solve and recently, direct methods are frequently preferred in applications.
+
+\par The rational behind direct (or ``discretize then optimized'') methods is that a nonlinear programming (NLP) optimization problem with large dimension (tenth of thousand variables) has an easier numerical solution than a simple BVP, because it is sparse. That is, we rewrite our OCP (in the infinite dimensional functional space) into an optimization NLP (in a finite dimensional Euclidean space). 
+
+In short, state and control variables are approximated (e.g using a piece-wise constant function) and the cost functional becomes a cost function. The problem is now to find the coefficients defining the control variable approximation, in such a way that they minimize the approximated cost function $F$. This leads to the following NLP:
+\begin{equation}
+\min_{\textbf{x} \in \mathbb{R}^n} F(\textbf{x})
+\end{equation}
+subject to:
+\begin{equation}
+g(\textbf{x}) = 0
+\end{equation}    
+\begin{equation}
+h(\textbf{x}) \leq 0
+\end{equation}
+This problem is solved by any NLP solver, like Ipopt~\cite{wachter_implementation_2006}.   Optimal control toolboxes, like CasADI~\cite{andersson_casadi:_2012}, allow us to transform the symbolic formulation of the OCP in into an NLP. 
+
+Despite a wide range of power tools, solving even a simple  optimal control problem is still a computationally-intensive task.
+
+\paragraph{Epidemiological Applications of Optimal Control}
+
+Optimal control is of great interest for practitioners and policy makers: it allows to formally back up existing policies, and may suggest alternative action plans. Indeed, such discoveries have to be carefully analyzed in order to be understood, as they might be due to model features. We present a brief literature review of studies on optimal control for epidemiological applications. This non-exhaustive review should present a sufficient picture of the current research landscape.
+
+First, theoretical studies~\cite{kar_stability_2011, laguzet_global_2015} on  generic epidemiological models explored the feasibility and features of optimal control polices. These studies, first by Morton and Wickwire~\cite{morton_optimal_1974}, Sethi and Staats~\cite{sethi_optimal_1978}, Greenhalgh~\cite{greenhalgh_results_1988}, Behncke~\cite{behncke_optimal_2001} analyzed  various spatially-implicit models in a control system perspective, deriving existence, uniqueness, and stability of the optimal control for some (ideal) inputs like quarantine and vaccination.
+
+It is also possible to use optimal control in order to find some general rules for disease intervention. For example, Rowthorn \textit{et al.}~\cite{rowthorn_optimal_2009} showed that for a system with two interconnected regions and a particular epidemic, equalizing infection in the two regions is the worst possible strategy in minimizing the total number of infection.
+
+For cholera, intervention considered are a combination of antibiotics, vaccination and WaSH improvement. Tuite \textit{et al.} applied optimal control to the 2010 Haitian epidemic. For spatial allocation of the (rather small) vaccine stockpile available at that time, they compared optimal allocation against equal and density-dependent. They found that the later the vaccination is done, the better the optimal allocation performs against the control allocation strategies~\cite{tuite_cholera_2011}. However, there a few caveat in this study like the lack of inapparent infections~\cite{king_inapparent_2008, rinaldo_reassessment_2012}. Another approach was undertaken by Neilan \textit{et al.}~\cite{millerneilan_modeling_2010} in Calcutta and Bogra. They optimized for rehydratation/antibiotics, vaccination and sanitation, and concluded that a problem dependent mix of these methods is the most effective intevention strategy. This last approach and many others~\cite{sardar_optimal_2013} are designed for spatially-implicit models, and optimize the timing and proportion of the different interventions.
+
+In an interesting theoretical study, Kelly Jr. \textit{et al.}~\cite{kelly_impact_2016} explored different mobility patterns and  optimal control intervention strategies. Namely, they tested a spatially-explicit version of the Tien and Earn model~\cite{tien_multiple_2010} and different spatial setups: nearest-neighbour connectivity, hub arrangement, and  hotspot map. They derived vaccination strategies. For example, one non-intuitive finding is that for nearest-neighbour connectivity, the outbreak patch should receive the least amount of effort.  A study by Chao \textit{et al.} compared different vaccination strategies using a spatially explicit model at small scale~\cite{chao_vaccination_2011}.  
+
+Other cholera control analysis are either conceptual (no data nor a particular setup)~\cite{fister_optimal_2016} or do not search for an optimal control solution, but test the impact of different possible  strategies~\cite{kirpich_controlling_2017, eubank_modelling_2004, finger_potential_2018, seidlein_preventing_2018,azman_micro-hotspots_2018,lessler_mapping_2018,rebaudet_dry_2013}.
+
+These studies are either theoretical, without connection to a particular setup nor actual data, or compare different control strategies defined by the author. In the framework of this thesis, I aim to develop a computational tool able to solve the optimal control problem for actual cholera outbreaks in quasi-real time, in order to provide objective information that can promptly support the health-care actors during the emergency. 
+
 
 
 
