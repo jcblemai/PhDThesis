@@ -12,3 +12,5 @@ Thesis.pdf
 *.run.xml
 *.log
 *.synctex.gz
+*.ilg
+*.ind

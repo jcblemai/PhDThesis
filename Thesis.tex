@@ -3,15 +3,15 @@
 %% Unfortunately for the contents to contain
 %% the "Parts" lines successfully, hyperref
 %% needs to be disabled.
-\documentclass[nohyper,nobib,a4]{tufte-book}
+\documentclass[nohyper,nobib,a4]{tufte-book} %nobib
 \usepackage{nameref}
 % \hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
 
 % \usepackage{hyphenat}
 \usepackage{url}
-\usepackage[backend=biber, natbib=true, style=numeric]{biblatex}
+\usepackage[backend=biber, natbib=true, style=authoryear,citestyle=authoryear-comp]{biblatex}
 \addbibresource{../ZoteroLibUpdated/ZoteroLibUpdated.bib}
-\addbibresource{references.bib}
+%\addbibresource{references.bib}
 \usepackage{xargs}
 
 % from me: Remove the visited on https://tex.stackexchange.com/questions/400384/how-to-disable-biblatex-showing-visited-on-on-the-references
@@ -226,8 +226,6 @@
 %%% Needed for compilation.
 \renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
 \renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
-
-
 %%% Joseph's thesis
 % cholera-rainfall
 \usepackage{amssymb}
@@ -311,7 +309,7 @@
 
 % r.9 introduction
 %\cleardoublepage
-\chapter*{Introduction}\input{introduction}
+%\chapter*{Introduction}\input{introduction}
 
 %%
 % Start the main matter (normal chapters)
@@ -320,11 +318,12 @@
 \part{Cholera modeling}
 \input{cholera}
 \input{cholera-rainfall}
-\input{cholera-haiti-ocv}
+%\input{cholera-haiti-ocv}
 
 
-\part{Scientific and Public-Health response to the COVID-19 pandemic}
-\input{covid-switzerland-npi}
+%\part{Scientific and Public-Health response to the COVID-19 pandemic}
+%\input{covid-switzerland-npi}
+
 
 
 %%
@@ -332,8 +331,9 @@
 
 \backmatter
 
-% \bibliography{sample-handout}
-% \bibliographystyle{plainnat}
+%\bibliography{sample-handout}
+%\bibliographystyle{plainnat}
+%\printbibliography
 
 \printindex
 
