@@ -5,58 +5,29 @@
 %% needs to be disabled.
 \documentclass[nohyper,nobib,a4]{tufte-book} %nobib
 \usepackage{nameref}
-% \hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
 
+%BIBLIOGRAPHY
 % \usepackage{hyphenat}
 \usepackage{url}
-\usepackage[backend=biber,doi=false,isbn=false,url=false,eprint=false,style=authoryear,citestyle=authoryear-comp]{biblatex}
+\usepackage[backend=biber,doi=false,isbn=false,url=false,eprint=false,style=verbose,citestyle=authoryear-comp]{biblatex}
 \addbibresource{../ZoteroLibUpdated/ZoteroLibUpdated.bib}
 %\addbibresource{references.bib}
 \usepackage{xargs}
 
 % from me: Remove the visited on https://tex.stackexchange.com/questions/400384/how-to-disable-biblatex-showing-visited-on-on-the-references
-\AtEveryBibitem{
-    \clearfield{urlyear}
-    \clearfield{urlmonth}
-}
-
+%\AtEveryBibitem{
+  %  \clearfield{urlyear}
+    %\clearfield{urlmonth}
+%}
+% Only year
+%\AtEveryBibitem{\clearfield{month}}
+%\AtEveryBibitem{}
+\AtEveryCitekey{\clearfield{day}} % Remove day only in fullcite
+\renewcommandx{\cite}[3][1={0pt},2={}]{\sidenote[][#1]{\fullcite[#2]{#3}}}
 % from me: short citation in sideline: https://tex.stackexchange.com/questions/414716/options-for-styling-fullcite
-% No space: https://tex.stackexchange.com/questions/25891/fullcite-without-indent-in-biblatex
-%\DeclareCiteCommand{\fullcite}
-%{\usebibmacro{prenote}}%
-%{\clearfield{url}%
-%\clearfield{pages}%
-%\clearfield{pagetotal}%
-%\clearfield{edition}%
-%\clearfield{labelyear}%
-%\clearfield{doi}%
-%\clearfield{labelyear}%
-%\clearfield{urlyear}%
-%\clearfield{urlmonth}%
-%\clearfield{eprinttype}%
-%\clearfield{eprint}%
-%\clearfield{issn}%
-%\clearfield{volume}%
-%\clearfield{journaltitle}%
-%\clearfield{journal}%
-%\clearfield{number}%
-%\clearfield{date}%
-%\usedriver
-%{\DeclareNameAlias{sortname}{default}}
-%{\thefield{entrytype}}}
-%\multicitedelim
-%{\usebibmacro{postnote}}
-  %disable side bar
-%\renewcommandx{\cite}[3][1={0pt},2={}]{\sidenote[][#1]{\scriptsize\fullcite[#2]{#3}}}
-
-
-
+% No space: https://tex.stackexchange.com/questions/25891/fullcite-without-indent-in-biblatex ---> åDELETED
 %% From me: 
 \usepackage{ebgaramond}
-%\usepackage{fontspec}
-%\setromanfont{EB Garamond}
-%\setsansfont{Arial}
-%\setmonofont[Color={0019D4}]{Courier New}
 %Tittle in Smal cap, to change
 \usepackage{titlesec}
 \makeatletter
@@ -110,7 +81,6 @@
   December\fi\space\number\year
 }
 
-
 % Prints an epigraph and speaker in sans serif, all-caps type.
 \newcommand{\openepigraph}[2]{%
   %\sffamily\fontsize{14}{16}\selectfont
@@ -142,8 +112,8 @@
 \newcommand{\na}{\quad--}% used in tables for N/A cells
 % + removed some stuff
 % Generates the index
-\usepackage{makeidx}
-\makeindex
+%\usepackage{makeidx}
+%\makeindex
 
 %%%% Kevin Godny's code for title page and contents from https://groups.google.com/forum/#!topic/tufte-latex/ujdzrktC1BQ
 \makeatletter
@@ -182,8 +152,8 @@
 %%%% End additional code by Kevin Godby
 
 %%% Needed for compilation.
-\renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
-\renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
+%\renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
+%\renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
 %%% Joseph's thesis
 % cholera-rainfall
 \usepackage{amssymb}
@@ -212,9 +182,8 @@
 \begin{document}
 
 
-
 % Front matter
-\frontmatter
+%\frontmatter
 
 % r.1 blank page
 % \blankpage
@@ -275,40 +244,20 @@
 
 %%
 % Start the main matter (normal chapters)
-\mainmatter
-
-Testing different citation style, \texttt{fullcite}gives\fullcite{Lemaitre:AssessingImpactNonpharmaceutical:2020}.
-While \texttt{cite} is
-\cite{Lemaitre:AssessingImpactNonpharmaceutical:2020}... 
-
-\texttt{parencite} would yield\parencite{Lemaitre:AssessingImpactNonpharmaceutical:2020}.
-
-\texttt{footcite}yields\footcite{Lemaitre:AssessingImpactNonpharmaceutical:2020}.
-
-However I can also use \texttt{textcite} which is nice: \textcite{Lemaitre:AssessingImpactNonpharmaceutical:2020}.
-
+%\mainmatter
 \part{Cholera modeling}
-%\input{cholera}
-%\input{cholera-rainfall}
-%\input{cholera-haiti-ocv}
+\input{cholera}
+\input{cholera-rainfall}
+\input{cholera-haiti-ocv}
 
-
-%\part{Scientific and Public-Health response to the COVID-19 pandemic}
-%\input{covid-switzerland-npi}
-
-
+\part{Scientific and Public-Health response to the COVID-19 pandemic}
+\input{covid-switzerland-npi}
 
 %%
 % The back matter contains appendices, bibliographies, indices, glossaries, etc.
-
-\backmatter
-
-%\bibliography{sample-handout}
-%\bibliographystyle{plainnat}
+%\backmatter
+\begin{fullwidth}
 \printbibliography
-
-\printindex
+\end{fullwidth}
 
 \end{document}
-
-

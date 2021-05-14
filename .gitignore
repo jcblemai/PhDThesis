@@ -11,6 +11,6 @@ Template/
 Thesis.pdf
 *.run.xml
 *.log
-*.synctex.gz
+*.synctex.gz*
 *.ilg
 *.ind
