@@ -9,7 +9,7 @@
 %BIBLIOGRAPHY
 % \usepackage{hyphenat}
 \usepackage{url}
-\usepackage[backend=biber,doi=false,isbn=false,url=false,eprint=false,style=verbose,citestyle=authoryear-comp]{biblatex}
+\usepackage[backend=biber,doi=false,isbn=false,url=false,eprint=false,style=verbose,citestyle=authoryear-comp,maxbibnames=999]{biblatex}
 \addbibresource{../ZoteroLibUpdated/ZoteroLibUpdated.bib}
 %\addbibresource{references.bib}
 \usepackage{xargs}
@@ -22,8 +22,8 @@
 % Only year
 %\AtEveryBibitem{\clearfield{month}}
 %\AtEveryBibitem{}
-\AtEveryCitekey{\clearfield{day}} % Remove day only in fullcite
-\renewcommandx{\cite}[3][1={0pt},2={}]{\sidenote[][#1]{\fullcite[#2]{#3}}}
+\AtEveryCitekey{\clearfield{day}\clearfield{pages}\clearfield{volume}\clearfield{number}\clearfield{issue} \clearfield{urlyear}\clearfield{urlmonth}} % Remove day only in fullcite
+\renewcommandx{\cite}[3][1={0pt},2={}]{\sidenote[][#1]{\fullcite[#2]{#3}.}}
 % from me: short citation in sideline: https://tex.stackexchange.com/questions/414716/options-for-styling-fullcite
 % No space: https://tex.stackexchange.com/questions/25891/fullcite-without-indent-in-biblatex ---> åDELETED
 %% From me: 
@@ -42,9 +42,6 @@
 \author[Joseph Lemaitre]{Joseph \ Lemaitre}
 \publisher{Under the supervision of Prof. Andrea Rinaldo and Dr. Damiano Pasetto.}
 
-%\usepackage{microtype}
-
-
 %%
 % For nicely typeset tabular material
 \usepackage{booktabs}
@@ -53,7 +50,6 @@
 % For graphics / images
 \usepackage{graphicx}
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
-\graphicspath{{graphics/}}
 
 % The fancyvrb package lets us customize the formatting of verbatim
 % environments.  We use a slightly smaller font.
@@ -179,6 +175,18 @@
     
 %\AtEveryCitekey{\clearfield{url}\clearfield{doi}\clearfield{isbn}\clearfield{issn}}
 
+%% Define \longfullcite to include all authors (https://tex.stackexchange.com/questions/142148/typeset-one-citation-with-all-authors)
+\makeatletter
+\DeclareCiteCommand{\longfullcite}
+  {\usebibmacro{prenote}}
+  {\usedriver
+     {\c@maxnames\blx@maxbibnames\relax
+      \DeclareNameAlias{sortname}{default}}
+     {\thefield{entrytype}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+\makeatother
+
 \begin{document}
 
 
@@ -240,7 +248,7 @@
 
 % r.9 introduction
 %\cleardoublepage
-%\chapter*{Introduction}\input{introduction}
+\chapter*{Introduction}\input{introduction}
 
 %%
 % Start the main matter (normal chapters)
@@ -248,7 +256,7 @@
 \part{Cholera modeling}
 \input{cholera}
 \input{cholera-rainfall}
-\input{cholera-haiti-ocv}
+%\input{cholera-haiti-ocv}
 
 \part{Scientific and Public-Health response to the COVID-19 pandemic}
 \input{covid-switzerland-npi}
