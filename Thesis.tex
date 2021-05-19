@@ -4,8 +4,9 @@
 %% the "Parts" lines successfully, hyperref
 %% needs to be disabled.
 \documentclass[nohyper,nobib,a4]{tufte-book} %nobib
-\usepackage{nameref}
 
+
+\usepackage{nameref}
 %BIBLIOGRAPHY
 % \usepackage{hyphenat}
 \usepackage{url}
@@ -186,6 +187,16 @@
   {\multicitedelim}
   {\usebibmacro{postnote}}
 \makeatother
+% section in table of content
+\setcounter{tocdepth}{3}
+
+%Hyperref likes to be loaded last
+\usepackage{hyperref}
+%No link in TOC, that breaks tuftebook
+\makeatletter
+\let\Hy@linktoc\Hy@linktoc@none
+\makeatother
+\usepackage[open,openlevel=2]{bookmark} %open up to level 2 by default
 
 \begin{document}
 
@@ -226,6 +237,7 @@
 \maketitle
 
 % r.5 contents
+\pdfbookmark[section]{\contentsname}{toc}
 \tableofcontents
 
 \listoffigures
@@ -248,7 +260,8 @@
 
 % r.9 introduction
 %\cleardoublepage
-\chapter*{Introduction}\input{introduction}
+\chapter{Introduction}
+\input{introduction}
 
 %%
 % Start the main matter (normal chapters)
