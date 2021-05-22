@@ -37,7 +37,7 @@ We base our analysis of the cholera outbreak in Juba on a general epidemiologica
 \section{P1 Case study: the 2015 cholera outbreak in Juba, South Sudan}\label{sec:data sets}
 \begin{figure}\centering
   \includegraphics[width=\textwidth]{fig_cholera-rainfall/Lemaitre_ACTROP_2018_42_R1_fig2.png}
-  \caption{Reported cholera cases (dots) and precipitation (bars) during the 2015 cholera epidemic in Juba. The timing of the vaccination campaign is highlighted in yellow.}
+  \caption[Cholera cases and precipitation during the 2015 epidemic in Juba]{Reported cholera cases (dots) and precipitation (bars) during the 2015 cholera epidemic in Juba. The timing of the vaccination campaign is highlighted in yellow.}
   \label{fig:report}
 \end{figure}
 In the past years, South Sudan had been struck by several cholera outbreaks\footnote{More details on the history of cholera in South Sudan in \fullcite{Sciarra:MathematicalModelingCholera:2018}}. Here we focus our analysis on the 2015 outbreak in Juba, when a particular double peak of cholera cases occurred, probably associated to a strong intra-seasonal precipitation event (Figure~\ref{fig:report}). We use epidemiological records for the 2014 and 2015 cholera epidemics that include cholera cases and hospitalization time series at the second-lowest administrative level  (Payams) as reported by the Ministry of Health of South Sudan, SSMoH. The recorded cases in the 7 Payams that constitute the administrative area of Juba have been aggregated to obtain the reported time series for the county level. The population data for Juba county is taken from the South Sudan National Bureau of Statistics\cite{SSNBS:PopulationProjectionsSouth:2015}.
@@ -90,7 +90,7 @@ During the vaccination campaign, OCV doses are assumed to be distributed with eq
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{fig_cholera-rainfall/Lemaitre_ACTROP_2018_42_R1_fig1.png}
-  \caption{Transition diagram for the different cholera models considered, with the different variations \textbf{ME}, \textbf{MR}, and \textbf{MEC} indicated.}
+  \caption[Transition diagram for the competing cholera models]{Transition diagram for the different cholera models considered, with the different variations \textbf{ME}, \textbf{MR}, and \textbf{MEC} indicated.}
   \label{diagram}
 \end{figure}
 
@@ -190,7 +190,7 @@ The results of the nested LR-tests confirm the statistical significance of inclu
 \begin{figure}
     \centering
     \includegraphics[width = \textwidth, trim = 11mm 19mm 10mm 12mm, clip]{fig_cholera-rainfall/Lemaitre_ACTROP_2018_42_R1_fig3.png}
-    \caption{Likelihood ratio tests of model nesting. The LL-tests were computed for each nested pair of models $\{\mathcal{M}_0, \mathcal{M}_1\}$, with parameter vectors $\boldsymbol{\theta}^0,\boldsymbol{\theta}^1$, for which at least on of the parameters that is not null is $\boldsymbol{\theta}^1$ is equal to 0 in $\boldsymbol{\theta}^0$. Each model is labeled with its associated estimated maximum log-likelihood value, $\hat{\ell}$ , for the deterministic (A) and the stochastic (B) models, and linked based on whether the likelihood ratio is significantly (full black lines) or not (dashed gray lines) at the 5\% level. The absence of lines indicates a lower $\hat{\ell}$ for the more complex model.} 
+    \caption[Likelihood ratio tests of model nesting]{Likelihood ratio tests of model nesting. The LL-tests were computed for each nested pair of models $\{\mathcal{M}_0, \mathcal{M}_1\}$, with parameter vectors $\boldsymbol{\theta}^0,\boldsymbol{\theta}^1$, for which at least on of the parameters that is not null is $\boldsymbol{\theta}^1$ is equal to 0 in $\boldsymbol{\theta}^0$. Each model is labeled with its associated estimated maximum log-likelihood value, $\hat{\ell}$ , for the deterministic (A) and the stochastic (B) models, and linked based on whether the likelihood ratio is significantly (full black lines) or not (dashed gray lines) at the 5\% level. The absence of lines indicates a lower $\hat{\ell}$ for the more complex model.} 
     \label{fig:lltests}
 \end{figure}
 
@@ -203,7 +203,7 @@ The comparison between the estimated output cases computed by the basic SIRB mod
 \begin{figure}[ht]
     \centering
     \includegraphics[width = \textwidth]{fig_cholera-rainfall/Lemaitre_ACTROP_2018_42_R1_fig4.png}
-    \caption{Simulations of the \textbf{MN} (A-B), \textbf{ME} (C-D) and \textbf{MEC} (E-F) models. Simulations for the deterministic versions (A,C,E) are given by the mean (blue dashed line), median (blue full line) and 95\% simulation envelops (blue ribbon) of 100 simulations of the measurement model for each trajectory from 100 samples from the posteriors of model parameters against reported daily cholera cases (red line and dots). Simulations from the stochastic models (B, D, F) are given for 10'000 simulations of the stochastic process and measurement models.}
+    \caption[Fit of the different models]{Simulations of the \textbf{MN} (A-B), \textbf{ME} (C-D) and \textbf{MEC} (E-F) models. Simulations for the deterministic versions (A,C,E) are given by the mean (blue dashed line), median (blue full line) and 95\% simulation envelops (blue ribbon) of 100 simulations of the measurement model for each trajectory from 100 samples from the posteriors of model parameters against reported daily cholera cases (red line and dots). Simulations from the stochastic models (B, D, F) are given for 10'000 simulations of the stochastic process and measurement models.}
     \label{fig:sim}
 \end{figure}
 

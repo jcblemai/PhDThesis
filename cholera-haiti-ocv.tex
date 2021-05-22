@@ -4,6 +4,8 @@
 This section is adapted from work published in The Lancet Global Health:
 \longfullcite{Lee:AchievingCoordinatedNational:2020}\footnote{ECL, ASA, JL, and LCI conceived of the study and contributed to project administration. ECL, DLC, JCL, and LM did the primary modelling analysis, and ECL, DLC, JCL, LM, DP, JP-S, and FF wrote the model supplements. FF, RT, KV, and LCI contributed to data collection. ECL and JL wrote the first draft of the report. ECL, DLC, JCL, LM, DP, JP-S, JDS, FF, MEH, IML, ASA, JL, and LCI contributed to the study design, and all authors contributed to data interpretation and revision of the report.}. 
 
+
+
 \section{Spatial stochatic model for modeling cholera elimination}
 % Describe structure of their model and make appropriate references to their previous work. Ideally this will include at least one diagram illustrating the assumed natural history of disease and how vaccination works within the model and appropriate ODE/PDEs
 \paragraph{General Principles} The cholera model we adopted to study the Haitian epidemic is a stochastic compartmental model applied at the level of the ten Haitian departments. 
@@ -63,7 +65,7 @@ The rates at which individuals leave compartments $V^A$ and $V^{R_k}$ ($k=$1, 2,
 \begin{figure*}[htbp]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{fig_cholera-haiti-ocv/compartiments.png}
-\caption{Schematic diagram of the cholera transmission in a single department. Dynamics of vaccinated compartments are not shown.}
+\caption[Schematic diagram of the cholera transmission in a single department]{Schematic diagram of the cholera transmission in a single department. Dynamics of vaccinated compartments are not shown.}
 \label{figEPFL}
 \end{center}
 \end{figure*}
@@ -246,7 +248,7 @@ The model fit is shown in Figure \ref{fitEPFL}. An example of the number of indi
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{fig_cholera-haiti-ocv/fit.png}
-\caption{Fit on calibration data for the best parameter of the model. The median (blue line) and the q025 and q975 quantiles (shaded area) over 1000 realization of the stochastic model are shown. Weekly reported cholera cases are shown as black dots.}
+\caption[Fit on calibration data for the best parameter of the model]{Fit on calibration data for the best parameters of the model. The median (blue line) and the q025 and q975 quantiles (shaded area) over 1000 realization of the stochastic model are shown. Weekly reported cholera cases are shown as black dots.}
 \label{fitEPFL}
 \end{center}
 \end{figure}
@@ -254,7 +256,7 @@ The model fit is shown in Figure \ref{fitEPFL}. An example of the number of indi
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{fig_cholera-haiti-ocv/comps.png}
-\caption[]{Total number of individual belonging to each compartment in the Ouest department, for vaccination scenario S3. Median values over 500 runs are shown in blue. The uncertainty bands represent the 2.5th and the 97.5th quantiles. Compartments with the suffix "\_alt" indicate already conducted vaccination campaigns that took place in Haiti (see the meta-supplement). Other vaccination compartments concern the potential future mass vaccination campaigns that are the subject of this study.}
+\caption[Total number of individual belonging to each compartment in the Ouest department]{Total number of individual belonging to each compartment in the Ouest department, for vaccination scenario S3. Median values over 500 runs are shown in blue. The uncertainty bands represent the 2.5th and the 97.5th quantiles. Compartments with the suffix "\_alt" indicate already conducted vaccination campaigns that took place in Haiti (see the meta-supplement). Other vaccination compartments concern the potential future mass vaccination campaigns that are the subject of this study.}
 \label{figCompartiment}
 \end{center}
 \end{figure}
