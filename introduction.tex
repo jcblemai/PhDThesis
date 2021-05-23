@@ -1,27 +1,19 @@
-- Epidemic (as a phenomena)
-- Modeling (Bayesian philosophy, data, representation of reality) sochastic/determistic
-- Modeling of epidemics (uncertainties, social factors, heterogeneities)
-- Control of epidemic, and modeling of control of epidemics
-- Public-health decision making tools using models
+Epidemics of infectious diseases are a complex phenomena at the crossing of human behaviour, mobility, host dynamics, environmental factors. 
 
-Material  Methods (→ Mathematical epidemiology) *3 days*
-1. Material = data
-2. Model design
-    3. Compartimental
-4. Inference and calibration (Data and Health)
-    6. Filtering
-7. Vizualisation and communication
-8. Optimal control
-
-
-
-\textit{Modeling} provides a formal framework to design and test such approaches. It encompasses uncertainties, transmission dynamics and intervention policies. Depending on its accuracy, a cholera model might be able to reproduce, and even forecast, in time and space the spread of the epidemic.
+Modeling provides a formal framework to design and test such approaches. It encompasses uncertainties, transmission dynamics and intervention policies. Depending on its accuracy, a cholera model might be able to reproduce, and even forecast, in time and space the spread of the epidemic.
 
 One of the main goals of epidemiological modeling is to predict the incidence of an ongoing epidemic in order to guide the public health officials in the deployment of life-saving medical supplies and medical staff. Moreover, an accurate model is a viable substitute for an experiment, where stakeholders can test intervention policies and scientific hypothesis on disease dynamics.
 
 A novel use of epidemiological modelling is in the formal design of control policies. \textit{Optimal control} provides a rigorous framework to identify the most effective control measures under a set of operational constraints, in order to minimize an objective function of interest, like disease transmission and death. 
 
+
+
+\section{Thesis aim and outline}
+This thesis was initially focused on cholera, a diareal disease that affects the poorest of the poor. Cholera . Part I of this thesis will present a model-comparison study of the influence of intra-seasonal rainfall events. The COVID-19 pandemic changed the initial plan of optimal control for cholera, hence the most recent part of this work is dedicated to COVID. Part II wil
+
 The construction of such a framework is the object of the present thesis. Building on the laboratory of Ecohydrology at EPFL (ECHO lab in the following) expertise on waterborne disease modeling, optimal control of cholera epidemic is a step forward in the ability for scientists to help policy makers in reducing the global cholera burden.
+
+
 
 \subsection{Objectives}
 
@@ -34,6 +26,9 @@ Towards an operational forecasting and decision framework, many obstacles must b
 
 The ECHO lab has been working on a spatially-explicit cholera model that has been able to match, and even forecast, the epidemiological curve across a number of settings. During the whole thesis, we will continue to improve this model, and to develop new features, relaxing assumptions and limitations of existing approaches. A major milestone is the creation of an operational forecasting platform for epidemic dynamics, to communicate results in a timely manner.
 
+At the end of the thesis, the final deliverable will be a platform able to provide cholera forecasts and optimal control policies in quasi real time, to exploit the full potential of state-of-the-art spatially explicit cholera models.
+
+
 %The thesis aims at answering the following questions:
 %\begin{itemize}
 %    \item For a given setup, with operational constraints, what is the optimal way of %allocating control resources to minimize the impact of a cholera outbreak ?
@@ -41,24 +36,48 @@ The ECHO lab has been working on a spatially-explicit cholera model that has bee
 %    \item How do we should allocate surveillance measure in order to best detect upcoming %outbreaks ?
 %\end{itemize}
 
-At the end of the thesis, the final deliverable will be a platform able to provide cholera forecasts and optimal control policies in quasi real time, to exploit the full potential of state-of-the-art spatially explicit cholera models.
 
-\chapter{Infectious Disease Modeling}
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Infectious Disease Modeling} %(Computational epidemiomology
 
 \section{Infectious Diseases Epidemics} %as a phenomena)
 
+
 \section{Modeling of Epidemics}
+
 % (Bayesian philosophy, data, representation of reality) sochastic/determistic Modeling of epidemics (uncertainties, social factors, heterogeneities)
 \subsection{Data}
 %data on health
+Model makes use of epidemiological data: reported cases, severity of outcomes, serology survey. 
+
+Covariates or input data range from rainfall and temperature, human mobility.
+
+Information and prior on
+
+
 
 \subsection{Model design}
+The cornstone of epidemiological modeling is the compartmental model. Individuals belongs to compartiments who caraterize their stage with respect to the disease. The seminal work has introduced compartiments for Susceptible, Infected, Recovered. The SIR model. 
+
+An Exposed compartiment may be added 
 Compartimental + spatially explicit
 \subsection{Inference and calibration} 
 Model parameters in the SIRB cholera models represent physical rates. However, in the literature there is no consensus on their values or on their  probability distribution. Numerical calibration is therefore required to assess their value in any particular application. Parameter identifiability is one of the major problems during the calibration of SIR-like epidemiological models. This is mainly due to the impossibility to directly measure the exact figures of individual infections in each compartment, the uncertainty associated to epidemiological data and the net effect of possible model over-parametrization. Calibration thus often results in combination of parameters that produce almost identical fits, termed equifinality\footnote{For a cholera example, Eisenberg et al. (\fullcite{eisenberg_identifiability_2013}) highlighted that the presence of uncertain measurements might generate strongly correlated parameters, which cannot be unambiguously  identified.}.
 
+
+
  Filtering
 \subsection{Vizualisation and communication}
+
+
+ \section{Control of epidemic, and modeling of control of epidemics}%Public-health decision making tools using models
+%- Control of epidemic, and modeling of control of epidemics
+%- Public-health decision making tools using models
 
 \subsection{Optimal control}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OK
@@ -121,10 +140,6 @@ Other cholera control analysis are either conceptual (no data nor a particular s
 
 These studies are either theoretical, without connection to a particular setup nor actual data, or compare different control strategies defined by the author. In the framework of this thesis, I aim to develop a computational tool able to solve the optimal control problem for actual cholera outbreaks in quasi-real time, in order to provide objective information that can promptly support the health-care actors during the emergency. 
 
-
-
-
- \section{Control of epidemic, and modeling of control of epidemics}%Public-health decision making tools using models
 
 
 
