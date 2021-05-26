@@ -14,3 +14,6 @@ Thesis.pdf
 *.synctex.gz*
 *.ilg
 *.ind
+*.lof
+*.toc
+*.lot

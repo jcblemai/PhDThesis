@@ -1,12 +1,118 @@
 \chapter{Scenario planning tools and report}
 \label{sec:covid-pipeline-reports}
 
+The ongoing Coronavirus disease 2019 (COVID-19, previously nCov) pandemic started in Wuhan, China end of 2019. The pathogen is a virus, the severe acute respiratory syndrome coronavirus SARS-CoV-2. The pandemic is one of the deadliest pandemic in history, and the response has mobilized scientist, public-health and medical professionals and politics in an unprecented way.
+
+A litterature review of the disease is outside of the scope of this thesis, as science advances our understanding daily. The following work details dealing with the uncertainties that caraterize disease emergences.
+
+\section{The COVID Scenario Pipeline}
+
+The COVID Scenario pipeline is a sequence of four modules that tackle different part of the disease transmission.
+
+\begin{figure*}[!htb]
+    \centering
+    \includegraphics[width = .7\textwidth]{fig_pipeline/fig1a}
+    \caption[The four modules of the pipeline]{Overview of the four modules of the pipeline.}
+    \label{fig:pipeline-modules}
+\end{figure*}
+
+The pipeline is set up via a config file. This config file defines a spatial setup and its demography. On that, an arbitrary transmission model is setup
+
+SARS-CoV-2 transmission is done along an arbitrary transition graph. By default, the pipeline uses a stochastic models.
+
+n practice, this translate into $k = 3$ compartments of infected, $I_1, I_2, I_3$ in 
+order to have an infectious period shaped as Erlang distribution.
+Then the rates of the different compartments are given in the table below:
+
+\begin{table}
+    \centering
+    \begin{tabular}{ccc}
+\toprule
+Transition & rate parameter &Unit \\
+ \midrule
+$S\longrightarrow E$  &   $\beta = R_0 \cdot \gamma$  & d$^{-1}$\\
+$E\longrightarrow I_1$ & $\sigma = \frac{1}{5.2}$         & d$^{-1}$\\
+$I_1\longrightarrow I_2$ & $\gamma_1 = \gamma \cdot k$ & d$^{-1}$\\
+$I_2\longrightarrow I_3$ & $\gamma_1 = \gamma \cdot k$ & d$^{-1}$\\
+$I_3\longrightarrow R$&$\gamma_1 = \gamma \cdot k$&d$^{-1}$\\
+\bottomrule
+\end{tabular}
+\caption{Estimated parameters of hospitalization time distributions. These estimates differ from observed values given in Table~\ref{tab:vdparams} by accounting for right-censoring of observations. We report time from hospitalization to discharge or death, and from ICU admission to discharge or death. Estimates were obtained using competing risk survival model as described in section~\ref{sec:crm}. Parameters are given in terms of their posterior mean and 95\% CrI (in parenthesis). For the log-normal distribution the parameters correspond to the mean and SD of the logarithm of the distribution.}
+     \label{tab:survpars}
+\end{table}
+
+For such epidemiological model, two meta-parameters are important in reproducing 
+the dynamics and final size of an epidemic: the serial interval $SI$, which is 
+the interval between two subsequent infections, and the basic reproductive number 
+$R_0$ representing the number of newly infected per infected, in a fully susceptible population.
+
+
+The serial interval (SI) of COVID-19 is currently estimated to be in range $6.5-8.2$. We draw uniformly from this range, and we solve
+$SI = \frac{1}{2}(\frac{1}{\gamma})+\frac{1}{\sigma}$ for the inverse of the total infectious period,
+$\gamma$.
+
+The basic reproductive number, $R_0$, is drawn for each simulation and we obtain parameter beta from
+$\beta= R_0 \cdot \gamma$.
+
+The model is fixed time step, and the transitions (without mobility here) at each time step
+$\Delta t$ are: 
+
+\begin{eqnarray}
+p_{expose} &=&  1 - \exp(-\Delta t \cdot FOI) \\
+p_{infect} &=& 1 - \exp(-\Delta t \cdot \sigma)\\
+p_{recover} &=& 1 - \exp(-\Delta t \cdot \gamma)
+\end{eqnarray}
+
+
+At each time step, we draw in a binomial distribution, e.g 
+\begin{equation}
+N_{I_1\longrightarrow I_2}(t) = \text{Binom}(I_1, 1 - \exp(-\Delta t \cdot \gamma_1))
+\end{equation}
+
+
+The force of infection without mobility is defined as: 
+
+\begin{equation}
+FOI = \beta \frac{(I_1 + I_2 + I_3)^\alpha}{H} 
+\end{equation}
+
+where $\alpha$ is a coefficient that dampens disease transmission when its value is below 1, thus more accurately representing non-homogeneous mixing in the population. Although we were unable to find $\alpha$ estimates for SARS-CoV-2, we expect disease transmission to be similar to that of other respiratory diseases and typical estimated values for $\alpha$ for respiratory diseases range from 0.87 to 0.97.
+
+In our model, individuals move from one node to another. A mobility matrix $M$ where
+$M(o,d)$ is the amount of individuals moving daily from origin $o$ to
+destination $d$. At each time step, and for each $(o,d)$ pair, we draw a force of infection 
+for node $i$ to account for mobility:
+
+\begin{equation}
+FOI_i = \left(1 - \sum_{j\neq i} p_{away} \frac{M_{i,j}}{H_i} \right) \cdot \beta_i(t) \frac{(I_1^{i} + I_2^{i} + I_3^{i})^\alpha}{H_i} +  \sum_{j \neq i} \left(p_{away} \frac{M_{i,j}}{H_i} \cdot \beta_j(t) \frac{(I_1^j + I_2^j + I_3^j)^\alpha}{H_j} \right)
+\end{equation}
+
+with $p_{away}$ the percent of the time individuals that move spend away; $p_{away} \approx 0.5$ in the case of commuting. $H_i$ is the population of node $i$. Then, the transition is:
+
+\begin{equation}
+N_{S_i \longrightarrow I_1^{i}}(t) = Binom(S^i, 1 - \exp(-\Delta t \cdot FOI_i))
+\end{equation}
+
+The model is implemented in python, just-in-time compiled to machine code using Numba.
+
+
+
+
+
+\section{Scenario planning for Canton de Vaud}
+
+
+
+
+ 
 
 1. Intro Unraveling of the epidemic since January: from importation models to intervention model
 2. Model description
 3. Interaction with public-health decision maker. Usefulness of modeling
 
 \section{Model Parameters from truncated data}
+
+We bridge our work to the next section. Working with CHUV has enable us to get early hospitalization data.
 
 We had access to individual-level data from 1093 patients hospitalized in the canton of Vaud up to April 14, 2020. Of all patients, 41\% (448/1093) were female and 59\% were male (645/1093) with a median age of 70 years (Supplementary Material, SM, Figure~\ref{fig:vdage}). Of all the hospitalized cases, 20\% (214/1093) required use of an Intensive Care Unit (ICU).
 
