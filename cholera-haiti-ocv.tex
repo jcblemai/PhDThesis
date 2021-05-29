@@ -1,14 +1,14 @@
 \chapter{Spatial stochatic model for modeling cholera elimination}
 \label{ch:cholera-haiti-ocv}
 
-This chapter describes a model developed for a multi-modelling study. Four teams with existing cholera work were tasked to design a models for  where four models from different team  is adapted from work published in The Lancet Global Health:
+This chapter describes a model developed for a multi-modelling study. Four teams with existing experience in modeling cholera in Haiti were tasked to model scenarios of mass vaccination administration towards cholera immunity. The full model comparaison has been published in The Lancet Global Health:
 \longfullcite{Lee:AchievingCoordinatedNational:2020}\footnote{ECL, ASA, JL, and LCI conceived of the study and contributed to project administration. ECL, DLC, JCL, and LM did the primary modelling analysis, and ECL, DLC, JCL, LM, DP, JP-S, and FF wrote the model supplements. FF, RT, KV, and LCI contributed to data collection. ECL and JL wrote the first draft of the report. ECL, DLC, JCL, LM, DP, JP-S, JDS, FF, MEH, IML, ASA, JL, and LCI contributed to the study design, and all authors contributed to data interpretation and revision of the report.}. 
 
-
+The present chapter is adapted from Supplement 3 of the paper, and details modeling choices to account for vaccination.
 
 \section{Spatial stochatic model for modeling cholera elimination}
 % Describe structure of their model and make appropriate references to their previous work. Ideally this will include at least one diagram illustrating the assumed natural history of disease and how vaccination works within the model and appropriate ODE/PDEs
-\paragraph{General Principles} The cholera model we adopted to study the Haitian epidemic is a stochastic compartmental model applied at the level of the ten Haitian departments. 
+\paragraph{General Principles} The cholera model adopted to study the Haitian epidemic is a stochastic compartmental model applied at the level of the ten Haitian departments. 
 It is the stochastic translation of a deterministic SIRB model based on Ordinary Differential Equations (ODEs) which has been extensively used to simulate the Haitian cholera epidemic in previous studies\cite{Rinaldo:Reassessment20102011:2012, Bertuzzo:PredictionSpatialEvolution:2011,Bertuzzo:ProbabilityExtinctionHaiti:2016,Pasetto:RealtimeForecastingCholera:2018, Lemaitre:RainfallDriverEpidemic:2019}. 
 Here the model has been implemented as a discrete-state model based on a Partially-Observed Markov Process (POMP), simulating the stochastic transitions between compartments as discrete events\cite{King:InapparentInfectionsCholera:2008}.
 
@@ -245,19 +245,19 @@ The final parameters are shown in Table \ref{calibrationEPFL}.
 The model fit is shown in Figure \ref{fitEPFL}. An example of the number of individuals in the different compartments over time is shown in Figure \ref{figCompartiment}.
 % Give an overview of the fit of his/her model in whatever way they feel is appropriate.
 
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{fig_cholera-haiti-ocv/fit.png}
 \caption[Fit on calibration data for the best parameter of the model]{Fit on calibration data for the best parameters of the model. The median (blue line) and the q025 and q975 quantiles (shaded area) over 1000 realization of the stochastic model are shown. Weekly reported cholera cases are shown as black dots.}
 \label{fitEPFL}
 \end{center}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=1.0\textwidth]{fig_cholera-haiti-ocv/comps.png}
-\caption[Total number of individual belonging to each compartment in the Ouest department]{Total number of individual belonging to each compartment in the Ouest department, for vaccination scenario S3. Median values over 500 runs are shown in blue. The uncertainty bands represent the 2.5th and the 97.5th quantiles. Compartments with the suffix "\_alt" indicate already conducted vaccination campaigns that took place in Haiti (see the meta-supplement). Other vaccination compartments concern the potential future mass vaccination campaigns that are the subject of this study.}
-\label{figCompartiment}
-\end{center}
-\end{figure}
+%\begin{figure}[htbp]
+%\begin{center}
+%\includegraphics[width=1.0\textwidth]{fig_cholera-haiti-ocv/comps.png}
+%\caption[Total number of individual belonging to each compartment in the Ouest department]{Total number of individual belonging to each compartment in the Ouest department, for vaccination scenario S3. Median values over 500 runs are shown in blue. The uncertainty bands represent the 2.5th and the 97.5th quantiles. Compartments with the suffix "\_alt" indicate already conducted vaccination campaigns that took place in Haiti (see the meta-supplement). Other vaccination compartments concern the potential future mass vaccination campaigns that are the subject of this study.}
+%\label{figCompartiment}
+%\end{center}
+%\end{figure}
 

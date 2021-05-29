@@ -3,7 +3,10 @@
 
 The ongoing Coronavirus disease 2019 (COVID-19, previously nCov) pandemic started in Wuhan, China end of 2019. The pathogen is a virus, the severe acute respiratory syndrome coronavirus SARS-CoV-2. The pandemic is one of the deadliest pandemic in history, and the response has mobilized scientist, public-health and medical professionals and politics in an unprecented way.
 
-A litterature review of the disease is outside of the scope of this thesis, as science advances our understanding daily. The following work details dealing with the uncertainties that caraterize disease emergences.
+The state of knowledge on the evolving SARS-CoV-2 and COVID-19 is quickly expanding, and the present chapter and the next one present way to deal with such uncertainties. For the same reason, I believe it is too early to present a litterature review of our understanding of COVID-19 outside the scope of this thesis. The following work details dealing with the uncertainties that caraterize disease emergences.
+
+
+
 
 \section{The COVID Scenario Pipeline}
 
@@ -16,11 +19,11 @@ The COVID Scenario pipeline is a sequence of four modules that tackle different 
     \label{fig:pipeline-modules}
 \end{figure*}
 
-The pipeline is set up via a config file. This config file defines a spatial setup and its demography. On that, an arbitrary transmission model is setup
+The pipeline is set up via a config file. This config file defines a spatial setup and its demography. On that, an arbitrary transmission model is setup.
 
 SARS-CoV-2 transmission is done along an arbitrary transition graph. By default, the pipeline uses a stochastic models.
 
-n practice, this translate into $k = 3$ compartments of infected, $I_1, I_2, I_3$ in 
+In practice, this translate into $k = 3$ compartments of infected, $I_1, I_2, I_3$ in 
 order to have an infectious period shaped as Erlang distribution.
 Then the rates of the different compartments are given in the table below:
 
@@ -37,7 +40,7 @@ $I_2\longrightarrow I_3$ & $\gamma_1 = \gamma \cdot k$ & d$^{-1}$\\
 $I_3\longrightarrow R$&$\gamma_1 = \gamma \cdot k$&d$^{-1}$\\
 \bottomrule
 \end{tabular}
-\caption{Estimated parameters of hospitalization time distributions. These estimates differ from observed values given in Table~\ref{tab:vdparams} by accounting for right-censoring of observations. We report time from hospitalization to discharge or death, and from ICU admission to discharge or death. Estimates were obtained using competing risk survival model as described in section~\ref{sec:crm}. Parameters are given in terms of their posterior mean and 95\% CrI (in parenthesis). For the log-normal distribution the parameters correspond to the mean and SD of the logarithm of the distribution.}
+\caption{Transitions rate parameters for the pipeline}
      \label{tab:survpars}
 \end{table}
 
@@ -48,8 +51,7 @@ $R_0$ representing the number of newly infected per infected, in a fully suscept
 
 
 The serial interval (SI) of COVID-19 is currently estimated to be in range $6.5-8.2$. We draw uniformly from this range, and we solve
-$SI = \frac{1}{2}(\frac{1}{\gamma})+\frac{1}{\sigma}$ for the inverse of the total infectious period,
-$\gamma$.
+$SI = \frac{1}{2}(\frac{1}{\gamma})+\frac{1}{\sigma}$ for the inverse of the total infectious period, $\gamma$.
 
 The basic reproductive number, $R_0$, is drawn for each simulation and we obtain parameter beta from
 $\beta= R_0 \cdot \gamma$.
@@ -63,12 +65,10 @@ p_{infect} &=& 1 - \exp(-\Delta t \cdot \sigma)\\
 p_{recover} &=& 1 - \exp(-\Delta t \cdot \gamma)
 \end{eqnarray}
 
-
 At each time step, we draw in a binomial distribution, e.g 
 \begin{equation}
 N_{I_1\longrightarrow I_2}(t) = \text{Binom}(I_1, 1 - \exp(-\Delta t \cdot \gamma_1))
 \end{equation}
-
 
 The force of infection without mobility is defined as: 
 
@@ -95,11 +95,8 @@ N_{S_i \longrightarrow I_1^{i}}(t) = Binom(S^i, 1 - \exp(-\Delta t \cdot FOI_i))
 
 The model is implemented in python, just-in-time compiled to machine code using Numba.
 
+\section{Example of scenario planning: Canton de Vaud}
 
-
-
-
-\section{Scenario planning for Canton de Vaud}
 
 
 
