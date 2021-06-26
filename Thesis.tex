@@ -10,10 +10,12 @@
 %BIBLIOGRAPHY
 % \usepackage{hyphenat}
 \usepackage{url}
-\usepackage[backend=biber,doi=false,isbn=false,url=false,eprint=false,style=verbose,citestyle=authoryear-comp,maxbibnames=999]{biblatex}
+\usepackage[backend=biber,doi=false,isbn=false,url=false,eprint=false,style=verbose,citestyle=authoryear-comp,maxbibnames=999,firstinits=true,maxcitenames=1]{biblatex}
 \addbibresource{../ZoteroLibUpdated/ZoteroLibUpdated.bib}
 %\addbibresource{references.bib}
 \usepackage{xargs}
+
+%first init comes from: https://tex.stackexchange.com/questions/490049/towards-a-concise-fullcite-command, It's a good ressource
 
 % from me: Remove the visited on https://tex.stackexchange.com/questions/400384/how-to-disable-biblatex-showing-visited-on-on-the-references
 %\AtEveryBibitem{
@@ -23,7 +25,7 @@
 % Only year
 %\AtEveryBibitem{\clearfield{month}}
 %\AtEveryBibitem{}
-\AtEveryCitekey{\clearfield{day}\clearfield{pages}\clearfield{volume}\clearfield{number}\clearfield{issue} \clearfield{urlyear}\clearfield{urlmonth}} % Remove day only in fullcite
+\AtEveryCitekey{\clearfield{day}\clearfield{pages}\clearfield{volume}\clearfield{number}\clearfield{issue}\clearfield{urlyear}\clearfield{urlmonth}\clearfield{pagetotal}} % Remove day only in fullcite
 \renewcommandx{\cite}[3][1={0pt},2={}]{\sidenote[][#1]{\fullcite[#2]{#3}.}}
 % from me: short citation in sideline: https://tex.stackexchange.com/questions/414716/options-for-styling-fullcite
 % No space: https://tex.stackexchange.com/questions/25891/fullcite-without-indent-in-biblatex ---> åDELETED
@@ -31,9 +33,12 @@
 \usepackage{ebgaramond}
 %Tittle in Smal cap, to change
 \usepackage{titlesec}
+% Display instead of hang makes it on two line: Chapter 1\\blabla
 \makeatletter
-\titleformat{\chapter}[display]{\huge\scshape}{\@chapapp~\thechapter}{1\baselineskip}{}
-\titleformat{\section}{\large\scshape}{\thesection}{1em}{}
+\titleformat{\chapter}[display]{\huge\scshape}{\@chapapp~\thechapter}{.5\baselineskip}{}%[\vspace{2ex}\titlerule]
+\titleformat{\section}{\Large\scshape}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\scshape}{\thesubsection}{1em}{}
+\titleformat{\paragraph}[runin]{\scshape}{\theparagraph}{}{}
 \makeatother
 
 %%
@@ -113,45 +118,44 @@
 %\makeindex
 
 %%%% Kevin Godny's code for title page and contents from https://groups.google.com/forum/#!topic/tufte-latex/ujdzrktC1BQ
-\makeatletter
-\renewcommand{\maketitlepage}{%
-\begingroup%
-\setlength{\parindent}{0pt}
-
-{\fontsize{24}{24}\selectfont\textit{\@author}\par}
-
-\vspace{1.75in}{\fontsize{36}{54}\selectfont\@title\par}
-
-\vspace{0.5in}{\fontsize{14}{14}\selectfont\textsf{\smallcaps{\@date}}\par}
-
-\vfill{\fontsize{14}{14}\selectfont\textit{\@publisher}\par}
-
-\thispagestyle{empty}
-\endgroup
-}
-\makeatother
-
-\titlecontents{part}%
-    [0pt]% distance from left margin
-    {\addvspace{0.25\baselineskip}}% above (global formatting of entry)
-    {\allcaps{Part~\thecontentslabel}\allcaps}% before w/ label (label = ``Part I'')
-    {\allcaps{Part~\thecontentslabel}\allcaps}% before w/o label
-    {}% filler and page (leaders and page num)
-    [\vspace*{0.5\baselineskip}]% after
-  \makeatletter
-\titleformat{\part}[display]
-  {\Huge\scshape\filright}
-  {\partname~\thepart}
-  {20pt}
-  {}
-\makeatother
-\titlecontents{chapter}%
-    [4em]% distance from left margin
-    {}% above (global formatting of entry)
-    {\contentslabel{2em}\textit}% before w/ label (label = ``Chapter 1'')
-    {\hspace{0em}\textit}% before w/o label
-    {\qquad\thecontentspage}% filler and page (leaders and page num)
-    [\vspace*{0.5\baselineskip}]% after
+%\makeatletter
+%\renewcommand{\maketitlepage}{%
+%\begingroup%
+%\setlength{\parindent}{0pt}
+%
+%{\fontsize{24}{24}\selectfont\textit{\@author}\par}
+%
+%\vspace{1.75in}{\fontsize{36}{54}\selectfont\@title\par}
+%
+%\vspace{0.5in}{\fontsize{14}{14}\selectfont\textsf{\smallcaps{\@date}}\par}
+%
+%\vfill{\fontsize{14}{14}\selectfont\textit{\@publisher}\par}
+%
+%\thispagestyle{empty}
+%\endgroup
+%}
+%\makeatother
+%\titlecontents{part}%
+%    [0pt]% distance from left margin
+%    {\addvspace{0.25\baselineskip}}% above (global formatting of entry)
+%    {\allcaps{Part~\thecontentslabel}\allcaps}% before w/ label (label = ``Part I'')
+%    {\allcaps{Part~\thecontentslabel}\allcaps}% before w/o label
+%    {}% filler and page (leaders and page num)
+%    [\vspace*{0.5\baselineskip}]% after
+%  \makeatletter
+%\titleformat{\part}[display]
+%  {\Huge\scshape\filright}
+%  {\partname~\thepart}
+%  {20pt}
+%  {}
+%\makeatother
+%\titlecontents{chapter}%
+%    [4em]% distance from left margin
+%    {}% above (global formatting of entry)
+%    {\contentslabel{2em}\textit}% before w/ label (label = ``Chapter 1'')
+%    {\hspace{0em}\textit}% before w/o label
+%    {\qquad\thecontentspage}% filler and page (leaders and page num)
+%    [\vspace*{0.5\baselineskip}]% after
 %%%% End additional code by Kevin Godby
 
 
@@ -165,6 +169,7 @@
 \usepackage{amsbsy}
 \usepackage{makecell}
 \usepackage{amsmath}
+\usepackage{bm}
 %Intro
 \newcommand{\eqname}[1]{\tag*{#1}} %tag equations by name
 % 
@@ -206,12 +211,21 @@
 \makeatother
 \usepackage[open,openlevel=2]{bookmark} %open up to level 2 by default
 
+% Numbered chapters 
+\setcounter{secnumdepth}{0}
+
+%longer page
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+textheight=690pt,
+ }
 \begin{document}
 
-\begin{fullwidth}
+%\begin{fullwidth}
 	
 % Front matter
-\frontmatter
+%\frontmatter
 
 % r.1 blank page
 % \blankpage
@@ -243,15 +257,15 @@
 
 
 % r.3 full title page
-\maketitle
+%\maketitle
 
 % r.5 contents
-\pdfbookmark[section]{\contentsname}{toc}
-\tableofcontents
+%\pdfbookmark[section]{\contentsname}{toc}
+%\tableofcontents
 
-\listoffigures
+%\listoffigures
 
-\listoftables
+%\listoftables
 
 % r.7 dedication
 %\cleardoublepage
@@ -266,10 +280,9 @@
 %\vfill
 %\vfill
 
-\end{fullwidth}
+%\end{fullwidth}
 % r.9 introduction
 %\cleardoublepage
-\chapter{Introduction}
 \input{introduction}
 
 %%
@@ -282,18 +295,18 @@
 
 %\part{Scientific and Public-Health response to the COVID-19 pandemic}
   
-\input{covid-pipeline-reports}
-\input{covid-switzerland-npi}
-\input{covid-italy-ocp}
+%\input{covid-pipeline-reports}
+%\input{covid-switzerland-npi}
+%\input{covid-italy-ocp}
 
-\input{conclusions}
+%\input{conclusions}
 
 
 %%
 % The back matter contains appendices, bibliographies, indices, glossaries, etc.
 %\backmatter
 \begin{fullwidth}
-\printbibliography
+%\printbibliography
 \end{fullwidth}
 
 \end{document}

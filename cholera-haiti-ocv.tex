@@ -1,30 +1,38 @@
 \chapter{Spatial stochatic model for modeling cholera elimination}
 \label{ch:cholera-haiti-ocv}
 
-This chapter describes a model developed for a multi-modelling study. Four teams with existing experience in modeling cholera in Haiti were tasked to model scenarios of mass vaccination administration towards cholera immunity. The full model study was performed by Lee et al. and has been published in The Lancet Global Health:
-\longfullcite{Lee:AchievingCoordinatedNational:2020}\footnote{ECL, ASA, JL, and LCI conceived of the study and contributed to project administration. ECL, DLC, JCL, and LM did the primary modelling analysis, and ECL, DLC, JCL, LM, DP, JP-S, and FF wrote the model supplements. FF, RT, KV, and LCI contributed to data collection. ECL and JL wrote the first draft of the report. ECL, DLC, JCL, LM, DP, JP-S, JDS, FF, MEH, IML, ASA, JL, and LCI contributed to the study design, and all authors contributed to data interpretation and revision of the report.}. 
+\begin{fullwidth}
+	
 
-The present chapter is adapted from Supplement 3 of the paper, and details modeling choices to account for vaccination.
+This chapter describes a model developed for a multi-modelling study. Four teams with existing experience in modeling cholera in Haiti were tasked to model scenarios of mass vaccination administration towards cholera immunity. The full model study was performed by Lee et al. and has been published as:
 
+
+\longfullcite{Lee:AchievingCoordinatedNational:2020}%\footnote{ECL, ASA, JL, and LCI conceived of the study and contributed to project administration. ECL, DLC, JCL, and LM did the primary modelling analysis, and ECL, DLC, JCL, LM, DP, JP-S, and FF wrote the model supplements. FF, RT, KV, and LCI contributed to data collection. ECL and JL wrote the first draft of the report. ECL, DLC, JCL, LM, DP, JP-S, JDS, FF, MEH, IML, ASA, JL, and LCI contributed to the study design, and all authors contributed to data interpretation and revision of the report.}. 
+
+For this collaborative effort, we developed a hidden markov model of cholera transmission, with specific modeling choices to account for vaccination and to gather information on
+The present chapter is adapted from Supplement 3 of the aforementioned publication, which describe our model. We refer the reader to the full work by Lee et al. for the full. comparison.
+\end{fullwidth}
 \section{Spatial stochatic model for modeling cholera elimination}
 % Describe structure of their model and make appropriate references to their previous work. Ideally this will include at least one diagram illustrating the assumed natural history of disease and how vaccination works within the model and appropriate ODE/PDEs
-\paragraph{General Principles} The cholera model adopted to study the Haitian epidemic is a stochastic compartmental model applied at the level of the ten Haitian departments. 
-It is the stochastic translation of a deterministic SIRB model based on Ordinary Differential Equations (ODEs) which has been extensively used to simulate the Haitian cholera epidemic in previous studies\cite{Rinaldo:Reassessment20102011:2012, Bertuzzo:PredictionSpatialEvolution:2011,Bertuzzo:ProbabilityExtinctionHaiti:2016,Pasetto:RealtimeForecastingCholera:2018, Lemaitre:RainfallDriverEpidemic:2019}. 
+
+\paragraph{General Principles}The cholera model adopted to study the Haitian epidemic is a stochastic compartmental model applied at the level of the ten Haitian departments. 
+It is the stochastic translation of a deterministic SIRB model based on ordinary differential equations which has been extensively used to simulate the Haitian cholera epidemic in previous studies\cite{Rinaldo:Reassessment20102011:2012,Bertuzzo:ProbabilityExtinctionHaiti:2016,Pasetto:RealtimeForecastingCholera:2018}. 
 Here the model has been implemented as a discrete-state model based on a Partially-Observed Markov Process (POMP), simulating the stochastic transitions between compartments as discrete events\cite{King:InapparentInfectionsCholera:2008}.
 
-The model subdivides the population of each department into compartments counting the number of individuals at the different stages of the disease: susceptible individuals ($S$), symptomatic ($I$) and asymptomatic ($A$) infected and recovered individuals ($R$). The main feature of our model is that it contains an environmental compartment describing the bacterial concentration ($B$) in the local environment, which is used to estimate the force of infection\cite{Rinaldo:Reassessment20102011:2012, Bertuzzo:PredictionSpatialEvolution:2011}. Precipitation has been shown to be an important environmental driver of cholera transmission\cite{Camacho:CholeraEpidemicYemen:2018}, especially in Haiti\cite{Rinaldo:Reassessment20102011:2012}. In our model, it increases the rate at which bacteria shed by infected individuals enter the environmental reservoir and thus increases the bacterial concentration and finally the force of infection\cite{Lemaitre:RainfallDriverEpidemic:2019}. A diagram of the model is given in Fig.~\ref{figEPFL}.
+The model subdivides the population of each department into compartments counting the number of individuals at the different stages of the disease: susceptible individuals ($S$), symptomatic ($I$) and asymptomatic ($A$) infected and recovered individuals ($R$). The main feature of our model is that it contains an environmental compartment describing the bacterial concentration ($B$) in the local environment, which is used to estimate the force of infection\cite{Rinaldo:Reassessment20102011:2012, Bertuzzo:PredictionSpatialEvolution:2011}. Precipitation has been shown to be an important environmental driver of cholera transmission\cite{Camacho:CholeraEpidemicYemen:2018}, especially in Haiti\cite{Rinaldo:Reassessment20102011:2012}. In our model, rainfall increases the rate at which bacteria shed by infected individuals enter the environmental reservoir and thus increases the bacterial concentration and finally the force of infection\cite{Lemaitre:RainfallDriverEpidemic:2019}. A diagram of the model is given in Fig.~\ref{figEPFL}.
 \subsection{Model Dynamics} 
 The following dynamics characterize the model (see Figure \ref{figEPFL}):
 \begin{description}
-    \item[Infection] The force of infection governs the rate at which susceptible individuals become infected. A proportion $\sigma$ become symptomatically infected, and the rest asymptomatically infected. 
+
     \item[Force of Infection and mobility] The force of infection in each department contains an additional term representing the number of cholera cases in the rest of Haiti. This allows for a possible introduction of cholera due to  human mobility between departments. The force of infection in each department is composed of two parts. The first is related to the local bacterial concentration of the department. The second is related to case importation from other departments through human-to-human transmission. The corresponding equation for the $i^{th}$ department reads:
     \begin{equation*}
     F^i_0(t)=\beta^i\frac{B_i(t)}{1+B_i(t)}+c^i \sum_{j\ne i} (I_j(t)+A_j(t)).
     \end{equation*}
     The first term in the sum represents local transmission governed by the department-specific exposure parameter $\beta^i$ which multiplies the logistic dose-response of the rescaled local bacterial concentration $B = B^*/K$, where $B^*$ is the unscaled concentration of vibrios and $K$ the half-saturation constant of the logistic function $\frac{B^*_i(t)}{K+B^*_i(t)}$.
-    Case importation from other departments is given by the sum of the asymptomatically and symptomatically infected in department $j$, modulated by a parameter $c^i$ which represents the intensity of case introduction from other departments in Haiti  to department $i$.
-    \item[Shedding] Symptomatically and asymptomatically infected individuals shed bacteria. The shedding rate of asymtomatics, $\theta_A$, is modeled as a fraction of the shedding rate of symptomatic individuals  $\theta_I$\cite{Kuhn:GlucoseNotRiceBased:2014}.
-    \item[Recovery rate] The recovery rate is the same for both asymptomatic and symptomatic individuals ($\gamma_I=\gamma_A=0.2$ d$^{-1}$,\cite{Kaper:Cholera:1995, Codeco:EndemicEpidemicDynamics:2001}).
+    Case importation from other departments is given by the sum of the asymptomatically and symptomatically infected in department $j$, modulated by a parameter $c^i$ which represents the intensity of case introduction from other departments in Haiti  to department $i$.\marginnote[-11\baselineskip]{The force of infection uses indirect (water-mediated) local transmission but direct (human-to-human) transmission for mobility exchanges. One of the reason behind discrepancy is technical: scalability issues linked to particle depletion hinder iterated filtering performance. It becomes very hard to calibrate spatial model. To aleviate this issue, we developed a custom procedure (see below) that was only tractable with simple mobility link. Instead today, I would use the improved methods that have been developed\parencite{Asfaw:PartiallyObservedMarkov:2021, Park:InferenceHighdimensionalImplicit:2020}.}
+      \item[Symptoms] A proportion $\sigma$ of infected individuals become symptomatics, and $1-\sigma$ remain (shedding) asymptomatic. 
+    \item[Shedding] Both symptomatically and asymptomatically infected individuals shed bacteria. The shedding rate of asymtomatics, $\theta_A$, is modeled as a fraction of the shedding rate of symptomatic individuals  $\theta_I$\cite{Kuhn:GlucoseNotRiceBased:2014}.
+    \item[Recovery rate] The recovery rate is the same for both asymptomatic and symptomatic individuals ($\gamma_I=\gamma_A=0.2$ d$^{-1}$)\cite{Kaper:Cholera:1995, Codeco:EndemicEpidemicDynamics:2001}.
     \item[Acquired immunity] Individuals acquire natural immunity and remain in the recovered compartment ($R$) for a period that lasts for $1/\rho=$ 8 years on average, before reintegrating the susceptible compartment.
     \item[Gamma-distributed immunity loss] To better approximate the gamma distribution that typically characterizes the duration of immunity\cite{King:InapparentInfectionsCholera:2008}, recovered individuals pass through a succession of 3 separate recovered compartments ($R_1$, $R_2$, $R_3$) characterized by the same transition rate $\rho_1=\rho_2=\rho_3=3\rho$.
     \item[Bacterial Dynamics] The size of the bacterial reservoir is proportional to the population density $D_i$ of the department. Bacteria die at rate $\mu_B$. Rainfall influences the bacteria concentration by increasing the rate at which bacteria enter the environmental reservoir.
@@ -45,6 +53,13 @@ F_i(t) = F^i_0(t) \xi(t),
 which yields to over-dispersion in the transitions.
 %\(\Delta N_{SE}(t), \Delta N_{SR}(t), \Delta N_{V^SV^E}(t), and \Delta N_{V^SV^R}(t)\).
 
+\begin{figure*}%[htbp]
+\begin{center}
+\includegraphics{fig_cholera-haiti-ocv/compartiments.png}
+\caption[Schematic diagram of the cholera transmission in a single department]{Schematic diagram of the cholera transmission in a single department. Dynamics of vaccinated compartments are not shown.}
+\label{figEPFL}
+\end{center}
+\end{figure*}
 
 \paragraph{Vaccination dynamics} At each vaccination campaign, the available vaccine doses are uniformly distributed among susceptible ($S$), asymptomatic infected ($A$) and recovered ($R_{1}$, $R_2$, $R_3$) individuals. The rate of vaccination is indicated with $r_V$. Individuals can receive either one or two doses of OCV, which yield respective efficacies of $\eta_{1d}(t)$ and $\eta_{2d}(t)$, as defined in the main text. There is no age structure but the efficacy is set to be the population-weighted average of estimated efficacy for those under 5 years old and those over 5 years old.
  The model considers ten additional compartments for each vaccination campaign, in order to distinguish among individuals who received one (compartments $V^S_{1d}$, $V^A_{1d}$, $V^{R_k}_{1d}$, $k=$1, 2, 3) or two (compartments $V^S_{2d}$, $V^A_{2d}$, $V^{R_k}_{2d}$, $k=$1, 2, 3) doses of OCV. Vaccinated susceptible individuals ($V^S_{1d}$ and $V^S_{2d}$) have a lower probability to become infected (and thus entering classes $I$ or $A$) than non-vaccinated susceptibles. This is modeled through the multiplicative reduction of the force of infection by a  factor $(1-\eta_{1d}(t))$ or $(1-\eta_{2d}(t))$ respectively.
@@ -62,13 +77,7 @@ The rates at which individuals leave compartments $V^A$ and $V^{R_k}$ ($k=$1, 2,
 
 \paragraph{Other interventions} WaSH and other intervention efforts are not explicitly considered in the model, but their impact is implicitly taken into account by calibrating of the exposure rates $\beta^i$ to disease incidence that occurred while interventions were taking place. $\beta^i$ is modelled to be constant in time, meaning that changes in number or type interventions or population behaviour\cite{Bertuzzo:ProbabilityExtinctionHaiti:2016} over time are not taken into account. %The goal is to see if elimination is possible independently of WaSH improvement. for discussion
 
-\begin{figure*}[htbp]
-\begin{center}
-\includegraphics[width=1.0\textwidth]{fig_cholera-haiti-ocv/compartiments.png}
-\caption[Schematic diagram of the cholera transmission in a single department]{Schematic diagram of the cholera transmission in a single department. Dynamics of vaccinated compartments are not shown.}
-\label{figEPFL}
-\end{center}
-\end{figure*}
+
 \subsection{Model equations}\label{sec:stoch}
 The model is implemented as a stochastic counting process\cite{Breto:TimeSeriesAnalysis:2009}. Let \(N_{AB}(t)\) be the number of individuals transiting between compartments \(A,B\in \mathcal{X}\) in the time interval \([0,t)\)  where $\mathcal{X}$ is the state vector,
 $$\mathcal{X} = \{S, I, A, R_k, V^S_{j,1d},V^A_{j,1d}, V^{R_k}_{j,1d}, V^S_{j,2d},V^A_{j,2d}, V^{R_k}_{j,2d}\} 
@@ -191,6 +200,7 @@ $\eta_{1d}(t), \eta_{2d}(t)$ & no  & as in spec. & --& VE for 1 and 2 doses \\
 
 
 
+
 % Description of additional data
 \subsection{Additional Data}
 
@@ -211,7 +221,7 @@ The model was simulated with a constant time-step of $4.8$h, and the ODE for the
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=.6\textwidth]{fig_cholera-haiti-ocv/deploy.png}
+\includegraphics{fig_cholera-haiti-ocv/deploy.png}
 \caption{Deployment over time of the vaccination doses in the four scenario with vaccination.}\label{figDeploy}
 \end{center}
 \end{figure}
