@@ -1,4 +1,6 @@
+\begin{fullwidth}
 \chapter{A modelling-oriented primer on cholera}
+\end{fullwidth}
 Cholera is an acute intestinal infection causing severe diarrhea that may lead to dehydration, and sometimes death. While the global burden of cholera is difficult to estimate as the majority of cases are not reported, it is estimated that 3 million cases and 95'000 deaths occurs every year in endemic areas (around 50 countries), with millions more at risk\cite{Ali:UpdatedGlobalBurden:2015}. Despite its household name, cholera belongs to the neglected tropical diseases group as our understanding of many important aspects of cholera clinical course and transmission is limited.
 A political will to eliminate this ancient disease has recently arisen. The World Health Organization (WHO) initiated the Global Task Force for Cholera Control (GTFCC), who provides a concrete path towards the elimination of cholera by 2030\footnote{Elimination being defined as a 90\% reduction of cholera deaths/year, see \url{gtfcc.org}}. The general consensus is that to reach this goal in endemic countries, there must be substantial long-term improvements in education, sanitation, hygiene, medical treatment and prevention.  Moreover, in the event of a cholera outbreak, timely interventions such as vaccination campaigns are crucial to limit the spread of the disease. %With limited resources, public health officials face a number of challenging decisions, and a data driven decision support to guide the rational deployment of cholera control strategies is needed. Furthermore, on the road toward elimination, the need to setup context-specific tailored approaches appears. 
 
@@ -122,3 +124,71 @@ Most of recent modeling efforts focus on phenomenological (or statistical) model
 %\paragraph{Interventions design} The planning of the interventions described above is difficult to establish, as many factors enter into consideration including logistical and political constraints. Expert opinion is a valuable resource, however its use during outbreaks is not necessarily feasible and a consensus on strategy choice does not always emerges\cite{Cyranoski:CholeraVaccinePlan:2011}. Moreover, the global vaccine shortage\cite{Parker:AdaptingGlobalShortage:2017a,Seidlein:PreventingCholeraOutbreaks:2018} calls for an optimal use of current resources. Mass vaccination campaigns should be conducted only when strictly necessary. Case-area targeted interventions (CATIs) are an effective way of mitigating an outbreak while saving scarce resources. However, the optimal allocation in time and space of such interventions is strongly context-dependent which hinders the definition of general guidelines\cite{Eubank:ModellingDiseaseOutbreaks:2004,Finger:PotentialImpactCasearea:2018,Seidlein:PreventingCholeraOutbreaks:2018,Azman:MicrohotspotsRiskUrban:2018,Lessler:MappingBurdenCholera:2018,Rebaudet:DrySeasonHaiti:2013}. 
 
 %This thesis will explore the possibility to apply optimal control for  both short- and long-term interventions across all scales. 
+
+\section{Historic Cholera model}
+\textbf{TODO: Already said}
+spatially-explicit model has been developed at ECHO in the past 10 years\parencite{Bertuzzo:SpacetimeEvolutionCholera:2008}. Studies on the dynamics of several cholera epidemics, occurred in South Africa (2000)\parencite{Mari:ModellingCholeraEpidemics:2012}, Senegal (2005), Haiti (2010-2016)\parencite{Bertuzzo:PredictionSpatialEvolution:2011}, Democratic Republic of the Congo  (2004-2011), stand as a significant proof of concept.  
+
+We present here a complete formulation of the model, including patterns and effectiveness of vaccinations, human and hydrological mobility\cite{Bertuzzo:ProbabilityExtinctionHaiti:2016,Pasetto:RealtimeProjectionsCholera:2017}
+The model is a variation of the SIR model introduced first by Kermack and McKendrick\cite{Kermack:ContributionMathematicalTheory:1927}, with additional compartments for the vaccinated individuals and the bacteria concentration in the environment.
+
+The model subdivides the area potentially concerned by the epidemic into $n$ sub-regions. The sub-regions, defined by political boundaries or geomorphological features (like watersheds\cite{Bertuzzo:ProbabilityExtinctionHaiti:2016}), are represented as connected nodes. The $n$ nodes represent $n$ human communities having population size $H_i$, $i=1,\dots, n$. 
+
+At time $t$ and for each node $i$, the individuals in the node can be grouped into six compartments:
+
+\begin{itemize}
+\item $S_i(t)$: susceptible individuals  have no immunity, and may enter in contact with the bacteria and become infected (symptomatic or not),
+\item $I_i(t)$: infected individual shed bacteria into the community reservoir,
+\item $R_i(t)$: recovered are temporally immune, and don't participate in disease transmission,
+\item $V^S_i(t)$: vaccinated susceptible,
+\item $V^I_i(t)$: vaccinated infected,
+\item $V^R_i(t)$: vaccinated recovered.
+\end{itemize}
+
+In addition, the model considers the bacterial concentration of \textit{V.~cholerae} in the water reservoir of the community, $B_i(t)$. The $n$ nodes are connected by both human mobility and pathogen transport through water.
+
+Individuals commute from node $i$ to node $j$ with probability $Q_{ij}$. Bacteria are transported along the river network from node $i$ to node $j$ with probability $P_{ij}$, as shown in Figure~\ref{fig:bertuzzo14_SIRB}.
+
+
+The cholera dynamics are described by the following set of coupled ordinary differential equations:
+\begin{eqnarray}
+\frac{dI_i}{dt} &=& \sigma F_i(t) S_i - (\gamma + \mu + \alpha) I_i \label{eq:I2}\\
+\frac{dR_i}{dt} &=& (1-\sigma) F_i(t) S_i + \gamma I_i - (\rho + \mu+\frac{\nu_i(t)}{S_i+R_i}) R_i \label{eq:R2}\\
+\frac{dV^S_i}{dt} &=& \nu_i(t) \frac{S_i}{S_i+R_i}-\mu V^S_i \label{eq:VS2}\\
+\frac{dV^I_i}{dt} &=& \sigma (1-\eta) F_i(t) V^S_i - (\gamma + \mu + \alpha) V^I_i \label{eq:VI2}\\
+\frac{dV^R_i}{dt} &=& \nu_i(t) \frac{R_i}{S_i+R_i} + (1-\sigma) (1-\eta) F_i(t) V^S_i + \gamma V^I_i - (\mu+\rho_v) V^R_i \label{eq:VR2}\\
+\frac{dB_i}{dt} &=& - \mu_B B_i +\frac{p}{W_i}\left[1 + \phi J_i(t) \right] \left((1-m)(I_i +V_i^I)+m \sum_{j=1}^n Q_{ij} (I_j +V_j^I)\right)- \nonumber \\
+&& l \left( B_i - \sum_{j=1}^n P_{ji} \frac{W_j}{W_i} B_j \right)
+\end{eqnarray}
+
+where the population~$H_i$ of each node is assumed to be at demographic equilibrium, thus $S_i=H_i-I_i-R_i-V_i^S-V_i^I-V_i^R$.
+
+The force of infection, i.e the rate at which individual enters in contact with the diseases, is written as:
+
+\begin{equation}
+F_i(t) = \beta \left[ (1 - m) \frac{B_i}{K + B_i} + m \sum_{j=1}^n Q_{ij} \frac{B_j}{K + B_j} \right].
+\label{force}
+\end{equation}
+
+The parameter~$\beta$ represents the maximum exposure rate, which may decrease in time due to awareness of the population on the cholera transmission factors\cite{Bertuzzo:ProbabilityExtinctionHaiti:2016}. The fraction $B_{i}/(K+B_{i})$ is the probability of becoming infected due to the exposure to a concentration~$B_i$ of \textit{V.~cholerae}, $K$ being the half-saturation constant\cite{Codeco:EndemicEpidemicDynamics:2001}. The force of infection in a given node depends for a fraction ($1-m$) to the local concentration of \textit{V.~cholerae}, $B_i$, while the remaining fraction $m$, represents the community-level probability that individuals travel outside their node, accounts for the contribution of the concentration~$B_j$ of the remote communities. 
+The human mobility is accounted with the matrix $Q_{ij}$ representing the probabilities that an individual living in node $i$ reaches~$j$ as a destination. Because of human mobility, a susceptible individual residing at node $i$ can be exposed to pathogens in the destination community $j$. 
+In the lack of detailed mobility data,  the probabilities~$Q_{ij}$ can be estimated through a gravity approach\cite{erlander_gravity_1990} to model human mobility:
+
+\begin{equation}
+Q_{ij} = \frac{H_j e^{-d_{ij}/D}}{\sum_{k \neq i}^n H_k e^{-d_{ik}/D}} \, ,
+\label{eq:mob}
+\end{equation}
+where the attractiveness of node~$j$ depends on its population size $H_j$, while the deterrence factor is assumed to be dependent on the distance~$d_{ij}$ between the two communities via an exponential kernel (with shape factor~$D$).  
+
+Due to the contact with contaminated water, a fraction $\sigma$ of the infected individuals develops symptoms, passing from compartment $S$ to $I$. The remaining fraction~$(1-\sigma)$ does not develop symptoms, does not contribute to the disease transmission, and is considered temporally immune, thus passing from compartment $S$ to $R$.  Symptomatic infected individuals recover at a rate~$\gamma$, or die due to cholera or other causes at rates~$\alpha$ or $\mu$, respectively.
+Recovered individuals lose their immunity at rate~$\rho$, thus passing from compartments $R$ to $S$, or die at a rate~$\mu$.  % TODO Too many times property.
+
+The environmental concentration of \textit{V.~cholerae} at a node $i$ may increase due to both human mobility and to hydrologic dispersion. Human contributions depends from a fraction $1-m$ on the local infected individuals and form a fraction $m$ on the symptomatic infected individuals moving according to the mobility model. The increase in bacteria concentration is modeled with the rate~$p/W_i$, where $p$ is the rate at which bacteria excreted by an infected individual reach and contaminate the local water reservoir of volume $W_i$ (assumed to be proportional to population size, i.e., $W_i=c H_i$ as in\cite{Rinaldo:Reassessment20102011:2012}) and $\mu_B$ is the rate of decay of \textit{V.~cholerae}. Bacteria undergo hydrologic dispersal at a rate~$l$: pathogens travel from node~$i$ to~$j$ with probability $P_{ij}$, which is assumed to be one if node~$j$ is the downstream nearest neighborhood $i$, and zero otherwise. In order to express the worsening of sanitation conditions caused by rainfall-induced runoff, when relevant, which causes additional pathogen loads to enter the water reservoir due to effects such as the overflow of pit latrines and washout of open-air defecation sites\cite{Gaudart:SpatioTemporalDynamicsCholera:2013}, the contamination rate $p$ is increased by the rainfall intensity $J_i(t)$ via a coefficient $\phi$\cite{Rinaldo:Reassessment20102011:2012,righetto_rainfall_2013}. By introducing the dimensionless bacterial concentrations $B_i^*=B_i/K$,  it is possible to group three model parameters into a single ratio $\theta=p/(cK)$\cite{Bertuzzo:SpacetimeEvolutionCholera:2008}.
+
+The estimation of the local incidence is computed integrating over the new symptomatic individuals,
+
+\begin{equation}
+\frac{d C_i}{dt} \ = \ \sigma F_i S_i  \, , \label{eq:C}
+\end{equation}
+
+During the vaccination campaign, OCV doses are assumed to be distributed with rate $\nu_i(t)$ to susceptible and recovered individuals, which enter the compartments $V^S$ and $V^R$. As the OCV provides a partial immunity having efficacy $\eta$, $0\leq \eta \leq 1$, vaccinated susceptibles ($V^S$) can become infected ($V^I$) through a decreased force of infection of a factor $(1-\eta)$ with respect to non-vaccinated individuals. Vaccinated infected individuals behave exactly like infected ones, but are placed in a different compartment to exclude them from future vaccination campaigns. After recovering at  rate $\gamma$, they lose their vaccine protection at rate $\rho_{v}$.
