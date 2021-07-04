@@ -5,7 +5,6 @@
 %% needs to be disabled.
 \documentclass[nohyper,nobib,a4,12pt]{tufte-book} %nobib
 
-
 \usepackage{nameref}
 %BIBLIOGRAPHY
 % \usepackage{hyphenat}
@@ -17,7 +16,39 @@
 
 %first init comes from: https://tex.stackexchange.com/questions/490049/towards-a-concise-fullcite-command, It's a good ressource
 
-% from me: Remove the visited on https://tex.stackexchange.com/questions/400384/how-to-disable-biblatex-showing-visited-on-on-the-references
+% Remove the In: if there is no journal title. But if not in my defined shortcite, it means that the publication type is ill-defined (should be online, or something without journal)
+% Thanks to https://tex.stackexchange.com/questions/502657/how-to-remove-in-from-bibliography-if-there-is-no-journal-information
+\renewbibmacro*{in:}{%
+  \iffieldundef{journaltitle}
+    {}
+    {\printtext{\bibstring{in}\intitlepunct}}}
+
+% a fullcite command described by removing stuff
+\DeclareCiteCommand{\fullcite}
+  {\usebibmacro{prenote}}
+  {\clearfield{month}\clearfield{day}\clearfield{pages}\clearfield{volume}\clearfield{number}\clearfield{issue}\clearfield{urlyear}\clearfield{urlmonth}\clearfield{pagetotal}%\clearfield{title}\clearfield{journaltitle}%
+   \usedriver
+     {\DeclareNameAlias{sortname}{default}}
+     {\thefield{entrytype}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+  
+  % a fullcite command described by adding stuff
+  % Thanks https://tex.stackexchange.com/questions/490049/towards-a-concise-fullcite-command (also:https://tex.stackexchange.com/questions/479590/change-journaltitle-to-italics-in-fullcite, https://tex.stackexchange.com/questions/339681/abbreviate-journal-title-in-fullcite-command)
+  \DeclareCiteCommand{\myfullcite}
+  {\usebibmacro{prenote}}
+  {%
+     \printnames[given-family]{labelname}%
+     \setunit{\addcomma\space}%
+  %
+     \printfield{journaltitle}%
+     \setunit{\addspace}%
+     \printtext[parens]{%
+       \printdate}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+  
+  % from me: Remove the visited on https://tex.stackexchange.com/questions/400384/how-to-disable-biblatex-showing-visited-on-on-the-references
 %\AtEveryBibitem{
   %  \clearfield{urlyear}
     %\clearfield{urlmonth}
@@ -25,7 +56,9 @@
 % Only year
 %\AtEveryBibitem{\clearfield{month}}
 %\AtEveryBibitem{}
-\AtEveryCitekey{\clearfield{day}\clearfield{pages}\clearfield{volume}\clearfield{number}\clearfield{issue}\clearfield{urlyear}\clearfield{urlmonth}\clearfield{pagetotal}} % Remove day only in fullcite
+%\AtEveryCitekey{\clearfield{month}\clearfield{day}\clearfield{pages}\clearfield{volume}\clearfield{number}\clearfield{issue}\clearfield{urlyear}\clearfield{urlmonth}\clearfield{pagetotal}\clearfield{publication}} % Remove day only in fullcite
+
+
 \renewcommandx{\cite}[3][1={0pt},2={}]{\sidenote[][#1]{\fullcite[#2]{#3}.}}
 % from me: short citation in sideline: https://tex.stackexchange.com/questions/414716/options-for-styling-fullcite
 % No space: https://tex.stackexchange.com/questions/25891/fullcite-without-indent-in-biblatex ---> åDELETED
@@ -283,7 +316,7 @@ textheight=690pt,
 %\end{fullwidth}
 % r.9 introduction
 %\cleardoublepage
-\input{introduction}
+%\input{introduction}
 
 %%
 % Start the main matter (normal chapters)
@@ -299,7 +332,7 @@ textheight=690pt,
 \input{covid-switzerland-npi}
 \input{covid-italy-ocp}
 
-\input{conclusions}
+%\input{conclusions}
 
 
 %%
