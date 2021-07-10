@@ -6,6 +6,8 @@
 \end{fullwidth}
 
 \section{Introduction}
+
+In January 2010, an earthquake hit Haiti, disrupting healthcare and water infrastructure and displacing a million persons. Ten month later, Cholera (\textit{V. Cholerae} of serogroup O1, serotype Ogawa and biotype El Tor) was introduced in Haiti by United Nation peacekeepers soldiers\cite{Frerichs:NepaleseOriginCholera:2012, Piarroux:UnderstandingCholeraEpidemic:2011}. 
 \begin{figure*}
 	\centering
 	\includegraphics[height=12cm,keepaspectratio]{fig_cholera-haiti-ocv/haiti-2010.pdf}
@@ -13,14 +15,11 @@
 	\caption{Weekly incident cases and rainfall in the ten department of Haiti from 2010 to 2019. Note that the first two years are shown with a different scale. The ressurgence in 2016 is linked to hurricane Matthew\parencites{Pasetto:RealtimeForecastingCholera:2018}. The seasonality pattern is evident especially in Artibonite.}
 	\label{fig:data2}
 \end{figure*}
-
-In January 2010, an earthquake hit Haiti, disrupting healthcare and water infrastructure and displacing a million persons. Ten month later, Cholera (\textit{V. Cholerae} of serogroup O1, serotype Ogawa and biotype El Tor) was introduced in Haiti by United Nation peacekeepers soldiers\cite{Frerichs:NepaleseOriginCholera:2012, Piarroux:UnderstandingCholeraEpidemic:2011}. This introduction in a naive population caused a major outbreak, totalling 820'000 reported cases and 10'000 death, most of them occuring in the first two years\cite{Barzilay:CholeraSurveillanceHaiti:2013}).  Since 2016, cases decreased steadily and finally the last cholera (culture) confirmed case occured in early 2019\cite{RepubliquedHaiti:ProfilStatistiqueCholera}. Cholera exhibit a seasonal pattern with two annual peaks, and is spread in every department of the country.
+This introduction in a naive population caused a major outbreak, totalling 820'000 reported cases and 10'000 death, most of them occuring in the first two years\cite{Barzilay:CholeraSurveillanceHaiti:2013}).  Since 2016, cases decreased steadily and finally the last cholera (culture) confirmed case occured in early 2019\cite{RepubliquedHaiti:ProfilStatistiqueCholera}. Cholera exhibit a seasonal pattern with two annual peaks, and is spread in every department of the country.
 
 This chapter describes a model developed for a multi-modelling study. Four teams with existing experience in modeling cholera in Haiti were tasked to model scenarios of mass vaccination administration towards cholera immunity. The timing was meant to take advantage of the low incidence to affect the endemicity of cholera in Haiti to acheive elimination. The multi-model study was led by E. C. Lee and has been published as:
 \begin{fullwidth}
-	
-
-\longfullcite{Lee:AchievingCoordinatedNational:2020}%\footnote{ECL, ASA, JL, and LCI conceived of the study and contributed to project administration. ECL, DLC, JCL, and LM did the primary modelling analysis, and ECL, DLC, JCL, LM, DP, JP-S, and FF wrote the model supplements. FF, RT, KV, and LCI contributed to data collection. ECL and JL wrote the first draft of the report. ECL, DLC, JCL, LM, DP, JP-S, JDS, FF, MEH, IML, ASA, JL, and LCI contributed to the study design, and all authors contributed to data interpretation and revision of the report.}. 
+	\longfullcite{Lee:AchievingCoordinatedNational:2020}%\footnote{ECL, ASA, JL, and LCI conceived of the study and contributed to project administration. ECL, DLC, JCL, and LM did the primary modelling analysis, and ECL, DLC, JCL, LM, DP, JP-S, and FF wrote the model supplements. FF, RT, KV, and LCI contributed to data collection. ECL and JL wrote the first draft of the report. ECL, DLC, JCL, LM, DP, JP-S, JDS, FF, MEH, IML, ASA, JL, and LCI contributed to the study design, and all authors contributed to data interpretation and revision of the report.}. 
 \end{fullwidth}
 
 For this collaborative effort, we developed a hidden markov model of cholera transmission, with specific modeling choices to account for vaccination and to gather information on elimination timing and probability.

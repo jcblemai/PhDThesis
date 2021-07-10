@@ -1,17 +1,19 @@
 \begin{fullwidth}
-\chapter{Scenario planning tools and report}
+\chapter{Scenario planning tools and reports for the COVID-19 pandemic}
 \label{sec:covid-pipeline-reports}
-\end{fullwidth}
+  \end{fullwidth}s
+The ongoing Coronavirus disease 2019 (COVID-19, previously nCov) pandemic originated in Wuhan, China end of 2019. The pathogen is the severe acute respiratory syndrome coronavirus SARS-CoV-2. It is one of the deadliest pandemic in history, and the response has mobilized scientist, public-health and medical professionals and politics in an unprecented way. This chapter presents some modeling works for the response to COVID-19. As state of knowledge on the SARS-CoV-2 and COVID-19 was and still is quickly expanding, the present chapter and the next hightlight the challenges of dealing with such uncertainties. For the same reason, we do not endeavour a litterature review\sidenote[][5\baselineskip]{That would be ambitious, with a bit less than 170'000 peer-reviewed papers and many more preprints, website and reports. Estimation from:\fullcite{COVID-19OpenAccessProject:LivingEvidenceCOVID19:2020}} of the current understanding of COVID-19 and modeling studies. 
 
-The ongoing Coronavirus disease 2019 (COVID-19, previously nCov) pandemic started in Wuhan, China end of 2019. The pathogen is a virus, the severe acute respiratory syndrome coronavirus SARS-CoV-2. The pandemic is one of the deadliest pandemic in history, and the response has mobilized scientist, public-health and medical professionals and politics in an unprecented way.
+We focus on details dealing with the uncertainties that caraterize disease emergences.
 
-The state of knowledge on the evolving SARS-CoV-2 and COVID-19 is quickly expanding, and the present chapter and the next one present way to deal with such uncertainties. For the same reason, I believe it is too early to present a litterature review of our understanding of COVID-19 outside the scope of this thesis. The following work details dealing with the uncertainties that caraterize disease emergences.
 
 \section{The COVID Scenario Pipeline}
+The COVID Scenario pipeline\sidenote[][5\baselineskip]{\url{github.com/HopkinsIDD/COVIDScenarioPipeline}} has been develop by the Johns Hopkins University Infectious Disease Dynamics COVID-19 Working Group's. It is a flexible modeling framework that projects epidemic trajectories and healthcare impacts under different suites of interventions in order to aid in scenario planning. The model is generic enough to be applied to different spatial scales given shapefiles, population data, and COVID-19 confirmed case data. There are multiple components to the pipeline, which maxy be characterized as follows: 1) epidemic seeding; 2) disease transmission and non-pharmaceutical intervention scenarios; 3) calculation of health outcomes (hospital and ICU admissions and bed use, ventilator use, and deaths); and 4) summarization of model outputs.
 
-The COVID Scenario pipeline is a sequence of four modules that tackle different part of the disease transmission. It has been described in:
-\longfullcite{Lemaitre:ScenarioModelingPipeline:2021}
+Other parts of the pipeline not described in this thesis (airport importation, report generation, config writing, inference, analysis, submission)\footnote{see \url{github.com/HopkinsIDD/COVIDScenarioPipeline} and \url{github.com/HopkinsIDD/covidImportation}}. 1. Intro Unraveling of the epidemic since January: from importation models to intervention model
 
+A previous version of the ever evolving pipeline has been described in:
+\longfullcite{Lemaitre:ScenarioModelingPipeline:2021}.
 \begin{figure*}[!htb]
     \centering
     \includegraphics[width = .7\textwidth]{fig_pipeline/fig1a}
@@ -19,14 +21,10 @@ The COVID Scenario pipeline is a sequence of four modules that tackle different 
     \label{fig:pipeline-modules}
 \end{figure*}
 
-The pipeline is set up via a config file. This config file defines a spatial setup and its demography. On that, an arbitrary transmission model is setup.
+\subsection{Disease transmission model}
+The transmission model of SARS-CoV-2 is configurable to any  along an arbitrary transition graph, to allow for multi-strain, age-stratified models, and the pipeline is able to infer parameters values from data. However, the initial model built for scenario planning was much simpler. The initial model was hard-coded, and was a simple spatial $S\longrightarrow E \longrightarrow I \longrightarrow R$ model. In practice, there is $k = 3$ compartments of infected, $I_1, I_2, I_3$ in order to have an infectious period shaped as Erlang distribution.
 
-SARS-CoV-2 transmission is done along an arbitrary transition graph. By default, the pipeline uses a stochastic models.
-
-In practice, this translate into $k = 3$ compartments of infected, $I_1, I_2, I_3$ in 
-order to have an infectious period shaped as Erlang distribution.
 Then the rates of the different compartments are given in the table below:
-
 \begin{table}
     \centering
     \begin{tabular}{ccc}
@@ -43,14 +41,11 @@ $I_3\longrightarrow R$ & $\gamma_1 = \gamma \cdot k$&d$^{-1}$\\
 \caption{Transitions rate parameters for the pipeline}
      \label{tab:survpars}
 \end{table}
-
-For such epidemiological model, two meta-parameters are important in reproducing 
-the dynamics and final size of an epidemic: the serial interval $SI$, which is 
+Two meta-parameters are important in reproducing the dynamics and final size of an epidemic: the serial interval $SI$, which is 
 the interval between two subsequent infections, and the basic reproductive number 
 $R_0$ representing the number of newly infected per infected, in a fully susceptible population.
 
-
-The serial interval (SI) of COVID-19 is currently estimated to be in range $6.5-8.2$. We draw uniformly from this range, and we solve
+The serial interval was estimated to be in range $6.5-8.2$.,We draw uniformly from this range, and we solve
 $SI = \frac{1}{2}(\frac{1}{\gamma})+\frac{1}{\sigma}$ for the inverse of the total infectious period, $\gamma$.
 
 The basic reproductive number, $R_0$, is drawn for each simulation and we obtain parameter beta from
@@ -82,10 +77,12 @@ In our model, individuals move from one node to another. A mobility matrix $M$ w
 $M(o,d)$ is the amount of individuals moving daily from origin $o$ to
 destination $d$. At each time step, and for each $(o,d)$ pair, we draw a force of infection 
 for node $i$ to account for mobility:
-
+\begin{fullwidth}
+	
 \begin{equation}
 FOI_i = \left(1 - \sum_{j\neq i} p_{away} \frac{M_{i,j}}{H_i} \right) \cdot \beta_i(t) \frac{(I_1^{i} + I_2^{i} + I_3^{i})^\alpha}{H_i} +  \sum_{j \neq i} \left(p_{away} \frac{M_{i,j}}{H_i} \cdot \beta_j(t) \frac{(I_1^j + I_2^j + I_3^j)^\alpha}{H_j} \right)
 \end{equation}
+\end{fullwidth}
 
 with $p_{away}$ the percent of the time individuals that move spend away; $p_{away} \approx 0.5$ in the case of commuting. $H_i$ is the population of node $i$. Then, the transition is:
 
@@ -93,53 +90,83 @@ with $p_{away}$ the percent of the time individuals that move spend away; $p_{aw
 N_{S_i \longrightarrow I_1^{i}}(t) = Binom(S^i, 1 - \exp(-\Delta t \cdot FOI_i))
 \end{equation}
 
-The model is implemented in python, just-in-time compiled to machine code using Numba.
+\paragraph{Non-Pharmaceutical interventions} and other transmission alter parameter $\beta$. The copounded effects on transmission of the reductions of the $k$ intervention in place at time $t$ and node $i$ is:
+\begin{equation}
+	\beta_i'(t) =  \beta_i(t) \cdot  \prod_k \left(1-r_k(t) \right) \ref{eq:npi}% _{i=1}^{N_{\text{mod(t)}}
+\end{equation}
+Several interventions templates are provided, and the copounding  of interventions is with either multiplicative (as in Equation \ref{eq:npi}) or additive copounding depending on the parameters. 
 
-\section{Example of scenario planning: Canton de Vaud}
+
+\paragraph{Health Outcomes} are computed on top of the incidence for each compartments. Each outcomes $O$  is specified from a source incidence $S$, with a delay $\Delta$ and a duration $D$:
+ \begin{algorithm}[H]
+\SetAlgoLined
+  \SetKwInOut{Input}{inputs}
+  \SetKwInOut{Output}{output}
+  \SetKwProg{FindAnMFS}{FindAnMFS}{}{}
+  \FindAnMFS{$(Q,D)$}{
+\KwResult{Write here the result }
+\Input{A failing query $Q = t_1 \wedge \dots \wedge t_n$; an \texttt{RDF} database $D$}
+ \Output{An \texttt{MFS} denoted by $Q^*$}
+draw $\Delta$ from config distribution\;
+draw $D$ from config distribution\;
+\ForEach{$t$ in $t_i, t_i+1, ..., t_f$}{
+$O[t+\Delta:t+\Delta+D]\leftarrow O[t+\Delta:t+\Delta+D] + \text{Binom}(S[t], p_{O|S})$\;
+ }
+ }
+ \caption{Computations of health outcomes}
+\end{algorithm}
+and the rates are ajusted the different population-based risk, as further described in \cite{Lemaitre:ScenarioModelingPipeline:2021}.
 
 
- 
 
-1. Intro Unraveling of the epidemic since January: from importation models to intervention model
-2. Model description
+The epidemic tranmssion model, the intervention module and the outcome calculation are implemented in python, just-in-time compiled to machine code using Numba\cite{Lam:NumbaLLVMbasedPython:2015}. The team working on the pipeline has brought many improvements, both computational and conceptual, that have enabled the pipeline to remain useful in 2021. 
+
+\section{Example of scenario planning report for Canton de Vaud}
+The COVIDScenarioPipeline has been used in different settings (list). We present here a report produced on April 9, 2020, for Canton de Vaud main hopital, CHUV. The inference module of the pipeline did not exist yet, so scenario projects were generated using a simple particle filter like methods\footnote{This, and many further analysis and algorithm developed with Dr. Perez-Saez.}
 3. Interaction with public-health decision maker. Usefulness of modeling
 
+% pagecommand adds page numbers,  need package pdfpages
+
+ \includepdf[pages=-, pagecommand={\thispagestyle{empty}}]{fig_pipeline/planning.pdf}
+
 \section{Model Parameters from truncated data}
-
-We bridge our work to the next section. Working with CHUV has enable us to get early hospitalization data.
-
-We had access to individual-level data from 1093 patients hospitalized in the canton of Vaud up to April 14, 2020. Of all patients, 41\% (448/1093) were female and 59\% were male (645/1093) with a median age of 70 years (Supplementary Material, SM, Figure~\ref{fig:vdage}). Of all the hospitalized cases, 20\% (214/1093) required use of an Intensive Care Unit (ICU).
-
-\begin{figure}[!htb]
+While collaborating with CHUV on these reports, we had access to precise hospitalization data. It allowed us to refine our estimates\cite{Rees:COVID19LengthHospital:2020}. While we used naively the truncated data. This section is published in the supplementary material of
+\fullcite{Lemaitre:AssessingImpactNonpharmaceutical:2020}.
+\begin{figure}[!htb]% [width = .7\textwidth]
     \centering
-    \includegraphics[width = .7\textwidth]{fig_covid-switzerland-npi/fig_supp/VD_hist_age.png}
-    \caption[Age distribution of patients hospitalized for COVID-19 in the canton of Vaud]{Age distribution of patients hospitalized for COVID-19 in the canton of Vaud up to April 14. Hospitalized individuals are divided in two subgroups depending on if they were treated in ICU (left) or not (right) during their stay. Moreover, only the 777 patients with known outcome are displayed here. We highlight the outcome:  either death (orange) or discharge/transfer to another hospital (blue).}
+        \caption[Age distribution of patients hospitalized for COVID-19 in the canton of Vaud]{Age distribution of patients hospitalized for COVID-19 in the canton of Vaud up to April 14. Hospitalized individuals are divided in two subgroups depending on if they were treated in ICU (left) or not (right) during their stay. Moreover, only the 777 patients with known outcome are displayed here. We highlight the outcome:  either death (orange) or discharge/transfer to another hospital (blue).}
+    \includegraphics{fig_covid-switzerland-npi/fig_supp/VD_hist_age_mod.png}
     \label{fig:vdage}
 \end{figure}
-
-Of 777 patients with a known outcome on April 14, 104 died (13\%). 
-We estimate the hospitalized Case Fatality Ratio (hCFR) by adjusting for the distribution of time hospitalization to death accounting for the fact that outcomes have not been yet observed for all patients (right-censoring). To account for multiple outcomes (death and discharge), we implement a parametric competing risk survival model similar to that of \cite{Ghani:MethodsEstimatingCase:2005}. We follow a Bayesian approach proposed in \cite{Bellot:TreebasedBayesianMixture:2018} that enables us to fit parametric distributions to times to events using accelerated failure models. This method allows for the joint estimation of the probability of each event type and the distributions of times to events. In this case we are interested in the probability of death, i.e. the hCFR. A COVID-19 modeling study in France identified mixtures of probabilities of times to death, with a group dying faster with exponentially-distributed times and one dying slower \cite{Salje:EstimatingBurdenSARSCoV2:2020}. We therefore extend the Bayesian survival framework to test for mixture in times to death and recovery. We did not take into model patients being discharged from ICU and subsequently dying which was the case for 4/138 patients with known outcome. We neither accounted for multiple ICU stays per patient since we did not have that information. We fit both Gamma and Log-Normal distributions separately to patients that did not go into ICU, and patients that did. For the former, we model times from hospitalization to death or discharge, and for the latter times from ICU entry to both outcomes. Models were fit with Stan \cite{Carpenter:StanProbabilisticProgramming:2017}, and selection was done using Bayesian leave-one-out cross-validation \cite{Vehtari:PracticalBayesianModel:2017}. \\
-
-Times to death and discharge were best described by log-normal distributions with a single group both for patients having required ICU or not (SM Fig.~\ref{fig:delays}). When accounting for right-censoring and assuming log-normally distributed times to events, we estimate an overall hCFR of 16.0\% (95\% credible interval, CrI: 12.5-19.8), resulting from a hCFR of 28.1\% (95\% CrI: 16.4-40.9) for patients requiring ICU and 13.0\% (95\% CrI: 9.9-16.6) for patients that did no require it. Estimated hCFRs were slightly higher when assuming gamma-distributed times to events (overall hCFR of 20.3\%, 95\% CrI: 15.9-24.1).
-
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=.8\textwidth]{fig_covid-switzerland-npi/fig_supp/survival_analaysis.png}
-    \caption[Survival functions of death and discharge for hospitalized patients and patients in ICU]{Survival functions of death and discharge for hospitalized patients and patients in ICU. The lines represent the mean estimated cumulative probability of dying (full) and 1 minus the cumulative probability of discharge (dotted) estimated with non-parametric (Aalen-Johansen estimator, shading gives the 95\% CI) and parametric (assuming gamma and log-normal distributions, shading indicate the 95\% CrI) methods. Time is in days from hospitalization for patients that did not require ICU, and time from ICU admission for those that did. The point at which the lines join represents the probability that the final outcome is death, which was estimated to be 28.1\% (95\% CrI: 16.4-40.9) for patients in ICU and 13.0\% (95\% CrI: 9.9-16.6) for patients not requiring ICU based on the log-normal distribution.}
-    \label{fig:delays}
-\end{figure}
-
-\noindent The distribution of times of hospitalization processes are shown in SM Fig.~\ref{fig:vdtimes}, and fitted distribution parameters given in SM Table~\ref{tab:vdparams}.
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width=.8\textwidth]{fig_covid-switzerland-npi/fig_supp/VD_times.png}
+    \includegraphics{fig_covid-switzerland-npi/fig_supp/VD_times.png}
     \caption[Key data of hospitalization events in canton de Vaud]{Data from canton de Vaud showing times to key hospitalization events. In order to perform this analysis, we split patients in two categories: those who did not go through ICU during their stay and those who did. From left to right, top to bottom: total length of hospital stay for patients that went to ICU, then similarly for patient that did not. Then we show the time to death for all patients, followed by both the time to discharge and to death for non-ICU patients. The last three graphs concerns ICU patients and detail ICU focused estimate: time from hospitalization to ICU, time in ICU and time from ICU to death. When meaningful, we show both currently hospitalized patient (orange) and already out-of-hospital patients (blue).}
     \label{fig:vdtimes}
 \end{figure}
 
+
+We had access to individual-level data from 1093 patients hospitalized in the canton of Vaud up to April 14, 2020. Of all patients, 41\% (448/1093) were female and 59\% were male (645/1093) with a median age of 70 years (Supplementary Material, SM, Figure~\ref{fig:vdage}). Of all the hospitalized cases, 20\% (214/1093) required use of an Intensive Care Unit (ICU).
+
+
+Of 777 patients with a known outcome on April 14, 104 died (13\%). 
+We estimate the hospitalized Case Fatality Ratio (hCFR) by adjusting for the distribution of time hospitalization to death accounting for the fact that outcomes have not been yet observed for all patients (right-censoring). To account for multiple outcomes (death and discharge), we implement a parametric competing risk survival model similar to that of \cite{Ghani:MethodsEstimatingCase:2005}. We follow a Bayesian approach proposed in \cite{Bellot:TreebasedBayesianMixture:2018} that enables us to fit parametric distributions to times to events using accelerated failure models. This method allows for the joint estimation of the probability of each event type and the distributions of times to events. In this case we are interested in the probability of death, i.e. the hCFR. A COVID-19 modeling study in France identified mixtures of probabilities of times to death, with a group dying faster with exponentially-distributed times and one dying slower \cite{Salje:EstimatingBurdenSARSCoV2:2020}. We therefore extend the Bayesian survival framework to test for mixture in times to death and recovery. We did not take into model patients being discharged from ICU and subsequently dying which was the case for 4/138 patients with known outcome. We neither accounted for multiple ICU stays per patient since we did not have that information. We fit both Gamma and Log-Normal distributions separately to patients that did not go into ICU, and patients that did. For the former, we model times from hospitalization to death or discharge, and for the latter times from ICU entry to both outcomes. Models were fit with Stan \cite{Carpenter:StanProbabilisticProgramming:2017}, and selection was done using Bayesian leave-one-out cross-validation \cite{Vehtari:PracticalBayesianModel:2017}. \\
+\begin{figure}[!htb]
+    \centering
+        \caption[Survival functions of death and discharge for hospitalized patients and patients in ICU][-3\baselineskip]{Survival functions of death and discharge for hospitalized patients and patients in ICU. The lines represent the mean estimated cumulative probability of dying (full) and 1 minus the cumulative probability of discharge (dotted) estimated with non-parametric (Aalen-Johansen estimator, shading gives the 95\% CI) and parametric (assuming gamma and log-normal distributions, shading indicate the 95\% CrI) methods. Time is in days from hospitalization for patients that did not require ICU, and time from ICU admission for those that did. The point at which the lines join represents the probability that the final outcome is death, which was estimated to be 28.1\% (95\% CrI: 16.4-40.9) for patients in ICU and 13.0\% (95\% CrI: 9.9-16.6) for patients not requiring ICU based on the log-normal distribution.}
+    \includegraphics{fig_covid-switzerland-npi/fig_supp/survival_analaysis.png}
+    \label{fig:delays}
+\end{figure}
+
+
+Times to death and discharge were best described by log-normal distributions with a single group both for patients having required ICU or not (Fig.~\ref{fig:delays}). When accounting for right-censoring and assuming log-normally distributed times to events, we estimate an overall hCFR of 16.0\% (95\% credible interval, CrI: 12.5-19.8), resulting from a hCFR of 28.1\% (95\% CrI: 16.4-40.9) for patients requiring ICU and 13.0\% (95\% CrI: 9.9-16.6) for patients that did no require it. Estimated hCFRs were slightly higher when assuming gamma-distributed times to events (overall hCFR of 20.3\%, 95\% CrI: 15.9-24.1).
+
+
+\noindent The distribution of times of hospitalization processes are shown in Fig.~\ref{fig:vdtimes}, and fitted distribution parameters given in Table~\ref{tab:vdparams}.
+
+
 \begin{table}[t]
-\caption{Observed hospitalization time distributions. All times are in days and taken from the date of hospitalization if not specified otherwise. Note that these estimates are biased due to right-censoring of observations and probably under-estimate the true distributions. SM Table~\ref{tab:survpars} shows estimates that account for right-censoring.}
+\caption{Observed hospitalization time distributions. All times are in days and taken from the date of hospitalization if not specified otherwise. Note that these estimates are biased due to right-censoring of observations and probably under-estimate the true distributions.  Table~\ref{tab:survpars} shows estimates that account for right-censoring.}
 \label{tab:vdparams}
 \centering
 \begin{tabular}{lrrrr}

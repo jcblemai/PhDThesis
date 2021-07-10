@@ -1,8 +1,4 @@
-% This is a modified version of the tufte-latex book example in which the title page and the contents page resemble Tufte's VDQI book, using Kevin Godby's code from this thread at https://groups.google.com/forum/#!topic/tufte-latex/ujdzrktC1BQ.
-
-%% Unfortunately for the contents to contain
-%% the "Parts" lines successfully, hyperref
-%% needs to be disabled.
+% Unfortunately for the contents to contain  the "Parts" lines successfully, hyperref needs to be disabled.
 \documentclass[nohyper,nobib,a4,12pt]{tufte-book} %nobib
 
 \usepackage{nameref}
@@ -11,7 +7,6 @@
 \usepackage{url}
 \usepackage[backend=biber,doi=false,isbn=false,url=false,eprint=false,style=verbose,citestyle=authoryear-comp,maxbibnames=999,firstinits=true,maxcitenames=1]{biblatex}
 \addbibresource{../ZoteroLibUpdated/ZoteroLibUpdated.bib}
-%\addbibresource{references.bib}
 \usepackage{xargs}
 
 %first init comes from: https://tex.stackexchange.com/questions/490049/towards-a-concise-fullcite-command, It's a good ressource
@@ -58,10 +53,9 @@
 %\AtEveryBibitem{}
 %\AtEveryCitekey{\clearfield{month}\clearfield{day}\clearfield{pages}\clearfield{volume}\clearfield{number}\clearfield{issue}\clearfield{urlyear}\clearfield{urlmonth}\clearfield{pagetotal}\clearfield{publication}} % Remove day only in fullcite
 
-
 \renewcommandx{\cite}[3][1={0pt},2={}]{\sidenote[][#1]{\fullcite[#2]{#3}.}}
 % from me: short citation in sideline: https://tex.stackexchange.com/questions/414716/options-for-styling-fullcite
-% No space: https://tex.stackexchange.com/questions/25891/fullcite-without-indent-in-biblatex ---> åDELETED
+% No space: https://tex.stackexchange.com/questions/25891/fullcite-without-indent-in-biblatex ---> DELETED
 %% From me: 
 \usepackage{ebgaramond}
 %Tittle in Smal cap, to change
@@ -253,6 +247,10 @@
  a4paper,
 textheight=690pt,
  }
+ 
+ \usepackage{pdfpages}
+ \usepackage[ruled,vlined]{algorithm2e}
+ 
 \begin{document}
 
 %\begin{fullwidth}
@@ -293,12 +291,12 @@ textheight=690pt,
 %\maketitle
 
 % r.5 contents
-%\pdfbookmark[section]{\contentsname}{toc}
-%\tableofcontents
+\pdfbookmark[section]{\contentsname}{toc}
+\tableofcontents
 
-%\listoffigures
+\listoffigures
 
-%\listoftables
+\listoftables
 
 % r.7 dedication
 %\cleardoublepage
@@ -316,7 +314,7 @@ textheight=690pt,
 %\end{fullwidth}
 % r.9 introduction
 %\cleardoublepage
-%\input{introduction}
+\input{introduction}
 
 %%
 % Start the main matter (normal chapters)
@@ -332,14 +330,14 @@ textheight=690pt,
 \input{covid-switzerland-npi}
 \input{covid-italy-ocp}
 
-%\input{conclusions}
+\input{conclusions}
 
 
 %%
 % The back matter contains appendices, bibliographies, indices, glossaries, etc.
 %\backmatter
 \begin{fullwidth}
-%\printbibliography
+\printbibliography
 \end{fullwidth}
 
 \end{document}
