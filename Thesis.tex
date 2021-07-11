@@ -1,10 +1,10 @@
 % Unfortunately for the contents to contain  the "Parts" lines successfully, hyperref needs to be disabled.
-\documentclass[nohyper,nobib,a4,14pt]{tufte-book} %nobib
+\documentclass[nohyper,nobib,a4,16pt]{tufte-book} %nobib
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% BOOK DATA %%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{Computational infectious disease dynamics modeling towards informed control decisions}
+\title[PhD Thesis: infectious disease dynamics modeling towards informed control decisions]{Computational infectious disease dynamics modeling towards informed control decisions}
 \date{\today}
 \author[Joseph Lemaitre]{Joseph \ Lemaitre}
 \publisher{Under the supervision of Prof. Andrea Rinaldo and Dr. Damiano Pasetto.}
@@ -18,13 +18,15 @@
  \usepackage{nameref} % named references 
  \usepackage{url}
  \usepackage{ebgaramond} % Font I use, let's go baroque
+ \usepackage[cmintegrals,cmbraces]{newtxmath}
+ \usepackage{ebgaramond-maths} %exist for math too
 \usepackage{booktabs}  % For nicely typeset tabular material
 \usepackage{tabularx}
 \usepackage{units}
 \usepackage{xargs} % several argument in functions (needed for cite)
 
 % math stuff:
-\usepackage{amssymb}
+%\usepackage{amssymb} % does not play well with garamond math
 \usepackage{amsbsy}
 \usepackage{makecell}
 \usepackage{amsmath}
@@ -39,16 +41,11 @@
 \usepackage{fancyvrb}
 \fvset{fontsize=\normalsize}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%% BIBLIOGRAPHY & CITATION %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \usepackage[backend=biber,doi=false,isbn=false,url=false,eprint=false,style=verbose,citestyle=authoryear-comp,maxbibnames=999,firstinits=true,maxcitenames=1]{biblatex}
 \addbibresource{../ZoteroLibUpdated/ZoteroLibUpdated.bib}
-
-
-%first init comes from: https://tex.stackexchange.com/questions/490049/towards-a-concise-fullcite-command, It's a good ressource
 
 % Remove the In: if there is no journal title. But if not in my defined shortcite, it means that the publication type is ill-defined (should be online, or something without journal)
 % Thanks to https://tex.stackexchange.com/questions/502657/how-to-remove-in-from-bibliography-if-there-is-no-journal-information
@@ -56,11 +53,12 @@
   \iffieldundef{journaltitle}
     {}
     {\printtext{\bibstring{in}\intitlepunct}}}
-
+    % remove it altogher
+    \renewbibmacro*{in:}{;}
 % a fullcite command described by removing stuff
 \DeclareCiteCommand{\fullcite}
   {\usebibmacro{prenote}}
-  {\clearfield{month}\clearfield{day}\clearfield{pages}\clearfield{volume}\clearfield{number}\clearfield{issue}\clearfield{urlyear}\clearfield{urlmonth}\clearfield{pagetotal}%\clearfield{title}\clearfield{journaltitle}%
+  {\clearfield{month}\clearfield{day}\clearfield{pages}\clearfield{volume}\clearfield{number}\clearfield{issue}\clearfield{urlyear}\clearfield{urlmonth}\clearfield{url}\clearfield{pagetotal}%\clearfield{title}\clearfield{journaltitle}%
    \usedriver
      {\DeclareNameAlias{sortname}{default}}
      {\thefield{entrytype}}}
@@ -95,7 +93,6 @@
 \renewcommandx{\cite}[3][1={0pt},2={}]{\sidenote[][#1]{\fullcite[#2]{#3}.}}
 % from me: short citation in sideline: https://tex.stackexchange.com/questions/414716/options-for-styling-fullcite
 % No space: https://tex.stackexchange.com/questions/25891/fullcite-without-indent-in-biblatex ---> DELETED
-%% From me: 
 
 %% Define \longfullcite to include all authors (https://tex.stackexchange.com/questions/142148/typeset-one-citation-with-all-authors)
 \makeatletter
@@ -109,61 +106,30 @@
   {\usebibmacro{postnote}}
 \makeatother
 
+% Maybe this, but seems overkill: https://tex.stackexchange.com/questions/71526/repeat-the-same-reference-in-footnote-on-different-pages/71566#71566
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% HEADINGS %%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% --> I want titles ittle in Smal cap
+% --> I want titles ittle in Small capitals
 \usepackage{titlesec}
+%\usepackage{titletoc}
 % Display instead of hang makes it on two line: Chapter 1\\blabla
 \makeatletter
-\titleformat{\chapter}[display]{\huge\scshape}{\@chapapp~\thechapter}{.5\baselineskip}{}%[\vspace{2ex}\titlerule]
+\titleformat{\chapter}[display]{\huge\scshape}{\@chapapp~\thechapter}{1em}{}%[\vspace{2ex}\titlerule]
 \titleformat{\section}{\Large\scshape}{\thesection}{1em}{}
 \titleformat{\subsection}{\large\scshape}{\thesubsection}{1em}{}
 \titleformat{\paragraph}[runin]{\scshape}{\theparagraph}{}{}
 \makeatother
 
-%%%% Kevin Godny's code for title page and contents from https://groups.google.com/forum/#!topic/tufte-latex/ujdzrktC1BQ
-%\makeatletter
-%\renewcommand{\maketitlepage}{%
-%\begingroup%
-%\setlength{\parindent}{0pt}
-%
-%{\fontsize{24}{24}\selectfont\textit{\@author}\par}
-%
-%\vspace{1.75in}{\fontsize{36}{54}\selectfont\@title\par}
-%
-%\vspace{0.5in}{\fontsize{14}{14}\selectfont\textsf{\smallcaps{\@date}}\par}
-%
-%\vfill{\fontsize{14}{14}\selectfont\textit{\@publisher}\par}
-%
-%\thispagestyle{empty}
-%\endgroup
-%}
-%\makeatother
-%\titlecontents{part}%
-%    [0pt]% distance from left margin
-%    {\addvspace{0.25\baselineskip}}% above (global formatting of entry)
-%    {\allcaps{Part~\thecontentslabel}\allcaps}% before w/ label (label = ``Part I'')
-%    {\allcaps{Part~\thecontentslabel}\allcaps}% before w/o label
-%    {}% filler and page (leaders and page num)
-%    [\vspace*{0.5\baselineskip}]% after
-%  \makeatletter
-%\titleformat{\part}[display]
-%  {\Huge\scshape\filright}
-%  {\partname~\thepart}
-%  {20pt}
-%  {}
-%\makeatother
-%\titlecontents{chapter}%
-%    [4em]% distance from left margin
-%    {}% above (global formatting of entry)
-%    {\contentslabel{2em}\textit}% before w/ label (label = ``Chapter 1'')
-%    {\hspace{0em}\textit}% before w/o label
-%    {\qquad\thecontentspage}% filler and page (leaders and page num)
-%    [\vspace*{0.5\baselineskip}]% after
-%%%% End additional code by Kevin Godby
-
+% Table of contents. works well but should not use tocloft with titlesec
+\usepackage[titles]{tocloft}
+\renewcommand\cftchapfont{\scshape}
+\renewcommand\cftsecfont{\scshape}
+\renewcommand\cftsubsecfont{\scshape}
+\renewcommand{\cftdot}{} %if fot inside, will put dots
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% FRONTMATTER %%%%%%%%%%%%
@@ -204,6 +170,11 @@
 \newcommand{\hangstar}{\makebox[0pt][l]{*}}
 % Prints a trailing space in a smart way.
 \usepackage{xspace}
+\newcommand{\hairsp}{\hspace{1pt}}% hair space
+\newcommand{\ie}{\textit{i.\hairsp{}e.}\xspace}
+\newcommand{\eg}{\textit{e.\hairsp{}g.}\xspace}
+\newcommand{\na}{\quad--}% used in tables for N/A cells
+
 \newcommand{\eqname}[1]{\tag*{#1}} %tag equations by name
 % boxes
 \usepackage[most]{tcolorbox}
@@ -222,7 +193,7 @@
 \usepackage{geometry}
  \geometry{
  a4paper,
-textheight=695pt,
+textheight=690pt,
  }
 
 %Hyperref likes to be loaded last
@@ -233,7 +204,7 @@ textheight=695pt,
 %%%%%%%%%%%%%%%%% DOC %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-%\begin{fullwidth}
+%
 	
 % Front matter
 %\frontmatter
@@ -270,10 +241,12 @@ textheight=695pt,
 %\maketitle
 
 % r.5 contents
+\begin{fullwidth}
 \pdfbookmark[section]{\contentsname}{toc}
 \tableofcontents
-\listoffigures
-\listoftables
+\end{fullwidth}
+%\listoffigures
+%\listoftables
 
 % r.7 dedication
 %\cleardoublepage
@@ -291,22 +264,22 @@ textheight=695pt,
 %\end{fullwidth}
 % r.9 introduction
 %\cleardoublepage
-%\input{introduction}
+\input{introduction}
 
 % Start the main matter (normal chapters)
 %\mainmatter
 %\part{Cholera modeling}
-%\input{cholera}
-%\input{cholera-rainfall}
-%\input{cholera-haiti-ocv}
+\input{cholera}
+\input{cholera-rainfall}
+\input{cholera-haiti-ocv}
 
 %\part{Scientific and Public-Health response to the COVID-19 pandemic}
   
-%\input{covid-pipeline-reports}
+\input{covid-pipeline-reports}
 \input{covid-switzerland-npi}
-%\input{covid-italy-ocp}
+\input{covid-italy-ocp}
 
-%\input{conclusions}
+\input{conclusions}
 
 % The back matter contains appendices, bibliographies, indices, glossaries, etc.
 %\backmatter
