@@ -44,7 +44,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%% BIBLIOGRAPHY & CITATION %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[backend=biber,doi=false,isbn=false,url=false,eprint=false,style=verbose,citestyle=authoryear-comp,maxbibnames=999,firstinits=true,maxcitenames=1]{biblatex}
+\usepackage[backend=biber,doi=false,isbn=false,url=false,eprint=false,style=verbose,citestyle=authoryear,maxbibnames=999,maxcitenames=1]{biblatex}%,firstinits=true, before: authoryear-comp
 \addbibresource{../ZoteroLibUpdated/ZoteroLibUpdated.bib}
 
 % Remove the In: if there is no journal title. But if not in my defined shortcite, it means that the publication type is ill-defined (should be online, or something without journal)
@@ -67,16 +67,16 @@
   
   % a fullcite command described by adding stuff
   % Thanks https://tex.stackexchange.com/questions/490049/towards-a-concise-fullcite-command (also:https://tex.stackexchange.com/questions/479590/change-journaltitle-to-italics-in-fullcite, https://tex.stackexchange.com/questions/339681/abbreviate-journal-title-in-fullcite-command)
-  \DeclareCiteCommand{\myfullcite}
+  \DeclareCiteCommand{\fullcite}
   {\usebibmacro{prenote}}
   {%
-     \printnames[given-family]{labelname}%
+     \printnames[family]{labelname}% \printnames[given-family]{labelname}
      \setunit{\addcomma\space}%
   %
      \printfield{journaltitle}%
      \setunit{\addspace}%
      \printtext[parens]{%
-       \printdate}}
+       \printfield{year}}}%printdate
   {\multicitedelim}
   {\usebibmacro{postnote}}
   
