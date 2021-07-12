@@ -24,6 +24,7 @@
 \usepackage{tabularx}
 \usepackage{units}
 \usepackage{xargs} % several argument in functions (needed for cite)
+\usepackage[toc,page]{appendix}
 
 % math stuff:
 %\usepackage{amssymb} % does not play well with garamond math
@@ -36,6 +37,12 @@
 \usepackage{graphicx}
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 
+% we want margin figure caption header to be smaller to remove this weird size diperempty:
+% adapted from https://tex.stackexchange.com/questions/319345/change-font-size-in-caption-for-selected-figures, should post it there
+\usepackage{caption}
+\newcommand{\margincaption}[2][1={}]{%
+  \captionsetup{font=footnotesize}%
+  \caption[#1]{#2}}
 % The fancyvrb package lets us customize the formatting of verbatim
 % environments.  We use a slightly smaller font.
 \usepackage{fancyvrb}
@@ -282,7 +289,10 @@ textheight=690pt,
 \input{conclusions}
 
 % The back matter contains appendices, bibliographies, indices, glossaries, etc.
-%\backmatter
+\backmatter
+\begin{appendices}
+\input{appendices}
+\end{appendices}
 \begin{fullwidth}
 \printbibliography
 \end{fullwidth}
