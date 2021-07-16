@@ -60,8 +60,8 @@
   \iffieldundef{journaltitle}
     {}
     {\printtext{\bibstring{in}\intitlepunct}}}
-    % remove it altogher
-    \renewbibmacro*{in:}{;}
+% remove it altogher
+%\renewbibmacro*{in:}{;}
 % a fullcite command described by removing stuff
 \DeclareCiteCommand{\fullcite}
   {\usebibmacro{prenote}}
@@ -74,7 +74,7 @@
   
   % a fullcite command described by adding stuff
   % Thanks https://tex.stackexchange.com/questions/490049/towards-a-concise-fullcite-command (also:https://tex.stackexchange.com/questions/479590/change-journaltitle-to-italics-in-fullcite, https://tex.stackexchange.com/questions/339681/abbreviate-journal-title-in-fullcite-command)
-  \DeclareCiteCommand{\fullcite}
+  \DeclareCiteCommand{\fullciteshort}
   {\usebibmacro{prenote}}
   {%
      \printnames[family]{labelname}% \printnames[given-family]{labelname}
@@ -87,6 +87,22 @@
   {\multicitedelim}
   {\usebibmacro{postnote}}
   
+  \newbibmacro{aycite}{%
+  \defcounter{maxnames}{1}%
+  \ifnameundef{labelname}
+    {\printfield{labeltitle}%
+     \setunit{\printdelim{nonameyeardelim}}}
+    {\printnames[][-\value{listtotal}]{labelname}%
+     \setunit{\printdelim{nameyeardelim}}}
+  \printtext[bibhyperref]{\printlabeldateextra}}
+\DeclareCiteCommand{\fullcite_short}
+  {\usebibmacro{prenote}}%
+  {\usebibmacro{citeindex}%
+   \usebibmacro{aycite}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}} 
+
+  
   % from me: Remove the visited on https://tex.stackexchange.com/questions/400384/how-to-disable-biblatex-showing-visited-on-on-the-references
 %\AtEveryBibitem{
   %  \clearfield{urlyear}
@@ -98,6 +114,7 @@
 %\AtEveryCitekey{\clearfield{month}\clearfield{day}\clearfield{pages}\clearfield{volume}\clearfield{number}\clearfield{issue}\clearfield{urlyear}\clearfield{urlmonth}\clearfield{pagetotal}\clearfield{publication}} % Remove day only in fullcite
 
 \renewcommandx{\cite}[3][1={0pt},2={}]{\sidenote[][#1]{\fullcite[#2]{#3}.}}
+\renewcommandx{\citecompact}[3][1={0pt},2={}]{\sidenote[][#1]{\fullciteshort[#2]{#3}.}}
 % from me: short citation in sideline: https://tex.stackexchange.com/questions/414716/options-for-styling-fullcite
 % No space: https://tex.stackexchange.com/questions/25891/fullcite-without-indent-in-biblatex ---> DELETED
 
@@ -248,10 +265,10 @@ textheight=690pt,
 %\maketitle
 
 % r.5 contents
-\begin{fullwidth}
-\pdfbookmark[section]{\contentsname}{toc}
-\tableofcontents
-\end{fullwidth}
+%\begin{fullwidth}
+%\pdfbookmark[section]{\contentsname}{toc}
+%\tableofcontents
+%\end{fullwidth}
 %\listoffigures
 %\listoftables
 
@@ -271,22 +288,22 @@ textheight=690pt,
 %\end{fullwidth}
 % r.9 introduction
 %\cleardoublepage
-\input{introduction}
+%\input{introduction}
 
 % Start the main matter (normal chapters)
 %\mainmatter
 %\part{Cholera modeling}
 \input{cholera}
 \input{cholera-rainfall}
-\input{cholera-haiti-ocv}
+%\input{cholera-haiti-ocv}
 
 %\part{Scientific and Public-Health response to the COVID-19 pandemic}
   
-\input{covid-pipeline-reports}
-\input{covid-switzerland-npi}
+%\input{covid-pipeline-reports}
+%\input{covid-switzerland-npi}
 \input{covid-italy-ocp}
 
-\input{conclusions}
+%\input{conclusions}
 
 % The back matter contains appendices, bibliographies, indices, glossaries, etc.
 \backmatter
