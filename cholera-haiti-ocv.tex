@@ -99,31 +99,31 @@ The number of transitions during a time-step $\Delta t$ is
 \allowdisplaybreaks
 \label{eq:stochsys}
 \begin{align}
-    \mathbb{P}\left[ \Delta N_{SI}(t) = 1 \right|\mathcal{X}_t] &= \sigma F_j(t) S(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{SA}(t) = 1 \right|\mathcal{X}_t] &= (1-\sigma) F_j(t) S(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{SV_{1d}^S}(t) = 1 \right|\mathcal{X}_t] &= r_{V_{1d}}(t) S(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{S\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu  S(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{IR_1}(t) = 1 \right|\mathcal{X}_t] &= \gamma I(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{I\bullet}(t) = 1 \right|\mathcal{X}_t] &= (\mu+\alpha)I(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{AR_1}(t) = 1 \right|\mathcal{X}_t] &= \gamma A(t) \Delta t + o(\Delta t)\\
-      \mathbb{P}\left[ \Delta N_{AV_{1d}^A}(t) = 1 \right|\mathcal{X}_t] &= r_{V_{1d}}(t) A(t) \Delta t + o(\Delta t)\\
-      \mathbb{P}\left[ \Delta N_{A\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu  A(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{R_kR_{k+1}}(t) = 1 \right|\mathcal{X}_t] &= 3\rho R_k(t) \Delta t + o(\Delta t),\quad k=1,2\\
-    \mathbb{P}\left[ \Delta N_{R_3S}(t) = 1 \right|\mathcal{X}_t] &= 3\rho R_3(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{R_kV_{1d}^{R_k}}(t) = 1 \right|\mathcal{X}_t] &= r_{V_{1d}}(t) R_k(t) \Delta t + o(\Delta t)\quad k=1,2,3\\
-    \mathbb{P}\left[ \Delta N_{R_k\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu  R_k(t) \Delta t + o(\Delta t)\quad k=1,2,3\\
-    \mathbb{P}\left[ \Delta N_{V_{1d}^SI}(t) = 1 \right|\mathcal{X}_t] &=  \sigma (1-\eta_{1d}^{i,j}(t)) F_j(t) V_{1d}^S(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V_{1d}^SA}(t) = 1 \right|\mathcal{X}_t] &=  (1-\sigma) (1-\eta_{1d}^{i,j}(t)) F_j(t) V_{1d}^S(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V_{1d}^S\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu  V_{1d}^S(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V_{1d}^AV_{1d}^{R_1}}(t) = 1 \right|\mathcal{X}_t] &= \gamma V_{1d}^A(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V_{1d}^A\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu  V_{1d}^A(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V^{R_k}V^{R_{k+1}}}(t) = 1 \right|\mathcal{X}_t] &= 3\rho V^{R_k}(t) \Delta t + o(\Delta t),\quad k=1,2\\
-    \mathbb{P}\left[ \Delta N_{V_{1d}^{R_3}V_{1d}^S}(t) = 1 \right|\mathcal{X}_t] &= 3\rho V_{1d}^{R_3}(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V^{R_k}\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu  V^{R_k}(t) \Delta t + o(\Delta t)\quad k=1,2,3
+    \mathbb{P}\left[ \Delta N_{SI}(t) = 1 \mid\mathcal{X}_t\right] &= \sigma F_j(t) S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{SA}(t) = 1 \mid\mathcal{X}_t\right] &= (1-\sigma) F_j(t) S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{SV_{1d}^S}(t) = 1 \mid\mathcal{X}_t\right] &= r_{V_{1d}}(t) S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{S\bullet}(t) = 1 \mid\mathcal{X}_t\right] &= \mu  S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{IR_1}(t) = 1 \mid\mathcal{X}_t\right] &= \gamma I(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{I\bullet}(t) = 1 \mid\mathcal{X}_t\right] &= (\mu+\alpha)I(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{AR_1}(t) = 1 \mid\mathcal{X}_t\right] &= \gamma A(t) \Delta t + o(\Delta t)\\
+      \mathbb{P}\left[ \Delta N_{AV_{1d}^A}(t) = 1 \mid\mathcal{X}_t\right] &= r_{V_{1d}}(t) A(t) \Delta t + o(\Delta t)\\
+      \mathbb{P}\left[ \Delta N_{A\bullet}(t) = 1 \mid\mathcal{X}_t\right] &= \mu  A(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{R_kR_{k+1}}(t) = 1 \mid\mathcal{X}_t\right] &= 3\rho R_k(t) \Delta t + o(\Delta t),\quad k=1,2\\
+    \mathbb{P}\left[ \Delta N_{R_3S}(t) = 1 \mid\mathcal{X}_t\right] &= 3\rho R_3(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{R_kV_{1d}^{R_k}}(t) = 1 \mid\mathcal{X}_t\right] &= r_{V_{1d}}(t) R_k(t) \Delta t + o(\Delta t)\quad k=1,2,3\\
+    \mathbb{P}\left[ \Delta N_{R_k\bullet}(t) = 1 \mid\mathcal{X}_t\right] &= \mu  R_k(t) \Delta t + o(\Delta t)\quad k=1,2,3\\
+    \mathbb{P}\left[ \Delta N_{V_{1d}^SI}(t) = 1 \mid\mathcal{X}_t\right] &=  \sigma (1-\eta_{1d}^{i,j}(t)) F_j(t) V_{1d}^S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{V_{1d}^SA}(t) = 1 \mid\mathcal{X}_t\right] &=  (1-\sigma) (1-\eta_{1d}^{i,j}(t)) F_j(t) V_{1d}^S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{V_{1d}^S\bullet}(t) = 1 \mid\mathcal{X}_t\right] &= \mu  V_{1d}^S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{V_{1d}^AV_{1d}^{R_1}}(t) = 1 \mid\mathcal{X}_t\right] &= \gamma V_{1d}^A(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{V_{1d}^A\bullet}(t) = 1 \mid\mathcal{X}_t\right] &= \mu  V_{1d}^A(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{V^{R_k}V^{R_{k+1}}}(t) = 1 \mid\mathcal{X}_t\right] &= 3\rho V^{R_k}(t) \Delta t + o(\Delta t),\quad k=1,2\\
+    \mathbb{P}\left[ \Delta N_{V_{1d}^{R_3}V_{1d}^S}(t) = 1 \mid\mathcal{X}_t\right] &= 3\rho V_{1d}^{R_3}(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{V^{R_k}\bullet}(t) = 1 \mid\mathcal{X}_t\right] &= \mu  V^{R_k}(t) \Delta t + o(\Delta t)\quad k=1,2,3
 \end{align}
 \endgroup
 \end{fullwidth}
-assuming that \(\mathbb{P}[\Delta N_{XY} > 1|\mathcal{X}_t] = o(\Delta t) \; \forall X,Y \in \mathcal{X}\) and \(\mathbb{P}[\Delta N_{X\bullet} > 1|\mathcal{X}_t] = o(\Delta t) \; \forall X \in \mathcal{X}\). Note that \(\mathbb{P}\left[ \Delta N_{X\bullet}(t) = 1 \right|\mathcal{X}_t]\) denotes probability that individuals die and it is governed by the same parameter $\mu$ for all compartments except $I$. 
+assuming that \(\mathbb{P}[\Delta N_{XY} > 1\mid\mathcal{X}_t] = o(\Delta t) \; \forall X,Y \in \mathcal{X}\) and \(\mathbb{P}[\Delta N_{X\bullet} > 1\mid\mathcal{X}_t] = o(\Delta t) \; \forall X \in \mathcal{X}\). Note that \(\mathbb{P}\left[ \Delta N_{X\bullet}(t) = 1 \mid\mathcal{X}_t\right]\) denotes probability that individuals die and it is governed by the same parameter $\mu$ for all compartments except $I$. 
 
 The ensuing stochastic variations of the state variables are:
 \begin{fullwidth}
