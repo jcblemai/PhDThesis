@@ -2,14 +2,20 @@
 \chapter[Scenario planning tools and reports for the covid-19 pandemic]{Scenario planning tools and reports for \\the covid-19 pandemic}
 \label{sec:covid-pipeline-reports}
   \end{fullwidth}
-The ongoing Coronavirus disease 2019 (COVID-19, previously nCov) pandemic originated in Wuhan, China end of 2019. The pathogen is the severe acute respiratory syndrome coronavirus SARS-CoV-2. It is one of the deadliest pandemic in history, and the response has mobilized scientist, public-health and medical professionals and politics around the globe. This chapter presents some modeling works for the response to COVID-19. As state of knowledge on the SARS-CoV-2 and COVID-19 was and still is quickly expanding, the present chapter and the next highlight the challenges of dealing with such uncertainties. For the same reason, we do not endeavour a literature review\sidenote[][5\baselineskip]{That would be ambitious, with a bit less than 190'000 peer-reviewed papers and many more preprints, website and reports. Estimation from: \fullcite{COVID-19OpenAccessProject:LivingEvidenceCOVID19:2020}} of the current understanding of COVID-19 and modeling studies. 
+The ongoing Coronavirus disease 2019 (COVID-19, previously nCov) pandemic originated in Wuhan, China at the end of year 2019. The pathogen here is a virus, the severe acute respiratory syndrome coronavirus SARS-CoV-2, which upon infections causes might cause symptoms accross all range of severity. With 4.07\textsc{M} confirmed deaths and 190\textsc{M} confirmed cases as of July 2021, it is one of the deadliest pandemic in history.
 
-We focus on details dealing with the uncertainties that caraterize disease emergences.
+ The response has mobilized scientists, public-health and medical professionals and politics around the world. Over a year and half, a considerable body of evidence has accumulated\sidenote[][-3\baselineskip]{With more than 190'000 peer-reviewed papers and many more preprints, website and reports published at the time of writing. Estimation from: \fullcite{COVID-19OpenAccessProject:LivingEvidenceCOVID19:2020}}. For this reason, we do not endeavour a literature review of the current (and evolving) understanding of COVID-19, nor the modeling studies which have informed the response. 
+
+ This chapter presents some modeling works for the response to COVID-19. While some of these work are still ongoing, we present them at an early stage, a perspective from around July 2020. The state of knowledge on the SARS-CoV-2 and COVID-19 was (and still is) quickly expanding, and the present chapter highlights the challenges of dealing with such uncertainties. 
+
+%We focus on details dealing with the uncertainties that caraterize disease emergences.
 
 
 \section{The COVID Scenario Pipeline}
-x
-A previous version of the ever evolving pipeline has been described in:
+
+The COVID Scenario pipeline\sidenote{\url{github.com/HopkinsIDD/COVIDScenarioPipeline}} has been develop by the Johns Hopkins University Infectious Disease Dynamics COVID-19 Working Group's. It is a flexible modeling framework that projects epidemic trajectories and healthcare impacts under different suites of interventions in order to aid in scenario planning. The model is generic enough to be applied to different spatial scales given shapefiles, population data, and COVID-19 confirmed case data. The pipeline is constituted of multiple components, which may be characterized as follows: 1) epidemic seeding; 2) disease transmission and non-pharmaceutical intervention scenarios; 3) calculation of health outcomes (hospital and ICU admissions and bed use, ventilator use, and deaths); and 4) summarization of model outputs.
+ Other parts of the pipeline not described in this thesis\footnote{Including airport importation, which was especially important in early 2020, report generation, config writing, inference, analysis, submission, see \eg \url{github.com/HopkinsIDD/COVIDScenarioPipeline} and \url{github.com/HopkinsIDD/covidImportation}}, but %1. Intro Unraveling of the epidemic since January: from importation models to intervention models
+ previous version of the ever evolving pipeline has been described in:
 \longfullcite{Lemaitre:ScenarioModelingPipeline:2021}.
 \begin{figure*}[!htb]
     \centering
@@ -19,7 +25,17 @@ A previous version of the ever evolving pipeline has been described in:
 \end{figure*}
 
 \subsection{Disease transmission model}
-The transmission model of SARS-CoV-2 is configurable to any  along an arbitrary transition graph, to allow for multi-strain, age-stratified models, and the pipeline is able to infer parameters values from data. However, the initial model built for scenario planning was much simpler. The initial model was hard-coded, and was a simple spatial $S\longrightarrow E \longrightarrow I \longrightarrow R$ model. In practice, there is $k = 3$ compartments of infected, $I_1, I_2, I_3$ in order to have an infectious period shaped as Erlang distribution.
+The model for SARS-CoV-2 transmission is entirely configurable to any compartment model following an arbitrary transition graph, allowing for multi-strain or age-stratified models. We present here the initial model built for scenario planning, and used until June 2020. This initial model was simple spatial $S\longrightarrow E \longrightarrow I \longrightarrow R$ model. In practice, we used $k = 3$ compartments of infected, $I_1, I_2, I_3$ in order to have an infectious period shaped as Erlang distribution.
+
+Two meta-parameters are important to reproduce the dynamics and final size of an epidemic: the serial interval $SI$, which is 
+the interval between two subsequent infections, and the basic reproductive number 
+$R_0$ representing the number of newly infected caused by an infecteds in a fully susceptible population.
+
+For SARS-CoV-2, the serial interval was estimated to be in range $6.5-8.2$. We draw uniformly from this range, and we solve
+$SI = \frac{1}{2}(\frac{1}{\gamma})+\frac{1}{\sigma}$ for the inverse of the total infectious period, $\gamma$.
+
+The basic reproductive number, $R_0$, is drawn for each simulation and we obtain parameter beta from
+$\beta= R_0 \cdot \gamma$.
 
 Then the rates of the different compartments are given in the table below:
 \begin{table}
@@ -38,15 +54,7 @@ $I_3\longrightarrow R$ & $\gamma_1 = \gamma \cdot k$&d$^{-1}$\\
 \caption{Transitions rate parameters for the pipeline}
      \label{tab:survpars}
 \end{table}
-Two meta-parameters are important in reproducing the dynamics and final size of an epidemic: the serial interval $SI$, which is 
-the interval between two subsequent infections, and the basic reproductive number 
-$R_0$ representing the number of newly infected per infected, in a fully susceptible population.
 
-The serial interval was estimated to be in range $6.5-8.2$.,We draw uniformly from this range, and we solve
-$SI = \frac{1}{2}(\frac{1}{\gamma})+\frac{1}{\sigma}$ for the inverse of the total infectious period, $\gamma$.
-
-The basic reproductive number, $R_0$, is drawn for each simulation and we obtain parameter beta from
-$\beta= R_0 \cdot \gamma$.
 
 The model is fixed time step, and the transitions (without mobility here) at each time step
 $\Delta t$ are: 

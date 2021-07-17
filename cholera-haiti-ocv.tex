@@ -1,5 +1,5 @@
 \begin{fullwidth}
-\chapter[Spatial stochatic model for modeling cholera elimination]{Spatial stochatic model for modeling\\cholera elimination}
+\chapter[Spatial stochatic model for modeling cholera elimination]{Estimating the probability of eliminating cholera from Haiti with a mass vaccination campaign}%Spatial stochatic model for modeling\\cholera elimination through mass vaccination campaigns}
 \label{ch:cholera-haiti-ocv}
 \end{fullwidth}
 In January 2010, an earthquake hit Haiti, disrupting healthcare and water infrastructure and displacing a million persons. Ten month later, Cholera (\textit{V. Cholerae} of serogroup O1, serotype Ogawa and biotype El Tor) was introduced in Haiti by United Nation peacekeepers soldiers\cite[-3\baselineskip]{Frerichs:NepaleseOriginCholera:2012, Piarroux:UnderstandingCholeraEpidemic:2011}. 
@@ -7,10 +7,9 @@ In January 2010, an earthquake hit Haiti, disrupting healthcare and water infras
 	\centering
 	\includegraphics[height=12cm,keepaspectratio]{fig_cholera-haiti-ocv/haiti-2010.pdf}
 		\includegraphics[height=12cm,keepaspectratio]{fig_cholera-haiti-ocv/haiti-2012.pdf}
-	\caption[Cholera cases and rainfall in the ten departments of Haiti from 2010 to 2019.]{Weekly incident cases and rainfall in the ten departments of Haiti from 2010 to 2019. Note that the first two years are shown with a different scale. The ressurgence in 2016 is linked to hurricane Matthew\parencites{Pasetto:RealtimeForecastingCholera:2018}. The seasonality pattern is evident especially in Artibonite.}
+	\caption{Weekly incident cases and rainfall in the ten departments of Haiti from 2010 to 2019. Note that the first two years are shown with a different scale. The ressurgence in 2016 is linked to hurricane Matthew\parencites{Pasetto:RealtimeForecastingCholera:2018}. The seasonality pattern is evident especially in Artibonite.}
 	\label{fig:data2}
 \end{fwfigure}
-\section{Introduction}
 This introduction in a naive population caused a major outbreak, totalling 820'000 reported cases and 10'000 death, most of them occuring in the first two years\cite{Barzilay:CholeraSurveillanceHaiti:2013}).  Since 2016, cases decreased steadily and finally the last cholera (culture) confirmed case occured in early 2019\cite{RepubliquedHaiti:ProfilStatistiqueCholera}. Cholera exhibit a seasonal pattern with two annual peaks, and is spread in every department of the country.
 
 This chapter describes a model developed for a multi-modelling study. Four teams with existing experience in modeling cholera in Haiti were tasked to model scenarios of mass vaccination administration towards cholera immunity. The timing was meant to take advantage of the low incidence to affect the endemicity of cholera in Haiti to acheive elimination. The multi-model study was led by E. C. Lee and has been published as:
@@ -21,15 +20,13 @@ This chapter describes a model developed for a multi-modelling study. Four teams
 For this collaborative effort, we developed a hidden markov model of cholera transmission, with specific modeling choices to account for vaccination and to gather information on elimination timing and probability.
 The present chapter is adapted from Supplement 3 of the aforementioned publication, which describe our model. We refer the reader to the full work by Lee et al. for the full comparison.
 
-
-
 \section{Spatial stochatic model for modeling cholera elimination}
 % Describe structure of their model and make appropriate references to their previous work. Ideally this will include at least one diagram illustrating the assumed natural history of disease and how vaccination works within the model and appropriate ODE/PDEs
 
 \paragraph{General Principles}The cholera model adopted to study the Haitian epidemic is a stochastic compartmental model applied at the level of the ten Haitian departments. 
 It is the stochastic translation of a deterministic SIRB model based on ordinary differential equations which has been extensively used to simulate the Haitian cholera epidemic in previous studies\cite[-4\baselineskip]{Rinaldo:Reassessment20102011:2012,Bertuzzo:ProbabilityExtinctionHaiti:2016,Pasetto:RealtimeForecastingCholera:2018} and described in \textsc{Chapter 3}. The common outputs for the exercise are the distrivution of time to elimination and probability of elimination in different scenario, we opted for a stochastic  model based on a Partially-Observed Markov Process (POMP), simulating the stochastic transitions between compartments as discrete events\cite{King:InapparentInfectionsCholera:2008}. 
 
-The model subdivides the population of each department\footnote{We model at the department scale because the case data was provided for the ten departments of Haiti. Other teams decided either the same scale, coarser (national for Lee et al.) or finer (1km grid for Chao et al.)} into compartments counting the number of individuals at the different stages of the disease: susceptible individuals ($S$), symptomatic ($I$) and asymptomatic ($A$) infected and recovered individuals ($R$). The main feature of our model is that it contains an environmental compartment describing the bacterial concentration ($B$) in the local environment, which is used to estimate the force of infection\cite{Rinaldo:Reassessment20102011:2012, Bertuzzo:PredictionSpatialEvolution:2011}. Precipitation has been shown to be an important environmental driver of cholera transmission\cite{Camacho:CholeraEpidemicYemen:2018}, especially in Haiti\shortcite{Rinaldo:Reassessment20102011:2012}. In our model, rainfall increases the rate at which bacteria shed by infected individuals enter the environmental reservoir and thus increases the bacterial concentration and finally the force of infection\cite{Lemaitre:RainfallDriverEpidemic:2019}. A diagram of the model is given in Fig.~\ref{figEPFL}.
+The model subdivides the population of each department\footnote{We model at the department scale because the case data was provided for the ten departments of Haiti. Other teams decided either the same scale, coarser (national for Lee et al.) or finer (1km grid for Chao et al.)} into compartments counting the number of individuals at the different stages of the disease: susceptible individuals $S$, symptomatic $I$ and asymptomatic $A$ infected and recovered individuals $R$. The main feature of our model is that it contains an environmental compartment describing the bacterial concentration $B$ in the local environment, which is used to estimate the force of infection\cite{Rinaldo:Reassessment20102011:2012, Bertuzzo:PredictionSpatialEvolution:2011}. Precipitation has been shown to be an important environmental driver of cholera transmission\cite{Camacho:CholeraEpidemicYemen:2018}, especially in Haiti\shortcite{Rinaldo:Reassessment20102011:2012}. In our model, rainfall increases the rate at which bacteria shed by infected individuals enter the environmental reservoir and thus increases the bacterial concentration and finally the force of infection\cite{Lemaitre:RainfallDriverEpidemic:2019}. A diagram of the model is given in Fig.~\ref{figEPFL}.
 \subsection{Model Dynamics} 
 The following dynamics characterize the model:
 \begin{description}
@@ -39,12 +36,12 @@ The following dynamics characterize the model:
     F^i_0(t)=\beta^i\frac{B_i(t)}{1+B_i(t)}+c^i \sum_{j\ne i} (I_j(t)+A_j(t)).
     \end{equation*}
     The first term in the sum represents local transmission governed by the department-specific exposure parameter $\beta^i$ which multiplies the logistic dose-response of the rescaled local bacterial concentration $B = B^*/K$, where $B^*$ is the unscaled concentration of vibrios and $K$ the half-saturation constant of the logistic function $\frac{B^*_i(t)}{K+B^*_i(t)}$.
-    Case importation from other departments is given by the sum of the asymptomatically and symptomatically infected in department $j$, modulated by a parameter $c^i$ which represents the intensity of case introduction from other departments in Haiti  to department $i$.\marginnote[-11\baselineskip]{The force of infection uses indirect (water-mediated) local transmission but direct (human-to-human) transmission for mobility exchanges. One of the reason behind discrepancy is technical: scalability issues linked to particle depletion hinder iterated filtering performance. It becomes very hard to calibrate spatial model. To aleviate this issue, we developed a custom procedure (see below) that was only tractable with simple mobility link. Instead today, I would use the improved methods that have been developed for spatial inference on pomp models \parencite{Asfaw:PartiallyObservedMarkov:2021, Park:InferenceHighdimensionalImplicit:2020}.}
+    Case importation from other departments is given by the sum of the asymptomatically and symptomatically infected in department $j$, modulated by a parameter $c^i$ which represents the intensity of case introduction from other departments in Haiti  to department $i$.\marginnote[-11\baselineskip]{The force of infection uses indirect (water-mediated) local transmission but direct (human-to-human) transmission for mobility exchanges. One of the reasons behind discrepancy is technical: scalability issues linked to particle depletion hinder iterated filtering performance. It becomes very hard to calibrate a spatial model. To aleviate this issue, we developed a custom procedure (see below) that was only tractable with simple mobility link. Instead today, I would use the improved methods that have been developed for spatial inference on pomp models \parencite{Asfaw:PartiallyObservedMarkov:2021, Park:InferenceHighdimensionalImplicit:2020}.}
       \item[Symptoms] A proportion $\sigma$ of infected individuals become symptomatics, and $1-\sigma$ remain (shedding) asymptomatic. 
     \item[Shedding] Both symptomatically and asymptomatically infected individuals shed bacteria. The shedding rate of asymtomatics, $\theta_A$, is modeled as a fraction of the shedding rate of symptomatic individuals  $\theta_I$\cite{Kuhn:GlucoseNotRiceBased:2014}.
     \item[Recovery rate] The recovery rate is the same for both asymptomatic and symptomatic individuals ($\gamma_I=\gamma_A=0.2$ d$^{-1}$)\cite{Kaper:Cholera:1995, Codeco:EndemicEpidemicDynamics:2001}.
     \item[Acquired immunity] Individuals acquire natural immunity and remain in the recovered compartment ($R$) for a period that lasts for $1/\rho=$ 8 years on average, before reintegrating the susceptible compartment\footnote{This was surprisingly consistent accross teams, with values ranging from 5 to 8 years.}.
-    \item[Gamma-distributed immunity loss] To better approximate the gamma distribution that typically characterizes the duration of immunity\cite{King:InapparentInfectionsCholera:2008}, recovered individuals pass through a succession of 3 separate recovered compartments ($R_1$, $R_2$, $R_3$) characterized by the same transition rate $\rho_1=\rho_2=\rho_3=3\rho$.
+    \item[Gamma-distributed immunity loss] To model extinction through coordinated immunity, we need to better approximate distribution that typically characterizes the duration of immunity\cite{King:InapparentInfectionsCholera:2008}. Instead of a exponential distribution, recovered individuals pass through a succession of 3 separate recovered compartments ($R_1$, $R_2$, $R_3$) characterized by the same transition rate $\rho_1=\rho_2=\rho_3=3\rho$. Hence the duration of immunity is gamma-distributed.
     \item[Bacterial Dynamics] The size of the bacterial reservoir is proportional to the population density $D_i$ of the department. Bacteria die at rate $\mu_B$ (with a mean persistance, calibrated, of less than three days). Rainfall influences the bacteria concentration by increasing the rate at which bacteria enter the environmental reservoir.
     \item[Measurement Process] The reported cases are modelled by a negative-binomial distribution with dispersion parameter $p$. We accounts for over- or under-reporting through the reporting parameter $\epsilon$.
 \end{description}
@@ -71,8 +68,8 @@ which yields to over-dispersion in the transitions.
 \end{center}
 \end{figure}
 
-\paragraph{Vaccination dynamics} The estimated vaccine efficacy was waning from 76\% over 60 month, and conservatively assumed to provide no protection after 5 years, and these assumptions were shared accross modeling teams. 
-At each vaccination campaign, the available vaccine doses are uniformly distributed among susceptible ($S$), asymptomatic infected ($A$) and recovered ($R_{1}$, $R_2$, $R_3$) individuals. The rate of vaccination written $r_V$. Individuals can receive either one or two doses of OCV, which yield respective efficacies of $\eta_{1d}(t)$ and $\eta_{2d}(t)$, as defined in the main text. There is no age structure but the efficacy is set to be the population-weighted average of estimated efficacy for those under 5 years old and those over 5 years old.
+\paragraph{Vaccination dynamics} The estimated vaccine efficacy was waning from 76\% over 60 month for adults, and conservatively assumed to provide no protection after 5 years. These assumptions were shared accross modeling teams. 
+At each vaccination campaign, the available vaccine doses are uniformly distributed among susceptible $S$, asymptomatic infected $A$ and recovered $R_{1}$, $R_2$, $R_3$ individuals. The rate of vaccination is written $r_V$. Individuals can receive either one or two doses of OCV, which yield respective efficacies of $\eta_{1d}(t)$ and $\eta_{2d}(t)$, as defined in the main text. There is no age structure but the efficacy is set to be the population-weighted average of estimated efficacy for those under 5 years old and those over 5 years old.
  The model considers ten additional compartments for each vaccination campaign, in order to distinguish among individuals who received one (compartments $V^S_{1d}$, $V^A_{1d}$, $V^{R_k}_{1d}$, $k=$1, 2, 3) or two (compartments $V^S_{2d}$, $V^A_{2d}$, $V^{R_k}_{2d}$, $k=$1, 2, 3) doses of OCV. Vaccinated susceptible individuals ($V^S_{1d}$ and $V^S_{2d}$) have a lower probability to become infected (and thus entering classes $I$ or $A$) than non-vaccinated susceptibles. This is modeled through the multiplicative reduction of the force of infection by a  factor $(1-\eta_{1d}(t))$ or $(1-\eta_{2d}(t))$ respectively.
 The vaccination campaign window is split equally between departments (i.e for a vaccination campaign of 5 years duration, each department will be vaccinated during a 6 month period). Vaccine efficacy starts waning after the first half of the duration of the department's vaccination campaign. For example, if for department $i$ the vaccination campaign $j$ spans from $t^{i,j}_a$ to $t^{i,j}_b$, then:
     \begin{equation}
@@ -163,7 +160,7 @@ observation interval \([t_j, t_{j+1})\) (i.e. the true incidence). Thus:
     C(t_j) = [N_{SI}(t_{j+1}) - N_{SI}(t_j)] + [N_{V^SI}(t_{j+1}) - N_{V^SI}(t_j)].
 \end{equation}
 
-A full partially observed Markov process formulation requires a measurement model linking the time series of the reported incidence to \(C(t_j)\), in addition to the process model in (\ref{eq:stochsys}). We use a negative-binomial measurement model accounting for over- or under-reporting of cholera incidence, i.e.
+A full partially observed Markov process formulation requires a measurement model linking the time series of the reported incidence to \(C(t_j)\), in addition to the process model in (\eqref{eq:stochsys}). We use a negative-binomial measurement model accounting for over- or under-reporting of cholera incidence, i.e.
 \[
 	\text{cases}(t_j) \sim \text{NB}(\epsilon(t) C(t_j), p).
 \]
@@ -238,11 +235,6 @@ The department-specific calibration procedure is as follow:
 \end{enumerate}
 
 During this phase, the mobility coefficients $c_i$ are calibrated using the reported cholera cases (data) from the other departments (appropriatly scaled with the reporting rate and symptomatic fraction).
-
-After visual convergence is reached in each departements, we now use the departmental best fits as starting points for a country-wide calibration. This mainly affects the mobility parameter $c_i$, which governs the departmental interdependence, as it now calibrated on the actual simulated incidence from other departments.
-
-\section{Result}
-The model fit is shown in Figure \ref{fitEPFL}. 
 \begin{figure*}[htbp]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{fig_cholera-haiti-ocv/fit.png}
@@ -250,14 +242,17 @@ The model fit is shown in Figure \ref{fitEPFL}.
 \label{fitEPFL}
 \end{center}
 \end{figure*}
+After visual convergence is reached in each departements, we now use the departmental best fits as starting points for a country-wide calibration. This mainly affects the mobility parameter $c_i$, which governs the departmental interdependence, as it now calibrated on the actual simulated incidence from other departments. The resulting model fit is shown in Figure \ref{fitEPFL}. 
 
-We present the results for the six following scenarios.
+\section{Result}
+
+We present the results for the six following scenarios, common accross modeling teams:
 \begin{itemize}
 	\item \textsc{No vaccination} status quo.
 	\item \textsc{National over 2 years} 2 years OCV campaign, with a coverage 70\% double dose coverage, 10\% single dose and 20\% without any vaccine.
-	\item 	 \textsc{National over 5 years} 5 years national OCV campaign with the same coverage described above.
-	\item \textsc{2 Department over 2 years} Campaign focusing on Centre and Artibonite, the two departments with the highest incidence of cholera, with similar coverage.
-	\item \textsc{3 Department over 2 years} Same as above, with the addition of Ouest department.
+	\item 	 \textsc{National over 5 years} 5 years national OCV campaign with the same coverage as above.
+	\item \textsc{2 Departments over 2 years} Campaign focusing only on Centre and Artibonite, the two departments with the highest recent incidence of cholera, with similar coverage.
+	\item \textsc{3 Departments over 2 years} Same as above, but with the addition of Ouest department.
 	\item \textsc{National over 2 years, high coverage} same as the National over 2 years, but with 95\% two doses, 1.67\% one doses and 3.33\% no vaccination.
 \end{itemize}
 The deployement in term of number of doses for each scenario is illustrated in Figure \ref{fig:deploy}.
@@ -269,9 +264,9 @@ The deployement in term of number of doses for each scenario is illustrated in F
 \end{center}
 \end{figure}
 
-The results are shown in Figure \ref{fig:OCVresults}\footnote{We present here results from our model. Due to the difficulty of the exercise, we refer the reader to \textcite{Lee:AchievingCoordinatedNational:2020} and its supplement to compare the results with the other modeling teams.}. We observe a limited long-term impact of the two department scenarios. All national scenario are projected to leads to elimination, despite the limited vaccine efficacy and coverage. The two departement and three departement scenarios exhibit a probability of elimination of about 9.6\% and 48\% respectively (compared to 4.1\% in the status quo scenario). The impact of adding Ouest to the campaign is intuitive as its population, around 4M, represents about 40\% of the Haitian population. While a slower timing decreases slightly the probablity of elimination, we observe that coverage far more important. 
+The results are shown in Figure \ref{fig:OCVresults}\marginnote{We present here results from our model only. Due to the difficulty of the exercise, the results accross teams were quite different, and we refer the reader to \textcite{Lee:AchievingCoordinatedNational:2020} and its supplement to compare the results with the other modeling teams.}. We observe a limited long-term impact of the \textsc{2 departments} scenarios. However, all \textsc{national} scenarios considered were projected to leads to elimination, despite the limited vaccine efficacy and coverage. The \textsc{2 departments} and\textsc{3 departments} scenarios exhibit a probability of elimination of about 9.6\% and 48\% respectively (compared to 4.1\% in the status quo scenario). The important impact of adding Ouest to the campaign is due to the department's population, around 4M, which represents about 40\% of the Haitian population. While a slower timing decreases slightly the probablity of elimination, we observe that coverage far more important than speed for these vaccination campaigns.
 
-\begin{figure*}[htbp]
+\begin{figure*}[h!]%[htbp]
 \begin{center}
 \includegraphics{fig_cholera-haiti-ocv/haiti-scn.pdf}
 \caption[Cholera in Haiti after mass vaccination campaigns]{Modeling results for the considered mass vaccination campaign scenarios. We show weekly reported cases (median and 95\% confidence interval), and cumulative probability of elimination against time. The timing of the vaccine distribution in each scenario is highlighted in yellow.}
@@ -279,7 +274,7 @@ The results are shown in Figure \ref{fig:OCVresults}\footnote{We present here re
 \end{center}
 \end{figure*}
  
- In Haiti, there have been no laboratory-confirmed cases of cholera in Haiti from February 2019. This has sparked claims of elimination from the island and from the Americas. In our model results, the probability of elimination in the no vaccination scenario is very low (4.1\%). This distranpty might be explained by (i) issues in our model design, especially concerning the mobility acting as a constant additive pressure for the introduction of cholera cases, (ii) and not giving enough weigth to the decrease in reported cases from 2017 on\footnote{a 90\% decrease of reporting is necessary for our model to replicate the decline in cases. However, it is highly unlikely that the observed decrease in cases is solely due to changes in the reporting process. }, (iii) WaSH interventions and rapid response teams that have been put in place in Haiti and of which have intensified in the last few years\cite{Rebaudet:CaseareaTargetedRapid:2019}, (vi) the difficulty of predict and explain disease elimination.
- 
- Further work must be performed to study the reasons behind these surprising dynamics of cholera in Haiti, and to assess all factors, including WaSH interventions, environmental drivers and socio-economic changes in an unified modeling framework. Such work has been started but was disrupted by the COVID-19 pandemic.
+ In Haiti, there have been no laboratory-confirmed cases of cholera in Haiti from February 2019. This has sparked claims of cholera elimination, which would mean that the Americas would be free from Cholera. However in our model results, the probability of elimination in the no vaccination scenario is very low (4.1\%). It is always very difficult to predict or explain diseases transmission, and even harder for elimination. Possible explanations for the distranpty observed between what we projected and what happened are (i) issues in our model design, especially concerning the mobility acting as a constant additive pressure for the introduction of cholera cases, hence lowering the probabilites of extinctions; this was done purposefully to sustain transmission as it improved model fit and we did not believe Haiti to be close to elimation at that time (ii) and not giving enough weigth to the decrease in reported cases from 2017\footnote[][-1.5\baselineskip]{a 90\% decrease of reporting is necessary for our model to replicate the decline in cases. However, it is highly unlikely that the observed decrease in cases is solely due to changes in the reporting process.}, (iii) WaSH interventions and rapid response teams that have been put in place in Haiti and of which have intensified in the last few years\cite{Rebaudet:CaseareaTargetedRapid:2019} might have played a role in disease elimination.
+  
+ Further work must be performed to study the reasons behind the surprising (to us, one year before) elimination of cholera from Haiti, and to assess all factors, including WaSH interventions, environmental drivers and socio-economic changes in an unified modeling framework. We have started to investigate this (using the same methods we present for COVID-19 in \textsc{Chapter 6}), but the project has been disrupted by the COVID-19 pandemic.
  
