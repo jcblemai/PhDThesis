@@ -1,20 +1,16 @@
 \begin{fullwidth}
-\chapter{Spatial stochatic model for modeling cholera elimination}
+\chapter[Spatial stochatic model for modeling cholera elimination]{Spatial stochatic model for modeling\\cholera elimination}
 \label{ch:cholera-haiti-ocv}
-
-
 \end{fullwidth}
-
-\section{Introduction}
-
-In January 2010, an earthquake hit Haiti, disrupting healthcare and water infrastructure and displacing a million persons. Ten month later, Cholera (\textit{V. Cholerae} of serogroup O1, serotype Ogawa and biotype El Tor) was introduced in Haiti by United Nation peacekeepers soldiers\cite{Frerichs:NepaleseOriginCholera:2012, Piarroux:UnderstandingCholeraEpidemic:2011}. 
-\begin{figure*}
+In January 2010, an earthquake hit Haiti, disrupting healthcare and water infrastructure and displacing a million persons. Ten month later, Cholera (\textit{V. Cholerae} of serogroup O1, serotype Ogawa and biotype El Tor) was introduced in Haiti by United Nation peacekeepers soldiers\cite[-3\baselineskip]{Frerichs:NepaleseOriginCholera:2012, Piarroux:UnderstandingCholeraEpidemic:2011}. 
+\begin{fwfigure}
 	\centering
 	\includegraphics[height=12cm,keepaspectratio]{fig_cholera-haiti-ocv/haiti-2010.pdf}
 		\includegraphics[height=12cm,keepaspectratio]{fig_cholera-haiti-ocv/haiti-2012.pdf}
-	\caption{Weekly incident cases and rainfall in the ten department of Haiti from 2010 to 2019. Note that the first two years are shown with a different scale. The ressurgence in 2016 is linked to hurricane Matthew\parencites{Pasetto:RealtimeForecastingCholera:2018}. The seasonality pattern is evident especially in Artibonite.}
+	\caption[Cholera cases and rainfall in the ten departments of Haiti from 2010 to 2019.]{Weekly incident cases and rainfall in the ten departments of Haiti from 2010 to 2019. Note that the first two years are shown with a different scale. The ressurgence in 2016 is linked to hurricane Matthew\parencites{Pasetto:RealtimeForecastingCholera:2018}. The seasonality pattern is evident especially in Artibonite.}
 	\label{fig:data2}
-\end{figure*}
+\end{fwfigure}
+\section{Introduction}
 This introduction in a naive population caused a major outbreak, totalling 820'000 reported cases and 10'000 death, most of them occuring in the first two years\cite{Barzilay:CholeraSurveillanceHaiti:2013}).  Since 2016, cases decreased steadily and finally the last cholera (culture) confirmed case occured in early 2019\cite{RepubliquedHaiti:ProfilStatistiqueCholera}. Cholera exhibit a seasonal pattern with two annual peaks, and is spread in every department of the country.
 
 This chapter describes a model developed for a multi-modelling study. Four teams with existing experience in modeling cholera in Haiti were tasked to model scenarios of mass vaccination administration towards cholera immunity. The timing was meant to take advantage of the low incidence to affect the endemicity of cholera in Haiti to acheive elimination. The multi-model study was led by E. C. Lee and has been published as:
@@ -31,9 +27,9 @@ The present chapter is adapted from Supplement 3 of the aforementioned publicati
 % Describe structure of their model and make appropriate references to their previous work. Ideally this will include at least one diagram illustrating the assumed natural history of disease and how vaccination works within the model and appropriate ODE/PDEs
 
 \paragraph{General Principles}The cholera model adopted to study the Haitian epidemic is a stochastic compartmental model applied at the level of the ten Haitian departments. 
-It is the stochastic translation of a deterministic SIRB model based on ordinary differential equations which has been extensively used to simulate the Haitian cholera epidemic in previous studies\cite{Rinaldo:Reassessment20102011:2012,Bertuzzo:ProbabilityExtinctionHaiti:2016,Pasetto:RealtimeForecastingCholera:2018} and described in \textsc{Chapter 3}. The common outputs for the exercise are the distrivution of time to elimination and probability of elimination in different scenario, we opted for a stochastic  model based on a Partially-Observed Markov Process (POMP), simulating the stochastic transitions between compartments as discrete events\cite{King:InapparentInfectionsCholera:2008}. 
+It is the stochastic translation of a deterministic SIRB model based on ordinary differential equations which has been extensively used to simulate the Haitian cholera epidemic in previous studies\cite[-4\baselineskip]{Rinaldo:Reassessment20102011:2012,Bertuzzo:ProbabilityExtinctionHaiti:2016,Pasetto:RealtimeForecastingCholera:2018} and described in \textsc{Chapter 3}. The common outputs for the exercise are the distrivution of time to elimination and probability of elimination in different scenario, we opted for a stochastic  model based on a Partially-Observed Markov Process (POMP), simulating the stochastic transitions between compartments as discrete events\cite{King:InapparentInfectionsCholera:2008}. 
 
-The model subdivides the population of each department\footnote{We model at the department scale because the case data was provided for the ten departments of Haiti. Other teams decided either the same scale, coarser (national for Lee et al.) or finer (1km grid for Chao et al.)} into compartments counting the number of individuals at the different stages of the disease: susceptible individuals ($S$), symptomatic ($I$) and asymptomatic ($A$) infected and recovered individuals ($R$). The main feature of our model is that it contains an environmental compartment describing the bacterial concentration ($B$) in the local environment, which is used to estimate the force of infection\cite{Rinaldo:Reassessment20102011:2012, Bertuzzo:PredictionSpatialEvolution:2011}. Precipitation has been shown to be an important environmental driver of cholera transmission\cite{Camacho:CholeraEpidemicYemen:2018}, especially in Haiti\cite{Rinaldo:Reassessment20102011:2012}. In our model, rainfall increases the rate at which bacteria shed by infected individuals enter the environmental reservoir and thus increases the bacterial concentration and finally the force of infection\cite{Lemaitre:RainfallDriverEpidemic:2019}. A diagram of the model is given in Fig.~\ref{figEPFL}.
+The model subdivides the population of each department\footnote{We model at the department scale because the case data was provided for the ten departments of Haiti. Other teams decided either the same scale, coarser (national for Lee et al.) or finer (1km grid for Chao et al.)} into compartments counting the number of individuals at the different stages of the disease: susceptible individuals ($S$), symptomatic ($I$) and asymptomatic ($A$) infected and recovered individuals ($R$). The main feature of our model is that it contains an environmental compartment describing the bacterial concentration ($B$) in the local environment, which is used to estimate the force of infection\cite{Rinaldo:Reassessment20102011:2012, Bertuzzo:PredictionSpatialEvolution:2011}. Precipitation has been shown to be an important environmental driver of cholera transmission\cite{Camacho:CholeraEpidemicYemen:2018}, especially in Haiti\shortcite{Rinaldo:Reassessment20102011:2012}. In our model, rainfall increases the rate at which bacteria shed by infected individuals enter the environmental reservoir and thus increases the bacterial concentration and finally the force of infection\cite{Lemaitre:RainfallDriverEpidemic:2019}. A diagram of the model is given in Fig.~\ref{figEPFL}.
 \subsection{Model Dynamics} 
 The following dynamics characterize the model:
 \begin{description}
@@ -54,7 +50,7 @@ The following dynamics characterize the model:
 \end{description}
     
     
-\paragraph{Stochasticity} Overdispersion in the infection process is introduced by multiplying the force of infection $F_0$ by a time-continuous white noise process \(\xi(t)\) defined as the differentiation of an integrated noise process \(\xi(t) = \frac{d}{dt}\Gamma(t)\), here taken to be have a Gamma distribution with mean \(\Delta t\) and variance \(\sigma^2 \Delta t\)\cite{Breto:CompoundMarkovCounting:2011}:
+\paragraph{Stochasticity} Overdispersion in the infection process is introduced by multiplying the force of infection $F_0$ by a time-continuous white noise process \(\xi(t)\) defined as the differentiation of an integrated noise process \(\xi(t) = \frac{d}{dt}\Gamma(t)\), here taken to be have a Gamma distribution with mean \(\Delta t\) and variance \(\sigma^2 \Delta t\)\cite[-3\baselineskip]{Breto:CompoundMarkovCounting:2011}:
 
 \[
 \xi(t) = \Gamma (t+\Delta t) - \Gamma (t) \sim \text{Gamma}\left( \frac{\Delta t}{\sigma^2}, \sigma^2\right).
@@ -188,7 +184,8 @@ The parameters of the model are shown in Table \ref{paramEPFL}.
 % Table with all model parameters indicating whether each is fit or assumed (with some description of assumptions) and appropriate references to primary literature (please don't cite previous parameters used in modeling studies).
 
 \begin{table*}
-\caption{Parameters of the model. References. \fullcite{Levine:DurationInfectionDerivedImmunity:1981, Koelle:DisentanglingExtrinsicIntrinsic:2004, Bertuzzo:SpacetimeEvolutionCholera:2008, Kaper:Cholera:1995}}
+\caption{Parameters of the model. References:%\fullciteshortb{Levine:DurationInfectionDerivedImmunity:1981, Koelle:DisentanglingExtrinsicIntrinsic:2004, Bertuzzo:SpacetimeEvolutionCholera:2008, Kaper:Cholera:1995}
+}
 \begin{tabular}{lcccl}
 \toprule
 Parameter & Calibration & Value or bound & Unit & description \\
@@ -256,19 +253,19 @@ The model fit is shown in Figure \ref{fitEPFL}.
 
 We present the results for the six following scenarios.
 \begin{itemize}
-	\item \textbf{No vaccination} status quo.
-	\item \textbf{National over 2 years} 2 years OCV campaign, with a coverage 70\% double dose coverage, 10\% single dose and 20\% without any vaccine.
-	\item 	 \textbf{National over 5 years} 5 years national OCV campaign with the same coverage described above.
-	\item \textbf{2 Department over 2 years} Campaign focusing on Centre and Artibonite, the two departments with the highest incidence of cholera, with similar coverage.
-	\item \textbf{3 Department over 2 years} Same as above, with the addition of Ouest department.
-	\item \textbf{National over 2 years, high coverage} same as the National over 2 years, but with 95\% two doses, 1.67\% one doses and 3.33\% no vaccination.
+	\item \textsc{No vaccination} status quo.
+	\item \textsc{National over 2 years} 2 years OCV campaign, with a coverage 70\% double dose coverage, 10\% single dose and 20\% without any vaccine.
+	\item 	 \textsc{National over 5 years} 5 years national OCV campaign with the same coverage described above.
+	\item \textsc{2 Department over 2 years} Campaign focusing on Centre and Artibonite, the two departments with the highest incidence of cholera, with similar coverage.
+	\item \textsc{3 Department over 2 years} Same as above, with the addition of Ouest department.
+	\item \textsc{National over 2 years, high coverage} same as the National over 2 years, but with 95\% two doses, 1.67\% one doses and 3.33\% no vaccination.
 \end{itemize}
 The deployement in term of number of doses for each scenario is illustrated in Figure \ref{fig:deploy}.
 
 \begin{figure}
 \begin{center}
 \includegraphics{fig_cholera-haiti-ocv/haiti-deploy.pdf}
-\caption{Deployment over time of the vaccination doses in the five scenario with vaccination.}\label{fig:deploy}
+\caption[Deployment the vaccination doses in the scenarios.][5\baselineskip]{Deployment over time of the vaccination doses in the five scenario with vaccination.}\label{fig:deploy}
 \end{center}
 \end{figure}
 

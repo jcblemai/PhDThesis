@@ -1,11 +1,12 @@
 \renewcommand{\thefigure}{\textsc{a}\arabic{figure}}
 \renewcommand{\theequation}{\textsc{a}\arabic{equation}}
+\renewcommand{\thetable}{\textsc{a}\arabic{table}}
 \setcounter{figure}{0}
 \setcounter{equation}{0}
 
-\chapter{Appendix to chapter 3}
+%\chapter{Appendix to chapter 3}
 
-\chapter{Appendix to chapter 6}
+%\chapter{Appendix to chapter 6}
 
 \chapter{Appendix to chapter 7}
 
@@ -65,17 +66,17 @@ The epidemiological data is obtained from the bulletins of the Dipartimento dell
 %% ***********************************************************************************************
 We designed alternative strategies to compare the optimal solutions. Each strategy uses a decision variable, $\mathcal{V}_i$, as a basis for the allocation of vaccines among provinces. The decision variable is one of:
 \begin{itemize}
-    \item \textbf{modelled future incidence, absolute}: the modelled total future incidence in a no-vaccination scenario. This is equivalent to the objective of the optimal control problem with no control;
-    \item \textbf{modelled future incidence, per population}: as above, but normalized by the resident population in each node;
-    \item \textbf{modelled initial susceptibility, absolute}: the modelled number of susceptibles in each province at the start of the vaccination campaign;
-    \item \textbf{modelled initial susceptibility, per population}: as above, but normalized by the resident population in each node;
-    \item \textbf{province's population}.
+    \item \textsc{modelled future incidence, absolute}: the modelled total future incidence in a no-vaccination scenario. This is equivalent to the objective of the optimal control problem with no control;
+    \item \textsc{modelled future incidence, per population}: as above, but normalized by the resident population in each node;
+    \item \textsc{modelled initial susceptibility, absolute}: the modelled number of susceptibles in each province at the start of the vaccination campaign;
+    \item \textsc{modelled initial susceptibility, per population}: as above, but normalized by the resident population in each node;
+    \item \textsc{province's population}.
 \end{itemize}
 
 We define two strategies to distribute the doses:
 \begin{itemize}
-\item \textbf{Focused} Where every province is sorted (higher on top) according to its decision variable $\mathcal{V}_i$. We then allocate the maximum local rate $v_i^{max}$ to every province going down through the list, until the stockpile is empty. In other words, assuming we have an amount $K$ of vaccines in the stockpile, we find the province index $i$ that satisfy $\max_i \mathcal{V}_i$, and we assign to province $i$ $M_i = \min(v_i^{max}, K)$ vaccines. Then, we find the province $j$ that satisfy $\max_{j,j\neq i} \mathcal{V}_j$ and we assign it $M_j = \min(v_j^{max}, K-M_i)$. And so on, until no vaccine remains in the stockpile. This strategy will concentrate the allocation on nodes with the highest values of the considered decision variable.
-\item \textbf{Proportional} In this case, assuming that on a given day there is a quantity of vaccine $K$ in the stockpile, we assign to each province $i$ an amount $M_i = \min(v_i^{max}, K \cdot \frac{\mathcal{V}_i}{\sum_j \mathcal{V}_j})$. This approach vaccinate each node proportionally to the value of its decision variable $\mathcal{V}_i$.
+\item \textsc{Focused} Where every province is sorted (higher on top) according to its decision variable $\mathcal{V}_i$. We then allocate the maximum local rate $v_i^{max}$ to every province going down through the list, until the stockpile is empty. In other words, assuming we have an amount $K$ of vaccines in the stockpile, we find the province index $i$ that satisfy $\max_i \mathcal{V}_i$, and we assign to province $i$ $M_i = \min(v_i^{max}, K)$ vaccines. Then, we find the province $j$ that satisfy $\max_{j,j\neq i} \mathcal{V}_j$ and we assign it $M_j = \min(v_j^{max}, K-M_i)$. And so on, until no vaccine remains in the stockpile. This strategy will concentrate the allocation on nodes with the highest values of the considered decision variable.
+\item \textsc{Proportional} In this case, assuming that on a given day there is a quantity of vaccine $K$ in the stockpile, we assign to each province $i$ an amount $M_i = \min(v_i^{max}, K \cdot \frac{\mathcal{V}_i}{\sum_j \mathcal{V}_j})$. This approach vaccinate each node proportionally to the value of its decision variable $\mathcal{V}_i$.
 \end{itemize}
 In the main text, we show the results for three alternative strategies, namely \textit{proportional absolute incidence}, \textit{proportional population}, and \textit{proportional susceptibility}---named respectively Incidence, Population, and Susceptibility. These strategy are good performers across scenarios, and show how different choices for the decision variables may affect the outcomes of the OCP. In the next sections, we will show the results for all these alternative strategies.
 
@@ -88,9 +89,9 @@ To further investigate the features of the optimal solution, we present a linear
 
 Finally, to highlight the temporal dimension of the prioritization strategy for the deployment of vaccine doses, we present an example of epidemiological dynamics in every compartment of the model for an optimal scenario (Figure \ref{fig:OC_ts_all}), and a stackplot of the proportion of vaccine dose allocated in each province according to the optimal solution (Figure \ref{fig:OC_temporal_alloaction}).
 
-\begin{table*}[h!]
+\begin{fwtable}
 \centering
-\tiny
+\small
 \begin{tabular}{llrrrr}
 \toprule
 & {} & \multicolumn{2}{c}{Averted Infections} & \multicolumn{2}{c}{Averted Infections} \\
@@ -145,14 +146,14 @@ Scenario & Method &  Optimistic & Pessimistic &     Optimistic & Pessimistic    
 \end{tabular}
 \caption{Absolute number of averted infections for each scenario}
 \label{table:all_strat}
-\end{table*}
+\end{fwtable}
 
-\begin{figure*}[!ht]
+\begin{fwfigure}
     \centering
     \includegraphics[width=0.9\textwidth]{fig_italy-ocp/figuresSI/scenarios_perturb_all_SI.pdf}
     \caption[Comparison of different allocation strategies]{Comparison of different allocation strategies. Percentages of averted infections per vaccine dose from January 11, 2021 to April 11, 2021 using different vaccine distribution strategies for the pessimistic (panel A) and the optimistic (panel B) scenario based on: the optimal solution, the spatial distribution of the population, the amount of susceptible individuals at the beginning of the vaccination campaign, and the projected disease incidence in the absence of control. We optimize a median realization of the modeled posterior (diamonds), and assess the performance on the whole posterior (box plots). The results are normalized by the number of averted infections in the optimized solution (see Table \ref{table:all_strat} for absolute values).}
     \label{fig:OC_comparison_all}
-\end{figure*}
+\end{fwfigure}
 
 
 \begin{figure}[!ht]
@@ -169,12 +170,12 @@ Scenario & Method &  Optimistic & Pessimistic &     Optimistic & Pessimistic    
     \label{fig:OC_scatter_pessimistic}
 \end{figure}
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=\textwidth]{fig_italy-ocp/figuresSI/SI_all_states.pdf}
-    \caption[Example of the dynamics in all compartments]{Example of the dynamics in all compartments for every node in the pessimistic scenario with a stockpile delivery of 479'700 doses. The lower right plot shows the control variable, the number of doses per day in each province.}
-    \label{fig:OC_ts_all}
-\end{figure}
+%\begin{figure}[!ht]
+%    \centering
+ %   \includegraphics[width=\textwidth]{fig_italy-ocp/figuresSI/SI_all_states.pdf}
+  %  \caption[Example of the dynamics in all compartments]{Example of the dynamics in all compartments for every node in the pessimistic scenario with a stockpile delivery of 479'700 doses. The lower right plot shows the control variable, the number of doses per day in each province.}
+%    \label{fig:OC_ts_all}
+%\end{figure}
 
 
 

@@ -1,17 +1,14 @@
 \begin{fullwidth}
-\chapter{Scenario planning tools and reports for the COVID-19 pandemic}
+\chapter[Scenario planning tools and reports for the covid-19 pandemic]{Scenario planning tools and reports for \\the covid-19 pandemic}
 \label{sec:covid-pipeline-reports}
-  \end{fullwidth}s
-The ongoing Coronavirus disease 2019 (COVID-19, previously nCov) pandemic originated in Wuhan, China end of 2019. The pathogen is the severe acute respiratory syndrome coronavirus SARS-CoV-2. It is one of the deadliest pandemic in history, and the response has mobilized scientist, public-health and medical professionals and politics in an unprecented way. This chapter presents some modeling works for the response to COVID-19. As state of knowledge on the SARS-CoV-2 and COVID-19 was and still is quickly expanding, the present chapter and the next hightlight the challenges of dealing with such uncertainties. For the same reason, we do not endeavour a litterature review\sidenote[][5\baselineskip]{That would be ambitious, with a bit less than 170'000 peer-reviewed papers and many more preprints, website and reports. Estimation from:\fullcite{COVID-19OpenAccessProject:LivingEvidenceCOVID19:2020}} of the current understanding of COVID-19 and modeling studies. 
+  \end{fullwidth}
+The ongoing Coronavirus disease 2019 (COVID-19, previously nCov) pandemic originated in Wuhan, China end of 2019. The pathogen is the severe acute respiratory syndrome coronavirus SARS-CoV-2. It is one of the deadliest pandemic in history, and the response has mobilized scientist, public-health and medical professionals and politics around the globe. This chapter presents some modeling works for the response to COVID-19. As state of knowledge on the SARS-CoV-2 and COVID-19 was and still is quickly expanding, the present chapter and the next highlight the challenges of dealing with such uncertainties. For the same reason, we do not endeavour a literature review\sidenote[][5\baselineskip]{That would be ambitious, with a bit less than 190'000 peer-reviewed papers and many more preprints, website and reports. Estimation from: \fullcite{COVID-19OpenAccessProject:LivingEvidenceCOVID19:2020}} of the current understanding of COVID-19 and modeling studies. 
 
 We focus on details dealing with the uncertainties that caraterize disease emergences.
 
 
 \section{The COVID Scenario Pipeline}
-The COVID Scenario pipeline\sidenote[][5\baselineskip]{\url{github.com/HopkinsIDD/COVIDScenarioPipeline}} has been develop by the Johns Hopkins University Infectious Disease Dynamics COVID-19 Working Group's. It is a flexible modeling framework that projects epidemic trajectories and healthcare impacts under different suites of interventions in order to aid in scenario planning. The model is generic enough to be applied to different spatial scales given shapefiles, population data, and COVID-19 confirmed case data. There are multiple components to the pipeline, which maxy be characterized as follows: 1) epidemic seeding; 2) disease transmission and non-pharmaceutical intervention scenarios; 3) calculation of health outcomes (hospital and ICU admissions and bed use, ventilator use, and deaths); and 4) summarization of model outputs.
-
-Other parts of the pipeline not described in this thesis (airport importation, report generation, config writing, inference, analysis, submission)\footnote{see \url{github.com/HopkinsIDD/COVIDScenarioPipeline} and \url{github.com/HopkinsIDD/covidImportation}}. 1. Intro Unraveling of the epidemic since January: from importation models to intervention model
-
+x
 A previous version of the ever evolving pipeline has been described in:
 \longfullcite{Lemaitre:ScenarioModelingPipeline:2021}.
 \begin{figure*}[!htb]
@@ -98,6 +95,7 @@ Several interventions templates are provided, and the copounding  of interventio
 
 
 \paragraph{Health Outcomes} are computed on top of the incidence for each compartments. Each outcomes $O$  is specified from a source incidence $S$, with a delay $\Delta$ and a duration $D$:
+
  \begin{algorithm}[H]
 \SetAlgoLined
   \SetKwInOut{Input}{inputs}
@@ -110,8 +108,7 @@ Several interventions templates are provided, and the copounding  of interventio
 draw $\Delta$ from config distribution\;
 draw $D$ from config distribution\;
 \ForEach{$t$ in $t_i, t_i+1, ..., t_f$}{
-$O[t+\Delta:t+\Delta+D]\leftarrow O[t+\Delta:t+\Delta+D] + \text{Binom}(S[t], p_{O|S})$\;
- }
+$O[t+\Delta:t+\Delta+D]\leftarrow O[t+\Delta:t+\Delta+D] + \text{Binom}(S[t], p_{O|S})$\;}
  }
  \caption{Computations of health outcomes}
 \end{algorithm}
@@ -127,7 +124,7 @@ The COVIDScenarioPipeline has been used in different settings (list). We present
 
 % pagecommand adds page numbers,  need package pdfpages
 
- \includepdf[pages=-, pagecommand={\thispagestyle{empty}}]{fig_pipeline/planning.pdf}
+ \includepdf[pages=-, pagecommand={\thispagestyle{empty}}]{fig_pipeline/planning_mod.pdf}
 
 \section{Model Parameters from truncated data}
 While collaborating with CHUV on these reports, we had access to precise hospitalization data. It allowed us to refine our estimates\cite{Rees:COVID19LengthHospital:2020}. While we used naively the truncated data. This section is published in the supplementary material of
@@ -166,7 +163,7 @@ Times to death and discharge were best described by log-normal distributions wit
 
 
 \begin{table}[t]
-\caption{Observed hospitalization time distributions. All times are in days and taken from the date of hospitalization if not specified otherwise. Note that these estimates are biased due to right-censoring of observations and probably under-estimate the true distributions.  Table~\ref{tab:survpars} shows estimates that account for right-censoring.}
+\caption[Observed hospitalization time distributions.]{Observed hospitalization time distributions. All times are in days and taken from the date of hospitalization if not specified otherwise. Note that these estimates are biased due to right-censoring of observations and probably under-estimate the true distributions.  Table~\ref{tab:survpars} shows estimates that account for right-censoring.}
 \label{tab:vdparams}
 \centering
 \begin{tabular}{lrrrr}
@@ -188,7 +185,7 @@ Time from ICU to death & 6.97 & 4.98 & 1.68 & 0.77\\
 \end{table}
 
 
-\begin{table}
+\begin{fwtable}
     \centering
     \begin{tabular}{ccccccc}
 \toprule
@@ -201,7 +198,7 @@ ICU & Death & 13 (6.2-30) & 2.6 (1.8-3.4) & 1.3 (0.87-1.9) & 21 (12-23) & 1.2 (0
  & Discharge & 6.4 (4.3-9.3) & 1.8 (1.5-2.2) & 1.3 (1.1-1.6) & 9.1 (8.1-11) & 1 (0.75-1.4)\\
 \bottomrule
 \end{tabular}
-\caption{Estimated parameters of hospitalization time distributions. These estimates differ from observed values given in Table~\ref{tab:vdparams} by accounting for right-censoring of observations. We report time from hospitalization to discharge or death, and from ICU admission to discharge or death. Estimates were obtained using competing risk survival model as described in section~\ref{sec:crm}. Parameters are given in terms of their posterior mean and 95\% CrI (in parenthesis). For the log-normal distribution the parameters correspond to the mean and SD of the logarithm of the distribution.}
+\caption[Estimated parameters of hospitalization time distributions.]{Estimated parameters of hospitalization time distributions. These estimates differ from observed values given in Table~\ref{tab:vdparams} by accounting for right-censoring of observations. We report time from hospitalization to discharge or death, and from ICU admission to discharge or death. Estimates were obtained using competing risk survival model as described in section~\ref{sec:crm}. Parameters are given in terms of their posterior mean and 95\% CrI (in parenthesis). For the log-normal distribution the parameters correspond to the mean and SD of the logarithm of the distribution.}
      \label{tab:survpars}
-\end{table}
+\end{fwtable}
 
