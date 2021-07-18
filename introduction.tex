@@ -4,7 +4,7 @@
 Over the course of history, humanity has encountered , and the burded is still high. Series of success and setback in the recent years. The COVID-19 pandemic is testament of the importance
 
 Models, conceptuals representations of systems, are the intuitive tools to reason about these phenomenas. Differents model of the , which in turns lead to more (quarantine) or less (bloodletting) effective approaches to control and treat. some note
-Modeling provides a formal framework to design and test such approaches. It encompasses uncertainties, transmission dynamics and intervention policies. Depending on its accuracy, a infectious disease model might be able to reproduce, and even forecast, in time and space the spread of the epidemic. . However from the 20th century on, novel mathematical tools, and later advances in computational power provided a paradigm shift for the way we could deal with the available evidence. The presents thesis makes an extensive use of computer-age modeling and inference methods.
+Modeling provides a formal framework to design and test such approaches. It encompasses uncertainties, transmission dynamics and intervention policies. Depending on its accuracy, a infectious disease model might be able to reproduce, and even forecast, in time and space the spread of the epidemic. However from the 20th century on, novel mathematical tools, and later advances in computational power provided a paradigm shift for the way we could deal with the available evidence. The presents thesis makes an extensive use of computer-age modeling and inference methods. 
 
 % thesis descritption
 This thesis explore a varieties of themes within the field of infectious diseases modeling. It does so by answering a series of research questions accross countries and diseases. In the end, it all come down to: why do things spread the way they do ? and how can we prevent them from spreading ?
@@ -61,8 +61,23 @@ The ultimate goal being  the forecasting and estimating the propagation of uncer
 Models may have only one spatial dimension or may consider the spatial spread of the epidemic across several nodes. Spatially-explicit mathematical models provide key insights into the course of an ongoing epidemic, where transmission is heterogeneous in space and time.
 
 % (Bayesian philosophy, data, representation of reality) sochastic/determistic Modeling of epidemics (uncertainties, social factors, heterogeneities)
-
-
+\begin{table*}[t]
+\label{tab:allmodels}
+\centering
+\begin{tabular}{lrrrrrrrr}
+\toprule
+  & disease & comparments & model & spatial (scale) & fit & goal & other  & ref\\
+\midrule
+\textsc{Chapter 4a} & Cholera & SEIR+B& Stochastic & no & MIF like & explain & precipitation & \parencite{Lemaitre:RainfallDriverEpidemic:2019}\\
+\textsc{Chapter 4b} & Cholera & SEIR+B& Deterministic & no & MCMC-like & project & precipitation  & \parencite{Lemaitre:RainfallDriverEpidemic:2019}\\
+\textsc{Chapter 5}  & Cholera & SEAIR$^3$+V& Stochastic & yes (10) & MIFlike & scenarios & precipitation  & \parencite{Lee:AchievingCoordinatedNational:2020} \\ \addlinespace
+\textsc{Chapter 6}  & \textsc{covid}-19 & SEI$^3$R+VH &Stochastic & yes(3'000) & MCMC-like & project & age structure & & & \parencite{Lemaitre:ScenarioModelingPipeline:2021} \\
+\textsc{Chapter 7}  & COVID-19  & SEI$^3$R+H& Stochastic & no  & MIF-like & infer & & \parencite{Lemaitre:AssessingImpactNonpharmaceutical:2020}\\
+\textsc{Chapter 8}  & COVID-19  & SEIAR+VH & Deterministic & yes (107) & MCMC-like & optimal control & & \parencite{Lemaitre:OptimizingSpatiotemporalAllocation:2021}\\ 
+\bottomrule
+\end{tabular}
+\caption[Comparison of the different models presented in this thesis]{For all projects that are described in this thesis, we have used compartmental models. In columns compartments, in addition to susceptible S, exposed E, infected (infectious, symptoms) I, infected (infectious, no symptoms) A and recoved R, we incidicate by H that there are compartiments to model the healthcare facilities (hospitalisation, ICUs), V means compartments for vaccinations, and B means an eromental reservoir. Exponent denotes the multiplication of compartments to use the linear-chain trick, see below.}
+\end{table*}
 
 \subsection{Data}
 %data on health
@@ -78,18 +93,32 @@ Information and prior on
 
 "Since all models are wrong the scientist must be alert to what is importantly wrong. It is inappropriate to be concerned about mice when there are tigers abroad."\cite{Box:ScienceStatistics:1976}.
 
+The cornstone of epidemiological modeling is the compartmental model. Individuals belongs to compartiments who caraterize their stage with respect to the disease. The seminal work has introduced compartiments for Susceptible, Infected, Recovered. The SIR model, first introduced first by Kermack and McKendrick\cite{Kermack:ContributionMathematicalTheory:1927}. 
 
-
-
-The cornstone of epidemiological modeling is the compartmental model. Individuals belongs to compartiments who caraterize their stage with respect to the disease. The seminal work has introduced compartiments for Susceptible, Infected, Recovered. The SIR model, first introduced first by Kermack and McKendrick\cite{Kermack:ContributionMathematicalTheory:1927}.s
+Or
 
 An Exposed compartiment may be added 
 Compartimental + spatially explicit
+
+\paragraph{Transitions}
+
+
+
+\paragraph{Residence time}
+
+\cite{Hurtado:GeneralizationsLinearChain:2019}
+
 \subsection{Inference and calibration} 
-Model parameters in the SIRB cholera models represent physical rates. However, in the literature there is no consensus on their values or on their  probability distribution. Numerical calibration is therefore required to assess their value in any particular application. Parameter identifiability is one of the major problems during the calibration of SIR-like epidemiological models. This is mainly due to the impossibility to directly measure the exact figures of individual infections in each compartment, the uncertainty associated to epidemiological data and the net effect of possible model over-parametrization. Calibration thus often results in combination of parameters that produce almost identical fits, termed equifinality\footnote{For a cholera example, Eisenberg et al. (\fullcite{eisenberg_identifiability_2013}) highlighted that the presence of uncertain measurements might generate strongly correlated parameters, which cannot be unambiguously  identified.}.
+Model parameters in the SIRB cholera models represent physical rates. However, in the literature there is no consensus on their values or on their  probability distribution. Numerical calibration is therefore required to assess their value in any particular application. Parameter identifiability is one of the major problems during the calibration of SIR-like epidemiological models. This is mainly due to the impossibility to directly measure the exact figures of individual infections in each compartment, the uncertainty associated to epidemiological data and the net effect of possible model over-parametrization. Calibration thus often results in combination of parameters that produce almost identical fits, termed equifinality\footnote{For a cholera example, Eisenberg et al. (\fullcite{eisenberg_identifiability_2013}) highlighted that the presence of uncertain measurements might generate strongly correlated parameters, which cannot be unambiguously identified.}.
 
 
 
+
+\paragraph{Markov-Chain Monte Carlo}
+
+
+
+\paragraph{Estimation of $R_0$} 
 
  Filtering
 \subsection{Evaluation}
@@ -154,71 +183,7 @@ which can then be used to derive BFs (see \parencite{Raftery:EstimatingIntegrate
 %- Control of epidemic, and modeling of control of epidemics
 %- Public-health decision making tools using models
 
-%\section{Case Study: spatially-explicit cholera model}
-%The model is a variation of the SIR model introduced first by Kermack and McKendrick\cite{Kermack:ContributionMathematicalTheory:1927}, with additional compartments for the vaccinated individuals and the bacteria concentration in the environment.
 
-%The model subdivides the area potentially concerned by the epidemic into $n$ sub-regions. The sub-regions, defined by political boundaries or geomorphological features (like watersheds\cite{Bertuzzo:ProbabilityExtinctionHaiti:2016}), are represented as connected nodes. The $n$ nodes represent $n$ human communities having population size $H_i$, $i=1,\dots, n$. 
-
-%At time $t$ and for each node $i$, the individuals in the node can be grouped into six compartments:
-
-%\begin{itemize}
-%\item $S_i(t)$: susceptible individuals  have no immunity, and may enter in contact with the bacteria and become infected (symptomatic or not),
-%\item $I_i(t)$: infected individual shed bacteria into the community reservoir,
-%\item $R_i(t)$: recovered are temporally immune, and don't participate in disease transmission,
-%\item $V^S_i(t)$: vaccinated susceptible,
-%\item $V^I_i(t)$: vaccinated infected,
-%\item $V^R_i(t)$: vaccinated recovered.
-%\end{itemize}
-
-%In addition, the model considers the bacterial concentration of \textit{V.~cholerae} in the water reservoir of the community, $B_i(t)$. The $n$ nodes are connected by both human mobility and pathogen transport through water.
-
-%Individuals commute from node $i$ to node $j$ with probability $Q_{ij}$. Bacteria are transported along the river network from node $i$ to node $j$ with probability $P_{ij}$, as shown in Figure~\ref{fig:bertuzzo14_SIRB}.
-
-
-%The cholera dynamics are described by the following set of coupled ordinary differential equations:
-%\begin{eqnarray}
-%\frac{dI_i}{dt} &=& \sigma F_i(t) S_i - (\gamma + \mu + \alpha) I_i \label{eq:I2}\\
-%\frac{dR_i}{dt} &=& (1-\sigma) F_i(t) S_i + \gamma I_i - (\rho + \mu+\frac{\nu_i(t)}{S_i+R_i}) R_i \label{eq:R2}\\
-%\frac{dV^S_i}{dt} &=& \nu_i(t) \frac{S_i}{S_i+R_i}-\mu V^S_i \label{eq:VS2}\\
-%\frac{dV^I_i}{dt} &=& \sigma (1-\eta) F_i(t) V^S_i - (\gamma + \mu + \alpha) V^I_i \label{eq:VI2}\\
-%\frac{dV^R_i}{dt} &=& \nu_i(t) \frac{R_i}{S_i+R_i} + (1-\sigma) (1-\eta) F_i(t) V^S_i + \gamma V^I_i - (\mu+\rho_v) V^R_i \label{eq:VR2}\\
-%\frac{dB_i}{dt} &=& - \mu_B B_i +\frac{p}{W_i}\left[1 + \phi J_i(t) \right] \left((1-m)(I_i +V_i^I)+m \sum_{j=1}^n Q_{ij} (I_j +V_j^I)\right)- \nonumber \\
-%&& l \left( B_i - \sum_{j=1}^n P_{ji} \frac{W_j}{W_i} B_j \right)
-%\end{eqnarray}
-%
-%where the population~$H_i$ of each node is assumed to be at demographic equilibrium, thus $S_i=H_i-I_i-R_i-V_i^S-V_i^I-V_i^R$.
-
-%The force of infection, i.e the rate at which individual enters in contact with the diseases, is written as:
-%
-%\begin{equation}
-%F_i(t) = \beta \left[ (1 - m) \frac{B_i}{K + B_i} + m \sum_{j=1}^n Q_{ij} \frac{B_j}{K + B_j} \right].
-%\label{force}
-%\end{equation}
-
-%The parameter~$\beta$ represents the maximum exposure rate, which may decrease in time due to awareness of the population on the cholera transmission factors\cite{Bertuzzo:ProbabilityExtinctionHaiti:2016}. The fraction $B_{i}/(K+B_{i})$ is the probability of becoming infected due to the exposure to a concentration~$B_i$ of \textit{V.~cholerae}, $K$ being the half-saturation constant\cite{Codeco:EndemicEpidemicDynamics:2001}. The force of infection in a given node depends for a fraction ($1-m$) to the local concentration of \textit{V.~cholerae}, $B_i$, while the remaining fraction $m$, represents the community-level probability that individuals travel outside their node, accounts for the contribution of the concentration~$B_j$ of the remote communities. 
-%The human mobility is accounted with the matrix $Q_{ij}$ representing the probabilities that an individual living in node $i$ reaches~$j$ as a destination. Because of human mobility, a susceptible individual residing at node $i$ can be exposed to pathogens in the destination community $j$. 
-%In the lack of detailed mobility data,  the probabilities~$Q_{ij}$ can be estimated through a gravity approach\cite{erlander_gravity_1990} to model human mobility:
-%
-%\begin{equation}
-%Q_{ij} = \frac{H_j e^{-d_{ij}/D}}{\sum_{k \neq i}^n H_k e^{-d_{ik}/D}} \, ,
-%\label{eq:mob}
-%\end{equation}
-%where the attractiveness of node~$j$ depends on its population size $H_j$, while the deterrence factor is assumed to be dependent on the distance~$d_{ij}$ between the two communities via an exponential kernel (with shape factor~$D$).  
-
-%Due to the contact with contaminated water, a fraction $\sigma$ of the infected individuals develops symptoms, passing from compartment $S$ to $I$. The remaining fraction~$(1-\sigma)$ does not develop symptoms, does not contribute to the disease transmission, and is considered temporally immune, thus passing from compartment $S$ to $R$.  Symptomatic infected individuals recover at a rate~$\gamma$, or die due to cholera or other causes at rates~$\alpha$ or $\mu$, respectively.
-%Recovered individuals lose their immunity at rate~$\rho$, thus passing from compartments $R$ to $S$, or die at a rate~$\mu$.  % TODO Too many times property.
-
-%The environmental concentration of \textit{V.~cholerae} at a node $i$ may increase due to both human mobility and to hydrologic dispersion. Human contributions depends from a fraction $1-m$ on the local infected individuals and form a fraction $m$ on the symptomatic infected individuals moving according to the mobility model. The increase in bacteria concentration is modeled with the rate~$p/W_i$, where $p$ is the rate at which bacteria excreted by an infected individual reach and contaminate the local water reservoir of volume $W_i$ (assumed to be proportional to population size, i.e., $W_i=c H_i$ as in\cite{Rinaldo:Reassessment20102011:2012}) and $\mu_B$ is the rate of decay of \textit{V.~cholerae}. Bacteria undergo hydrologic dispersal at a rate~$l$: pathogens travel from node~$i$ to~$j$ with probability $P_{ij}$, which is assumed to be one if node~$j$ is the downstream nearest neighborhood $i$, and zero otherwise. In order to express the worsening of sanitation conditions caused by rainfall-induced runoff, when relevant, which causes additional pathogen loads to enter the water reservoir due to effects such as the overflow of pit latrines and washout of open-air defecation sites\cite{Gaudart:SpatioTemporalDynamicsCholera:2013}, the contamination rate $p$ is increased by the rainfall intensity $J_i(t)$ via a coefficient $\phi$\cite{Rinaldo:Reassessment20102011:2012,righetto_rainfall_2013}. By introducing the dimensionless bacterial concentrations $B_i^*=B_i/K$,  it is possible to group three model parameters into a single ratio $\theta=p/(cK)$\cite{Bertuzzo:SpacetimeEvolutionCholera:2008}.
-
-
-
-%The estimation of the local incidence is computed integrating over the new symptomatic individuals,
-%
-%\begin{equation}
-%\frac{d C_i}{dt} \ = \ \sigma F_i S_i  \, , \label{eq:C}
-%\end{equation}
-
-%During the vaccination campaign, OCV doses are assumed to be distributed with rate $\nu_i(t)$ to susceptible and recovered individuals, which enter the compartments $V^S$ and $V^R$. As the OCV provides a partial immunity having efficacy $\eta$, $0\leq \eta \leq 1$, vaccinated susceptibles ($V^S$) can become infected ($V^I$) through a decreased force of infection of a factor $(1-\eta)$ with respect to non-vaccinated individuals. Vaccinated infected individuals behave exactly like infected ones, but are placed in a different compartment to exclude them from future vaccination campaigns. After recovering at  rate $\gamma$, they lose their vaccine protection at rate $\rho_{v}$.
 
 \subsection{Optimal control}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OK
