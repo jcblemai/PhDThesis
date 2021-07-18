@@ -1,30 +1,39 @@
 \chapter{Introduction}
-Epidemics of infectious diseases are a complex phenomena at the crossing of human behaviour, mobility, host dynamics, environmental factors. 
+%epidemics as phenomena
+ An epidemic -- the rapid spread in a population -- of an infectious disease is a complex phenomena at the cross road of human behaviour, mobility, host dynamics, environmental factors. 
+Over the course of history, humanity has encountered , and the burded is still high. Series of success and setback in the recent years. The COVID-19 pandemic is testament of the importance
 
-Modeling provides a formal framework to design and test such approaches. It encompasses uncertainties, transmission dynamics and intervention policies. Depending on its accuracy, a cholera model might be able to reproduce, and even forecast, in time and space the spread of the epidemic.
+Models, conceptuals representations of systems, are the intuitive tools to reason about these phenomenas. Differents model of the , which in turns lead to more (quarantine) or less (bloodletting) effective approaches to control and treat. some note
+Modeling provides a formal framework to design and test such approaches. It encompasses uncertainties, transmission dynamics and intervention policies. Depending on its accuracy, a infectious disease model might be able to reproduce, and even forecast, in time and space the spread of the epidemic. . However from the 20th century on, novel mathematical tools, and later advances in computational power provided a paradigm shift for the way we could deal with the available evidence. The presents thesis makes an extensive use of computer-age modeling and inference methods.
+
+% thesis descritption
+This thesis explore a varieties of themes within the field of infectious diseases modeling. It does so by answering a series of research questions accross countries and diseases. In the end, it all come down to: why do things spread the way they do ? and how can we prevent them from spreading ?
+
+By the unexpected events of the past four years, this thesis happens to bring together two diseases that everything opposes. Cholera is one of the most ancient recorded disease \footnote{History of pre-pandemic cholera is uncertain but numerous accounts of the disease are supposed from as early as 400~\textsc{b.c.e}. See \fullcite[p. 95]{Byrne:EncyclopediaPestilencePandemics:2008}.}, and has cause seven pandemics in the modern era. COVID-19 earliest known onset of symptoms is on December 1, 2019. The pathogen for cholera is a bacteria, \textit{Vibrio Cholerae} causing diarhea, whereas SARS-CoV-2, the COVID-19 pathogen, is a virus responsible for repiraotry infection. The mode of spreading (fecal-oral vs respiratory route), the affected communities ("poorest of the poor", mostly childrens vs global and mostly elders), mitigation measures; Cholera belongs to the negletected tropical disease, a class of understudied diseases while the COVID-19 pandemic as sparked an unprecented accumulation of evidence\cite{COVID-19OpenAccessProject:LivingEvidenceCOVID19:2020}. We could carry... Despite these differences, Cholera and COVID-19 shares the absence of an intermediate host, mechanisms that makes their transmission sustainable and hard to eliminate, a regretully high tool on humanity.
+
+The scientific methods to answer questions about the spread and control of epidemics are nevertheless similar these diseases (and others).
+
 
 One of the main goals of epidemiological modeling is to predict the incidence of an ongoing epidemic in order to guide the public health officials in the deployment of life-saving medical supplies and medical staff. Moreover, an accurate model is a viable substitute for an experiment, where stakeholders can test intervention policies and scientific hypothesis on disease dynamics.
 
 A novel use of epidemiological modelling is in the formal design of control policies. \textit{Optimal control} provides a rigorous framework to identify the most effective control measures under a set of operational constraints, in order to minimize an objective function of interest, like disease transmission and death. 
 
-\section{Objectives}
+%\section{Thesis aim and outline}
+The present thesis has been developed and written within the framework of the Swiss National foundation project ``Optimal control of intervention strategies for waterborne disease epidemics (\textsc{snf} 200021--172578)'', with the initial goal of developing a decision support system for the real-time design of optimal intervention strategies in time and space, for cholera. This framework includes an operational forecasting tool and and optimal control solver, and has been finally developed for COVID-19, is presented in \textsc{Chapter 8}. The work presented here builds on the ECHO laboratory expertise on the spatially-explicit modeling of cholera transmission. Previous works from the group, some presented in \textsc{Chapter 3} has focused on forecast cholera dynamics across a number of settings. The thesis  improve this model, and to develop new features, relaxing assumptions and limitations of existing approaches. A major milestone is the creation of an operational forecasting platform for epidemic dynamics, to communicate results in a timely manner.
 
-The present thesis, developed within the framework of the Swiss National foundation project ``Optimal
-control of intervention strategies for waterborne disease epidemics (SNF 200021--172578)'', aims at developing a decision support system to optimize cholera intervention strategies.
+The thesis is organised as follow. \textsc{Chapter 2} describes some of the methodological tools used over the course of the work. It allows us to focus in-depth on some key statistical and mechanisitic modeling features of interest. Then, for three chapters we present works on cholera. \textsc{Chapter 3} presents the cholera as a disease to introduce this ancient disease with a rich and sorrowful history. In  \textsc{Chapter 4}, we present the first original work of this thesis, where we compare on the explanatory power of two influencal cholera model.  We finish on cholera by presenting in \textsc{Chapter 5} an estimation of the probability of eliminating cholera from Haiti with a mass vaccination campaign. This model has been designed in the framework multi-modeling study. We focus on COVID-19 from \textsc{Chapter 6} on. This chapter focuses on some facets of dealing with uncertainties and writing reports. In   \textsc{Chapter 7}, we present an inference exercise to estimate the impact of the interventions against COVID-19 in Switzerland. Before we concluse, we present in \textsc{Chapter 8} a tentative to connect optimal control to an epidemiological model, in Italy. 
+\marginnote{Incidentaly, this organisation is reflects the chronogical order of the work.}
 
 The  primary objective of this thesis is to design and implement an optimal control solver to be coupled with a spatially explicit model of cholera transmission, to compute optimal intervention strategies in real time for health care actors during outbreaks.
 
+
 Towards an operational forecasting and decision framework, many obstacles must be overcome. The relevance of any control recommendation depends on the accuracy of the model forecasts. Thus, there exists a feedback loop between epidemiological modeling and control implementation. Since process-based epidemiological modeling for cholera is still at its infancy, the refinement of cholera models is essential to produce valid control policies.
 
-The ECHO lab has been working on a spatially-explicit cholera model that has been able to match, and even forecast, the epidemiological curve across a number of settings. During the whole thesis, we will continue to improve this model, and to develop new features, relaxing assumptions and limitations of existing approaches. A major milestone is the creation of an operational forecasting platform for epidemic dynamics, to communicate results in a timely manner.
+The
 
 At the end of the thesis, the final deliverable will be a platform able to provide cholera forecasts and optimal control policies in quasi real time, to exploit the full potential of state-of-the-art spatially explicit cholera models.
 
 
-
-
-
-\section{Thesis aim and outline}
 This thesis was initially focused on cholera, a diareal disease that affects the poorest of the poor. Cholera . Part I of this thesis will present a model-comparison study of the influence of intra-seasonal rainfall events. The COVID-19 pandemic changed the initial plan of optimal control for cholera, hence the most recent part of this work is dedicated to COVID. Part II wil
 
 The construction of such a framework is the object of the present thesis. Building on the laboratory of Ecohydrology at EPFL (ECHO lab in the following) expertise on waterborne disease modeling, optimal control of cholera epidemic is a step forward in the ability for scientists to help policy makers in reducing the global cholera burden.
@@ -41,12 +50,10 @@ The construction of such a framework is the object of the present thesis. Buildi
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Materials and methods} %(Computational epidemiomology or Infectious Disease Modeling
+\chapter[Materials and methods]{Materials and methods} %(Computational epidemiomology or Infectious Disease Modeling
 
-\section{Infectious Diseases Epidemics} %as a phenomena)
+%\section{Infectious Diseases Epidemics} %as a phenomena 
 Infect
-
-
 
 \section{Modeling of Epidemics}
 The ultimate goal being  the forecasting and estimating the propagation of uncertainties from the observable past to the future. Alongside, modeling helps us to understand the different processes of the cholera life cycle. As a substitute for physical experiments, different mechanistic pathways can be compared by benchmarking them against the reproduction of reported cases. 
@@ -147,7 +154,7 @@ which can then be used to derive BFs (see \parencite{Raftery:EstimatingIntegrate
 %- Control of epidemic, and modeling of control of epidemics
 %- Public-health decision making tools using models
 
-\section{Case Study: spatially-explicit cholera model}
+%\section{Case Study: spatially-explicit cholera model}
 %The model is a variation of the SIR model introduced first by Kermack and McKendrick\cite{Kermack:ContributionMathematicalTheory:1927}, with additional compartments for the vaccinated individuals and the bacteria concentration in the environment.
 
 %The model subdivides the area potentially concerned by the epidemic into $n$ sub-regions. The sub-regions, defined by political boundaries or geomorphological features (like watersheds\cite{Bertuzzo:ProbabilityExtinctionHaiti:2016}), are represented as connected nodes. The $n$ nodes represent $n$ human communities having population size $H_i$, $i=1,\dots, n$. 

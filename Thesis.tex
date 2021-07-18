@@ -1,6 +1,8 @@
 % Unfortunately for the contents to contain  the "Parts" lines successfully, hyperref needs to be disabled.
 \documentclass[nohyper,nobib,a4,16pt]{tufte-book} %nobib
 
+% There are usefull references heres: https://github.com/lalider/tufte-latex-thesis/blob/master/main.pdf
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% BOOK DATA %%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,6 +27,11 @@
 \usepackage{units}
 \usepackage{xargs} % several argument in functions (needed for cite)
 \usepackage[toc,page]{appendix}
+%\usepackage{emoji} % we need emojis 
+%\setemojifont{TwemojiMozilla}
+  % Set up the spacing using fontspec features
+%  \renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
+ % \renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
 
 % math stuff:
 %\usepackage{amssymb} % does not play well with garamond math
@@ -36,6 +43,8 @@
 % For graphics / images
 \usepackage{graphicx}
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+
+
 
 % we want margin figure caption header to be smaller to remove this weird size diperempty:
 % adapted from https://tex.stackexchange.com/questions/319345/change-font-size-in-caption-for-selected-figures, should post it there
@@ -304,40 +313,17 @@ textheight=690pt,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 %
-	
-% Front matter
-%\frontmatter
-
-% r.1 blank page
-% \blankpage
-
-% v.2 epigraphs
-% \newpage\thispagestyle{empty}
-% \openepigraph{%
-% The public is more familiar with bad design than good design.
-% It is, in effect, conditioned to prefer bad design, 
-% because that is what it lives with. 
-% The new becomes threatening, the old reassuring.
-% }{Paul Rand%, {\itshape Design, Form, and Chaos}
-% }
-% \vfill
-% \openepigraph{%
-% A designer knows that he has achieved perfection 
-% not when there is nothing left to add, 
-% but when there is nothing left to take away.
-% }{Antoine de Saint-Exup\'{e}ry}
-% \vfill
-% \openepigraph{%
-% \ldots the designer of a new system must not only be the implementor and the first 
-% large-scale user; the designer should also write the first user manual\ldots 
-% If I had not participated fully in all these activities, 
-% literally hundreds of improvements would never have been made, 
-% because I would never have thought of them or perceived 
-% why they were important.
-% }{Donald E. Knuth}
-
 % r.3 full title page
 %\maketitle
+	
+% Front matter
+\frontmatter
+
+% r.1 blank page
+\blankpage
+
+ \input{frontmatter}
+
 
 % r.5 contents
 \pdfbookmark[section]{\contentsname}{toc}
@@ -359,10 +345,11 @@ textheight=690pt,
 %\end{fullwidth}
 % r.9 introduction
 %\cleardoublepage
+\mainmatter
 \input{introduction}
 
 % Start the main matter (normal chapters)
-\mainmatter
+
 %\part{Cholera modeling}
 \input{cholera}
 \input{cholera-rainfall}
