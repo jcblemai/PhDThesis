@@ -14,7 +14,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\usepackage[utf8]{inputenc}
  \usepackage{pdfpages} % Include pdfs directly
  \usepackage[ruled,vlined]{algorithm2e} % algorithms
  \usepackage{nameref} % named references 
@@ -30,8 +30,9 @@
 %\usepackage{emoji} % we need emojis 
 %\setemojifont{TwemojiMozilla}
   % Set up the spacing using fontspec features
-%  \renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
- % \renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
+\renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
+ \renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
+ 
 
 % math stuff:
 %\usepackage{amssymb} % does not play well with garamond math
@@ -89,7 +90,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%% BIBLIOGRAPHY & CITATION %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[backend=biber,doi=false,isbn=false,url=false,eprint=false,style=verbose,citestyle=authoryear,maxbibnames=999,maxcitenames=1,citetracker=true,pagetracker=true]{biblatex}%,firstinits=true, before: authoryear-comp
+\usepackage[backend=biber,doi=false,isbn=false,url=false,eprint=false,style=verbose,citestyle=authoryear,maxbibnames=999,maxcitenames=1,citetracker=true,pagetracker=true,uniquename=false]{biblatex}%,firstinits=true, before: authoryear-comp; unique name is false so we can de
 \addbibresource{../ZoteroLibUpdated/ZoteroLibUpdated.bib}
 
 % Remove the In: if there is no journal title. But if not in my defined shortcite, it means that the publication type is ill-defined (should be online, or something without journal)
@@ -306,6 +307,11 @@ textheight=690pt,
 
 %Hyperref likes to be loaded last
 \usepackage{hyperref}
+ % prevent hyperref from destroying my lettrines https://tex.stackexchange.com/questions/561651/eb-garamond-initials-and-hyperref-package
+%\DeclareTextFontCommand{\textin}{\initials}
+%\usepackage{lettrine}
+%\setcounter{DefaultLines}{5}
+%\renewcommand{\LettrineFontHook}{\initials}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -313,7 +319,7 @@ textheight=690pt,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 %
-% r.3 full title page
+% r.3 full title page. % éà <- to make the document utf-8
 %\maketitle
 	
 % Front matter
@@ -322,7 +328,7 @@ textheight=690pt,
 % r.1 blank page
 \blankpage
 
- \input{frontmatter}
+% \input{frontmatter}
 
 
 % r.5 contents
@@ -351,21 +357,21 @@ textheight=690pt,
 % Start the main matter (normal chapters)
 
 %\part{Cholera modeling}
-\input{cholera}
-\input{cholera-rainfall}
-\input{cholera-haiti-ocv}
+%\input{cholera}
+%\input{cholera-rainfall}
+%\input{cholera-haiti-ocv}
 
 %\part{Scientific and Public-Health response to the COVID-19 pandemic}
   
-\input{covid-pipeline-reports}
-\input{covid-switzerland-npi}
-\input{covid-italy-ocp}
+%\input{covid-pipeline-reports}
+%\input{covid-switzerland-npi}
+%\input{covid-italy-ocp}
 
-%\input{conclusions}
+\input{conclusions}
 
 % The back matter contains appendices, bibliographies, indices, glossaries, etc.
 \backmatter
-\begin{appendices}\input{appendices}\end{appendices}
-\begin{fullwidth}\printbibliography\end{fullwidth}
+%\begin{appendices}\input{appendices}\end{appendices}
+%\begin{fullwidth}\printbibliography\end{fullwidth}
 
 \end{document}
