@@ -27,7 +27,7 @@
 \usepackage{units}
 \usepackage{xargs} % several argument in functions (needed for cite)
 \usepackage[toc,page]{appendix}
-%\usepackage{emoji} % we need emojis 
+%\usepackage{emoji} % I'd love to have emojis, but it doesn't work
 %\setemojifont{TwemojiMozilla}
   % Set up the spacing using fontspec features
 %\renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
@@ -50,14 +50,14 @@
 \newcolumntype{x}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
 
 
-% we want margin figure caption header to be smaller to remove this weird size diperempty:
+%  margin figure caption header should to be smaller to remove this weird size diperempty:
 % adapted from https://tex.stackexchange.com/questions/319345/change-font-size-in-caption-for-selected-figures, should post it there
 \usepackage{caption}
 \newcommand{\margincaption}[2][1={}]{%
   \captionsetup{font=footnotesize}%
   \caption[#1]{#2}}
 % The fancyvrb package lets us customize the formatting of verbatim
-% environments.  We use a slightly smaller font.
+% environment, so a slightly smaller font is used.
 \usepackage{fancyvrb}
 \fvset{fontsize=\normalsize}
 
@@ -93,7 +93,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%% BIBLIOGRAPHY & CITATION %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[backend=biber,doi=false,isbn=false,url=false,eprint=false,style=verbose,citestyle=authoryear,maxbibnames=999,maxcitenames=1,citetracker=true,pagetracker=true,uniquename=false]{biblatex}%,firstinits=true, before: authoryear-comp; unique name is false so we can de
+\usepackage[backend=biber,doi=false,isbn=false,url=false,eprint=false,style=verbose,citestyle=authoryear,maxbibnames=999,maxcitenames=1,citetracker=true,pagetracker=true,uniquename=false]{biblatex}%,firstinits=true, before: authoryear-comp; unique name is false :)
 \addbibresource{../ZoteroLibUpdated/ZoteroLibUpdated.bib}
 
 % Remove the In: if there is no journal title. But if not in my defined shortcite, it means that the publication type is ill-defined (should be online, or something without journal)
