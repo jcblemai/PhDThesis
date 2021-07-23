@@ -249,7 +249,7 @@ n_{t_\text{inf} + t_\text{inf} \to \text{hosp}}^{hosp} \sim Binom\left(n_{t_\tex
 \end{equation}
 where $n^\text{hosp}$ is the number of hospital admissions, $n^\text{inf}$ is the number of infections, $t_\text{inf}$ is the time of infection, $t_{\text{inf} \to \text{hosp}}$ is the mean time delay between infection and hospital admission, and $p_\text{hosp|inf}$ is the probability of hospitalization given infection (Table 1).
 
-\begin{table}[t]
+\begin{table*}[t]
 \caption[Health outcome risk parameters.]{Health outcome risk parameters.}
 \label{tab:vdparams}
 \centering
@@ -264,7 +264,7 @@ where $n^\text{hosp}$ is the number of hospital admissions, $n^\text{inf}$ is th
 \verb|rr_hosp_inf|	& Relative risk of hospitalization (given infection) relative to the average across all geoids\\
 \verb|rr_death_inf| & Relative risk of death (given infection) relative to the average across all geoids\\
 \bottomrule
-\end{tabular}
+\end{tabular*}
 \end{table}
 
 We make similar assumptions for the transitions between other outcomes (hospitalization admission to ICU admission, ICU admission to ventilator use, infection to death):
