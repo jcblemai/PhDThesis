@@ -61,6 +61,9 @@
 \usepackage{fancyvrb}
 \fvset{fontsize=\normalsize}
 
+% provide \FloatBarrier and ensure that floats are placed within their section (can remove this option \usepackage[section]{placeins})
+\usepackage{placeins}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% FRONTMATTER %%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -321,24 +324,24 @@ textheight=690pt,
 %%%%%%%%%%%%%%%%% DOC %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-%\frontmatter
-%\blankpage
-%\input{frontmatter}
-%\pdfbookmark[section]{\contentsname}{toc}
-%\begin{fullwidth}\tableofcontents\listoffigures\listoftables\end{fullwidth}
+\frontmatter
+\blankpage
+\input{frontmatter}
+\pdfbookmark[section]{\contentsname}{toc}
+\begin{fullwidth}\tableofcontents\listoffigures\listoftables\end{fullwidth}
 
 \mainmatter
 \input{introduction.tex}
 \input{cholera}
-%\input{cholera-rainfall}
-%\input{cholera-haiti-ocv}
-%\input{covid-pipeline-reports}
+\input{cholera-rainfall}
+\input{cholera-haiti-ocv}
+\input{covid-pipeline-reports}
 \input{covid-switzerland-npi}
-%\input{covid-italy-ocp}
+\input{covid-italy-ocp}
 \input{conclusions}
 
 \backmatter
-%\begin{appendices}\input{appendices}\end{appendices}
+\begin{appendices}\input{appendices}\end{appendices}
 \begin{fullwidth}\printbibliography\end{fullwidth}
 
 \end{document}
