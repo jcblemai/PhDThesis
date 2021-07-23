@@ -321,43 +321,22 @@ textheight=690pt,
 %%%%%%%%%%%%%%%%% DOC %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-%
-% r.3 full title page. % éà <- to make the document utf-8
-	
-% Front matter
-\frontmatter
-
-% r.1 blank page
-\blankpage
-
+%\frontmatter
+%\blankpage
 %\input{frontmatter}
-
-
-% r.5 contents
-\pdfbookmark[section]{\contentsname}{toc}
-\begin{fullwidth}\tableofcontents\listoffigures\listoftables\end{fullwidth}
+%\pdfbookmark[section]{\contentsname}{toc}
+%\begin{fullwidth}\tableofcontents\listoffigures\listoftables\end{fullwidth}
 
 \mainmatter
 \input{introduction.tex}
-
-
-
-% Start the main matter (normal chapters)
-
-%\part{Cholera modeling}
-%\input{cholera}
+\input{cholera}
 %\input{cholera-rainfall}
 %\input{cholera-haiti-ocv}
-
-%\part{Scientific and Public-Health response to the COVID-19 pandemic}
-  
 %\input{covid-pipeline-reports}
 %\input{covid-switzerland-npi}
 %\input{covid-italy-ocp}
-
 \input{conclusions}
 
-% The back matter contains appendices, bibliographies, indices, glossaries, etc.
 \backmatter
 %\begin{appendices}\input{appendices}\end{appendices}
 \begin{fullwidth}\printbibliography\end{fullwidth}

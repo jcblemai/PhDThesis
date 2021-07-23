@@ -2,9 +2,9 @@
 \chapter[Scenario planning tools and reports for the covid-19 pandemic]{Scenario planning tools and reports for \\the covid-19 pandemic}
 \label{sec:covid-pipeline-reports}
   \end{fullwidth}
-The ongoing Coronavirus disease 2019 (COVID-19, previously nCov) pandemic originated in Wuhan, China at the end of year 2019. The pathogen here is a virus, the severe acute respiratory syndrome coronavirus SARS-CoV-2, which upon infections might cause a wide variety of symptoms all accross range of severity. With 4.07\textsc{M} confirmed deaths and 190\textsc{M} confirmed cases as of July 2021, we are living through one of the deadliest pandemic in history.
+The ongoing Coronavirus disease 2019 (COVID-19, previously nCov) pandemic originated in Wuhan, China at the end of year 2019. The pathogen here is a virus, the severe acute respiratory syndrome coronavirus SARS-CoV-2, which upon infections might cause a wide variety of symptoms all accross range of severity. With 4.07\textsc{M} confirmed deaths and 190\textsc{M} confirmed cases as of July 2021, it is one of the deadliest pandemic in history.
 
- All around the world, the response has mobilized scientists, public-health and medical professionals and decision-makers. Over the last year and a half, a considerable body of evidence has accumulated\sidenote[][-3\baselineskip]{With more than 190'000 peer-reviewed papers and many more preprints, website and reports published at the time of writing. Estimation from: \fullcite{COVID-19OpenAccessProject:LivingEvidenceCOVID19:2020}}. For this reason, we do not endeavour a literature review of the current (and evolving) understanding of COVID-19, nor the modeling studies which have informed the response. 
+ All around the world, the response has mobilized scientists, public-health and medical professionals and decision-makers. Over the last year and a half, a considerable body of evidence has accumulated\sidenote[][-3\baselineskip]{With more than 190'000 peer-reviewed papers and many more preprints, website and reports published at the time of writing. Estimation from: \fullcite{COVID-19OpenAccessProject:LivingEvidenceCOVID19:2020}}. For this reason, no literature review of the current (and evolving) understanding of COVID-19, nor of the modeling studies which have informed the response is provided. 
 
  This chapter presents modeling works tailored for the response to COVID-19. While the COVID Scenario Pipeline is an ongoing project, we present it as its early stage, taking a perspective from around July 2020. The state of knowledge on the SARS-CoV-2 and COVID-19 was very rapidly expanding, and the present chapter highlights the challenges of dealing with such uncertainties. 
 
@@ -73,7 +73,7 @@ p_{infect} &=& 1 - \exp(-\Delta t \cdot \sigma)\\
 p_{recover} &=& 1 - \exp(-\Delta t \cdot \gamma)
 \end{eqnarray}
 
-At each time step, we draw in a binomial distribution, e.g 
+At each time step, the transition is draw in a binomial distribution, e.g 
 \begin{equation}
 N_{I_1\longrightarrow I_2}(t) = \text{Binom}(I_1, 1 - \exp(-\Delta t \cdot \gamma_1))
 \end{equation}
