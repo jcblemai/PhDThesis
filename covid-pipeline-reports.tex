@@ -263,7 +263,7 @@ Here it is described how the \verb|state_report| template in the report.generati
 
 For example, one standard report figure compares time series of the daily number of hospital beds needed across intervention scenarios (Fig. 2) using the \verb|load_hosp_geocombined_totals| and \verb|plot_ts_hosp_state_sample| functions from the report.generation package in order to load and plot the data. To plot variations of these figures, one only need to change which health outcome variable is specified in \verb|plot_ts_hosp_state_sample|.
 
-While Fig. 2 displays aggregate results, our reports also provide location-specific risk and logistical outputs at the county- or administrative subunit-level. For example, the age-adjusted infection fatality ratios and risk of ICU admission among hospitalized infections for the modeled counties within the distribution of all counties in the United States are presented in Fig. 3A,B. Using the \verb|load_hosp_geounit_relative_to_threshold| and \verb|plot_needs_relative_to_threshold_heatmap| functions from report.generation, the potential need for beds in excess of health system capacity by model location is displayed in our reports (Fig. 3C). Values of the location-specific healthcare capacity, represented by the number of staffed hospital, acute care, or intensive care beds available and/or number of ventilators available, are user-defined; these can be based on assumptions of the average availability per person or input from data where available.
+While fig.~\ref{fig:pipeline-seir} displays aggregate results, our reports also provide location-specific risk and logistical outputs at the county- or administrative subunit-level. For example, the age-adjusted infection fatality ratios and risk of ICU admission among hospitalized infections for the modeled counties within the distribution of all counties in the United States are presented in fig.~\ref{fig:pipeline-outcome}A,B. Using the \verb|load_hosp_geounit_relative_to_threshold| and \verb|plot_needs_relative_to_threshold_heatmap| functions from report.generation, the potential need for beds in excess of health system capacity by model location is displayed in our reports (Fig. 3C). Values of the location-specific healthcare capacity, represented by the number of staffed hospital, acute care, or intensive care beds available and/or number of ventilators available, are user-defined; these can be based on assumptions of the average availability per person or input from data where available.
 
 A map of model outputs makes it easier to visualize spatial and temporal heterogeneity in different intervention scenarios (Fig. 4). This functionality is provided in the \verb|load_cum_inf_geounit_dates| and \verb|plot_geounit_map| functions in the report.generation package.
 
@@ -327,7 +327,7 @@ While collaborating with CHUV on these reports, access to precise hospitalizatio
 \end{figure}
 
 
-Access to individual-level data from 1093 patients, hospitalized in the canton of Vaud up to April 14, 2020 was granted. Of all patients, 41\% (448/1093) were female and 59\% were male (645/1093) with a median age of 70 years (Supplementary Material, SM, Figure~\ref{fig:vdage}). Of all the hospitalized cases, 20\% (214/1093) required use of an Intensive Care Unit (ICU).
+Access to individual-level data from 1093 patients, hospitalized in the canton of Vaud up to April 14, 2020 was granted. Of all patients, 41\% (448/1093) were female and 59\% were male (645/1093) with a median age of 70 years (Supplementary Material, SM, fig.~\ref{fig:vdage}). Of all the hospitalized cases, 20\% (214/1093) required use of an Intensive Care Unit (ICU).
 
 
 Of 777 patients with a known outcome on April 14, 104 died (13\%). 
@@ -343,7 +343,7 @@ The hospitalized Case Fatality Ratio (hCFR) is estimated by adjusting for the di
 Times to death and discharge were best described by log-normal distributions with a single group both for patients having required ICU or not (Fig.~\ref{fig:delays}). When accounting for right-censoring and assuming log-normally distributed times to events, an overall hCFR is estimated at 16.0\% (95\% credible interval, CrI: 12.5-19.8), resulting from a hCFR of 28.1\% (95\% CrI: 16.4-40.9) for patients requiring ICU and 13.0\% (95\% CrI: 9.9-16.6) for patients that did no require it. Estimated hCFRs were slightly higher when assuming gamma-distributed times to events (overall hCFR of 20.3\%, 95\% CrI: 15.9-24.1).
 
 
-\noindent The distribution of times of hospitalization processes are shown in Fig.~\ref{fig:vdtimes}, and fitted distribution parameters given in Table~\ref{tab:vdparams}.
+\noindent The distribution of times of hospitalization processes are shown in fig..~\ref{fig:vdtimes}, and fitted distribution parameters given in Table~\ref{tab:vdparams}.
 
 
 \begin{table}[t]
