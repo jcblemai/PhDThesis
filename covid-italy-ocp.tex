@@ -96,7 +96,7 @@ The model subdivides the Italian population into its 107 provinces represented a
 
 Apart from hospitalized $H$, quarantined $Q$, dead $D$, and symptomatic individuals $I$, a fraction of the other individuals commutes between provinces along the mobility network, thus node-to-node disease transmission is introduced along the network shown in fig.~\ref{fig:model_description_network}.
 
-Compartments $P$, $A$, and $I$ have different degrees of infectiousness and contribute to the force of infection (Equation \eqref{eq:foiL} and \eqref{eq:foiM}), which represents the rate at which susceptibles $S$ become infected and, thus, enter the exposed compartment $E$. The force of infection in each province is constituted of a local and a mobility component. The local component describes transmission among the local individuals. The mobility component considers that local susceptibles may enter in contact with infected individuals that are traveling, and oppositely, susceptible commuters may become infected through contact with local infected. Connected provinces contribute to this process depending on the strength of the mobility fluxes from and to the node of interest.
+Compartments $P$, $A$, and $I$ have different degrees of infectiousness and contribute to the force of infection (eqn.~\eqref{eq:foiL} and \eqref{eq:foiM}), which represents the rate at which susceptibles $S$ become infected and, thus, enter the exposed compartment $E$. The force of infection in each province is constituted of a local and a mobility component. The local component describes transmission among the local individuals. The mobility component considers that local susceptibles may enter in contact with infected individuals that are traveling, and oppositely, susceptible commuters may become infected through contact with local infected. Connected provinces contribute to this process depending on the strength of the mobility fluxes from and to the node of interest.
 
 The estimated vaccine efficacy and immunity duration depends on the vaccine type. Because the focus is on spatial patterns and differences among vaccination strategies, the vaccination process is simplifed by assuming a one-dose vaccine with instantaneous 100\% efficacy. %This simplification does not influence the relative vaccine allocation between provinces and is independent of the specific vaccine used. 
 Moreover, that vaccines protection is assume persists during the three months of projection considered.
@@ -181,7 +181,7 @@ In order to evaluate the effectiveness of our approach, the optimal vaccination 
 \paragraph{Optimal control problem definition}Let $n$ the number of spatial nodes ($n=107$ provinces in Italy) and $m$ the number of epidemic states in our model ($m=9$ states).
 The states of the system are noted $x(t) \in \mathbb{R}_+^{n\times m}$, i.e., $x(t)$ is a vector containing the epidemic variables $S_i(t)$, $E_i(t)$, $P_i(t)$, $I_i(t)$, $A_i(t)$, $Q_i(t)$, $H_i(t)$, $R_i(t)$, $V_i(t)$ for every province $i=1,...,n$. The rate of vaccine rollout for every node $i$ at time $t$ is written $v(t) = (v_1(t),...,v_n(t)) \in \mathbb{R}_+^{n}$, representing our control variable:. %Omitting the time dependence $t$, t
 
-The dynamics of the epidemiological model (Equation~\eqref{eq:sepiar}) are expressed as an ordinary differential equation in each province $i$:
+The dynamics of the epidemiological model (eqn.~\eqref{eq:sepiar}) are expressed as an ordinary differential equation in each province $i$:
 \begin{equation}
     \label{eq:sepiar_compact}
     \dot x_i(t) = F_i(x_i(t),v_i(t), m_i(t), t),
@@ -221,7 +221,7 @@ Given our dynamical system with states $x$, controls $v$, and dynamics $F$, the 
     \end{align}
 \end{subequations}
 
-where the aim is to minimize the cost function over the control horizon $T$, while enforcing the modeled SARS-CoV-2 transmission dynamics (Equations \eqref{eq:ocp_dyn1} and \eqref{eq:ocp_dyn2}). Moreover, the constraints imposed by vaccine availability and the maximum vaccination rate are lumped in function $H$ that expands to
+where the aim is to minimize the cost function over the control horizon $T$, while enforcing the modeled SARS-CoV-2 transmission dynamics (eqns. \eqref{eq:ocp_dyn1} and \eqref{eq:ocp_dyn2}). Moreover, the constraints imposed by vaccine availability and the maximum vaccination rate are lumped in function $H$ that expands to
 \begin{subequations}
     \begin{align}
         v_i(t) &\geq 0, && i\in\mathbb{I}_1^n, \label{eq:constr_vacc_met} \\
@@ -230,8 +230,7 @@ where the aim is to minimize the cost function over the control horizon $T$, whi
     \end{align}
 \end{subequations}
 
-where time is measured in days, and $\mathbb{I}_a^b$ is the set of all integers $a\leq k\leq b$. Equation \eqref{eq:constr_vacc_met} enforces that one can only distribute a non-negative amount of vaccine doses. Equation \eqref{eq:constr_day_met} states the logistic constraints, which limit to $v_i^\mathrm{max}$ the amount of individuals that can be vaccinated each day in each node; here $t_\mathrm{d}$ is the time at which each day starts. The daily vaccination capacity of each province is set to be proportional to its population size $N_i$, assuming a fair distribution of the sanitary infrastructure among provinces, as shown in SI (Figure \ref{fig:OC_logistic_constraints}). The constraint on the national stockpile is materialized by Equation
-\eqref{eq:constr_week_met}, which ensures that the total vaccine allocation across all nodes does not exceed the stockpile $D(t)$. The stockpile is replenished every Monday by the delivery of new vaccines, hence $D(t)$ is a staircase function.
+where time is measured in days, and $\mathbb{I}_a^b$ is the set of all integers $a\leq k\leq b$. eqn.~\eqref{eq:constr_vacc_met} enforces that one can only distribute a non-negative amount of vaccine doses. eqn.~\eqref{eq:constr_day_met} states the logistic constraints, which limit to $v_i^\mathrm{max}$ the amount of individuals that can be vaccinated each day in each node; here $t_\mathrm{d}$ is the time at which each day starts. The daily vaccination capacity of each province is set to be proportional to its population size $N_i$, assuming a fair distribution of the sanitary infrastructure among provinces, as shown in SI (fig.~\ref{fig:OC_logistic_constraints}). The constraint on the national stockpile is materialized by eqn~\eqref{eq:constr_week_met}, which ensures that the total vaccine allocation across all nodes does not exceed the stockpile $D(t)$. The stockpile is replenished every Monday by the delivery of new vaccines, hence $D(t)$ is a staircase function.
 
 
 
@@ -239,12 +238,12 @@ where time is measured in days, and $\mathbb{I}_a^b$ is the set of all integers 
 
 \marginnote[1\baselineskip]{For an overview of the possible solution approaches for optimal control problems the interested reader is refered to \textcite{Betts:PracticalMethodsOptimal:2010,Biegler:NonlinearProgramming:2010}. In particular, in this work, a variant of direct multiple shooting \textcite{Bock:MultipleShootingAlgorithm:1984} tailored to distributed systems \textcite{Savorgnan:MultipleShootingDistributed:2011} is used.} 
 
-The optimal control problem in Equation~\eqref{eq:ocp} is solved by a direct method, also called \emph{first discretize, then optimize}, which transforms the control problem into a nonlinear programming problem. Within direct methods, direct multiple shooting is employed. 
+The optimal control problem in eqn.~\eqref{eq:ocp} is solved by a direct method, also called \emph{first discretize, then optimize}, which transforms the control problem into a nonlinear programming problem. Within direct methods, direct multiple shooting is employed. 
 
 
 Our time window $[0,T]$ is divided into a uniform time grid $t_0,\ldots,t_N$, with $N+1$ points and $t_0=0$, $t_N=T$. Hence there are $N$ intervals $[t_k,t_{k+1}]$, and the states at time $t_k$ is denoted $x_k=x(t_k)$, and $v_k$  represent the controls in interval $[t_k,t_{k+1}]$. The control function is parameterized using basis functions with local support. \marginnote[-2.5\baselineskip]{For discretization, a uniform time grid is choosen here, i.e., $t_{k+1}=t_k+\delta_t$ and a piecewise constant control function, i.e., $v(t)=v_k$, $t\in [t_k,t_{k+1}]$. This is a common choice but other are possible. Here $\delta t=1\ \mathrm{day}$.}
 
-The continuous-time dynamics~$F$ in Equation \eqref{eq:dynamics} are transformed by numerical integration into the discrete-time operator $f$ by numerical integration. The system dynamics are then discretized to obtain a discrete-time system.
+The continuous-time dynamics~$F$ in eqn.~\eqref{eq:dynamics} are transformed by numerical integration into the discrete-time operator $f$ by numerical integration. The system dynamics are then discretized to obtain a discrete-time system.
 
 \begin{align*}
     x_{k+1} = f(x_k,v_k),
