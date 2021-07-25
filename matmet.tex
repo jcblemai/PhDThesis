@@ -79,7 +79,7 @@ For inference or prediction, several candidates models may be devised for same d
 The log-likelyhood (or log predictive density), $\Pr(data \mid \boldsymbol\theta$  is often used. Note by using the likelyhood instead of the posterior, we don’t depends on the priors but just on the data model (but as the prior influence $\boldsymbol\theta$, it does affects the calculation of the predictive density). The log predictive accuracy as a scoring function i related to information theory, and to the Kull-back Leibler information.
 Unfortunatly, the hypothetical gold standard that is the expected log predictive density for new datapoints is out-of-reach in most of our problems. However we can compute an optimistic\footnote{optimistic because we have used the same as we used to calibrate our model. Generaly, out-of-sample predictions (i.e for a new datapoint) will be less accurate that what this within-sample accuraty}estimation, computing the log-poinwise predictive density of our model to the fitted data. For $s$ posterior samples and our $n$ datapoints, we have
 \begin{equation}
-	EQUN 7.4 \ref{eq:llik}
+	EQUN 7.4~\label{eq:llik}
 \end{equation}
 To approxmimate the true out-of sample predictive accurcy we can 
 \begin{itemize}
