@@ -64,6 +64,10 @@
 % provide \FloatBarrier and ensure that floats are placed within their section (can remove this option \usepackage[section]{placeins})
 \usepackage{placeins}
 
+
+% lower case label for figure and tables:
+\usepackage[tablename=tab., figurename=fig.]{caption}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% FRONTMATTER %%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -320,20 +324,59 @@ textheight=690pt,
 %\setcounter{DefaultLines}{5}
 %\renewcommand{\LettrineFontHook}{\initials}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% YAML LISTING %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% from https://tex.stackexchange.com/questions/152829/how-can-i-highlight-yaml-code-in-a-pretty-way-with-listings
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\newcommand\YAMLcolonstyle{\color{darkgray}\mdseries\small}
+\newcommand\YAMLkeystyle{\color{darkgray}\mdseries\ttfamily\small}
+\newcommand\YAMLvaluestyle{\color{orange}\mdseries\small}
+\makeatletter
+% here is a macro expanding to the name of the language
+% (handy if you decide to change it further down the road)
+\newcommand\language@yaml{yaml}
+\expandafter\expandafter\expandafter\lstdefinelanguage
+\expandafter{\language@yaml}
+{
+  keywords={true,false,null,y,n},
+  keywordstyle=\color{darkgray}\bfseries,
+  basicstyle=\YAMLkeystyle,                                 % assuming a key comes first
+  sensitive=false,
+  comment=[l]{\#},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\YAMLvaluestyle\ttfamily,
+  moredelim=[l][\color{orange}]{\&},
+  moredelim=[l][\color{magenta}]{*},
+  moredelim=**[il][\YAMLcolonstyle{:}\YAMLvaluestyle]{:},   % switch to value style at :
+  morestring=[b]',
+  morestring=[b]",
+  literate =    {---}{{\ProcessThreeDashes}}3
+                {>}{{\textcolor{red}\textgreater}}1     
+                {|}{{\textcolor{red}\textbar}}1 
+                {\ -\ }{{\mdseries\ -\ }}3,
+}
+% switch to key style at EOL
+\lst@AddToHook{EveryLine}{\ifx\lst@language\language@yaml\YAMLkeystyle\fi}
+\makeatother
+\newcommand\ProcessThreeDashes{\llap{\color{cyan}\mdseries-{-}-}}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%% DOC %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \frontmatter
-\blankpage
+%\blankpage
 \input{frontmatter}
 \pdfbookmark[section]{\contentsname}{toc}
 \begin{fullwidth}\tableofcontents\listoffigures\listoftables\end{fullwidth}
 
 \mainmatter
 \input{introduction}
-%\input{matmet}
+\input{matmet}
 \input{cholera}
 \input{cholera-rainfall}
 \input{cholera-haiti-ocv}
