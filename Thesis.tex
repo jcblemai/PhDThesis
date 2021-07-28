@@ -370,19 +370,16 @@ textheight=690pt,
 \begin{document}
 \frontmatter
 %\blankpage
-\input{frontmatter}
-\pdfbookmark[section]{\contentsname}{toc}
-\begin{fullwidth}\tableofcontents\listoffigures\listoftables\end{fullwidth}
-
+%\input{frontmatter}
 \mainmatter
 \input{introduction}
-\input{matmet}
-\input{cholera}
-\input{cholera-rainfall}
-\input{cholera-haiti-ocv}
-\input{covid-pipeline-reports}
-\input{covid-switzerland-npi}
-\input{covid-italy-ocp}
+%\input{matmet}
+\input{cholera} % 1
+\input{cholera-rainfall} % 2
+\input{cholera-haiti-ocv} % 3
+\input{covid-pipeline-reports} % 4
+\input{covid-switzerland-npi} % 5
+\input{covid-italy-ocp} % 6
 \input{conclusions}
 
 \backmatter

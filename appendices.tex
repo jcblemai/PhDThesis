@@ -6,9 +6,135 @@
 
 %\chapter{Appendix to chapter 3}
 
-%\chapter{Appendix to chapter 6}
+\chapter{Appendix to chapter 5}
 
-\chapter{Appendix to chapter 7}
+\section{Scenario modeling vignette}
+Here is presented a vignette with 50 model simulations in a fictional setting (Location X) with nine counties (named A through I) in demonstrative intervention scenarios from January 31 to December 31, 2020. In this vignette, a walk through is offered on how to set up and run the pipeline, demonstrate some of the spatial and temporal features for modeling non-pharmaceutical interventions, and display some of the plotting functions useful for summarizing the model output.
+
+To run the model, users will require a second GitHub repository specific to their model location. A template for such a spatial repository may be found at “\verb|COVID19_Minimal|” (\url{github.com/HopkinsIDD/COVID19_Minimal}), and complete details on downloading and running the model are available in the template’s wiki at \url{github.com/HopkinsIDD/COVID19_Minimal/} wiki.
+
+Once a working environment is setup, the next step is to create a configuration file to describe the model specifications. A skeleton configuration file is included in the \verb|COVID19_Minimal| template, and the full configuration file accompanying the results of this vignette is in the “Supplementary Material”.
+
+First, the broad parameters of the run, such as the date range covered and the number of simulations to run are provided (see first section in “Supplementary Material”, Example YAML Configuration File).
+
+Next the spatial setup information identifying the location of files containing geographic data and the geographic targets for modeling are described. The \verb|spatial_setup| section of the configuration file identifies a geographical data (geodata) file that contains the population data for each county or administrative subunit in the location(s) of interest and a mobility matrix file that contains the daily trip counts for each pair of counties. Users may employ the R scripts “\verb|build_US_setup.R|” or “\verb|build_nonUS_setup.R|,” which are provided with the repository, to generate compatible geodata and mobility matrix files. For users modeling non-US settings, the Github repository “\url{COVID-19-Mobility-Data-Network/mobility}” can be used to fit real-time or sparse travel data with mobility models in order to generate similarly compatible mobility matrixes\cite{Giles:COVID19MobilityDataNetworkMobilityV0:2020,Giles:MobilityPackageModeling:2020}.
+
+In situations with high cross-border mobility, it may be important to model a region larger than the location of interest in order to appropriately capture disease transmission risk in a given location. Here, Locations X, Y, and Z are modeled even though Location X is the sole location of interest:
+\begin{lstlisting}[language=yaml]
+spatial_setup: 
+  base_path: data/location-x ## base path to spatial files 
+  setup_name: location-x ## spatial folder name 
+  geodata: geodata.csv ## path to geodata file with modeled geoids 
+  mobility: mobility.csv ## path to mobility matrix 
+  popnodes: pop ## column name of population in geodata 
+  nodenames: geoid ## column name of unique location identifiers in geodata 
+  modeled_states: 
+    - X 
+    - Y 
+    - Z
+\end{lstlisting}
+
+The locations of the seeding files are then specified (see seeding section in “Supplementary Material”, Example YAML Configuration File), with a separate section to describe the air importation model parameters as appropriate (see importation in “Supplementary Material”, Example YAML Configuration File).
+
+Next, the parameters that determine the course of the disease are choosen. The seir section of the configuration file defines parameters used in the SEIR disease transmission model, including the level of population mixing (where 1 is homogeneous mixing, and <1 is heterogeneous), the incubation period of the virus, the infectious period, and the baseline basic reproductive number R0. These values may be fixed or drawn randomly from a distribution, according to the configuration file:
+\begin{lstlisting}[language=yaml]
+seir: 
+  parameters: 
+    alpha: 1 ## mixing coefficient 
+    sigma: 1 / 5.2 ## inverse of the incubation period in days 
+    gamma: ## inverse of the infectious period in days 
+      distribution: uniform 
+      low: 1 / 6 
+      high: 1 / 2.6 
+    R0s: ## baseline basic reproductive number 
+      distribution: uniform 
+      low: 2 
+      high: 3
+\end{lstlisting}
+
+Typically sigma and gamma are parameterized in our model with estimates of the range of the serial interval (SI) or generation time, such that
+\begin{equation}
+\text{SI}=\frac{1}{2}\left(\frac{1}{\gamma }\right)+\frac{1}{\sigma },
+\end{equation}
+which assumes that the average infection occurs halfway through an index case’s infectious period.
+
+The next step is defining the modeled intervention scenarios. Here, five scenarios are considered in our vignette example: (1) a no intervention scenario (named Uncontrolled), in which R0 remains unchanged over the course of the outbreak; (2) social distancing measures with fixed effectiveness in place from March 19 to December 31 (\verb|SocialDistancing_fixed|); (3) social distancing measures with declining compliance, which were modeled as 10\% reductions in effectiveness every 2 weeks beginning March 19 (\verb|SocialDistancing_fatigued|); (4) social distancing measures following a 3-week on–off “pulsing” cycle from March 19 to August 12 (\verb|SocialDistancing_pulsed|); and (5) social distancing measures with spatial heterogeneity (\verb|SocialDistancing_checker|), where three of nine counties implement social distancing measures with fixed effectiveness from March 19 to December 31.
+
+%\begin{mybox}{Initial parameters}
+\marginnote{\textsc{Initial parameters}The serial interval represents which is the interval between two subsequent infections. For SARS-CoV-2, the serial interval was estimated to be in range $6.5-8.2$, from: \fullcite[][tab. S4]{Bi:EpidemiologyTransmissionCOVID19:2020}. 
+
+The basic reproductive number $R_0$ -- the number of newly infected caused by an infecteds in a fully susceptible population, has been estimated in the range 2 -- 3. From: \fullcite{Riou:PatternEarlyHumantohuman:2020}. This very early work also characterize $R_0$ and the dispersion of the number of secondary cases as important epidemic characteristic.
+}
+
+An intervention may be specified in a single block for all model locations, as in the case of the \verb|SocialDistancing_fixed| scenario, or for unique location identifiers (“geoids”) as in the \verb|SocialDistancing_checker| scenario:
+\begin{lstlisting}[language=yaml]
+SocialDistancing_fixed: ## scenario name 
+  template: ReduceR0 
+  period_start_date: 2020-03-19 ## intervention start date 
+  period_end_date: 2020-12-31 ## intervention end date 
+  value: ## randomly draw an intervention effectiveness value 
+         ##from a uniform distribution between .71 and .83 
+    distribution: uniform 
+    low: .71 
+    high: .83 
+SocialDistancing_checker: 
+  template: ReduceR0 
+  affected_geoids: ["County B", "County E", "County F"] 
+  ## ^ matches location IDs in geodata file 
+  period_start_date: 2020-03-19 
+  period_end_date: 2020-12-31 
+  value: 
+    distribution: uniform 
+    low: .71
+    high: .83
+\end{lstlisting}
+
+Other intervention scenarios require multiple blocks to be stacked together, as in the case of the \verb|SocialDistancing_pulsed| scenario, shown in truncated form below: 
+
+\begin{lstlisting}[language=yaml]
+SD_Pulse1: 
+  template: ReduceR0 
+  period_start_date: 2020-03-19 
+  period_end_date: 2020-04-08 
+  value: 
+    distribution: uniform 
+    low: .71 
+    high: .83 
+SD_Pulse2: 
+  template: ReduceR0 
+  period_start_date: 2020-04-30 
+  period_end_date: 2020-05-20 
+  value: 
+    distribution: uniform
+    low: .71 
+    high: .83 
+# [... SD_Pulse3 and SD_Pulse4 ...]
+SocialDistancing_pulsed: 
+  template: Stacked 
+  scenarios: 
+    - SD_Pulse1 
+    - SD_Pulse2
+    - SD_Pulse3
+    - SD_Pulse4
+\end{lstlisting}
+
+Then, the health outcome risk specifications are set up. In the hospitalization section of the configuration file, it is specified whether the model calculates health outcome risks with age-adjusted estimates, the average infection fatality ratios (IFR), and the time delays between different health outcomes. The time delays are modeled with lognormal distributions and parameterized with the log median and log standard deviation. For ease of use, a table of estimates found in the literature is provided in tab. S2 of the postprint.
+
+After the simulation runs complete, wrapid summaries of the results are produced using R Markdown templates provided by the report.generation package. The report section of the configuration file specifies scenario labels and colors, IFR scenario labels, and table display dates. These settings, along with other model parameters, can be loaded into a technical report template.
+
+Here it is described how the \verb|state_report| template in the report.generation package can be used to display our model results as an example. The full template-generated report linked to this vignette is provided in the “Supplementary Material” (Example Report). First, the configuration file is loaded to pull in the model settings and file paths. Then, a number of predefined functions to load and plot the data are used.
+
+For example, one standard report figure compares time series of the daily number of hospital beds needed across intervention scenarios (fig.~\ref{fig:pipeline-seir}) using the \verb|load_hosp_geocombined_totals| and \verb|plot_ts_hosp_state_sample| functions from the report.generation package in order to load and plot the data. To plot variations of these figures, one only need to change which health outcome variable is specified in \verb|plot_ts_hosp_state_sample|.
+
+While fig.~\ref{fig:pipeline-seir} displays aggregate results, our reports also provide location-specific risk and logistical outputs at the county- or administrative subunit-level. For example, the age-adjusted infection fatality ratios and risk of ICU admission among hospitalized infections for the modeled counties within the distribution of all counties in the United States are presented in fig.~\ref{fig:pipeline-outcome}\textsc{a,b}. Using the \verb|load_hosp_geounit_relative_to_threshold| and \verb|plot_needs_relative_to_threshold_heatmap| functions from report.generation, the potential need for beds in excess of health system capacity by model location is displayed in our reports (fig.~\ref{fig:pipeline-outcome}\textsc{c}). Values of the location-specific healthcare capacity, represented by the number of staffed hospital, acute care, or intensive care beds available and/or number of ventilators available, are user-defined; these can be based on assumptions of the average availability per person or input from data where available.
+
+A map of model outputs makes it easier to visualize spatial and temporal heterogeneity in different intervention scenarios (fig.~\ref{fig:pipeline-map}). This functionality is provided in the \verb|load_cum_inf_geounit_dates| and \verb|plot_geounit_map| functions in the report.generation package.
+
+Each report template is equipped to load static R Markdown reference chunks, which is pre-written and provided with the package. These chunks provide details on our methods, limitations, and key references, pulling in parameters from the configuration file as needed.
+
+
+
+\chapter{Appendix to chapter 6}
 
 \section{Comment on the simplifications}
 \paragraph{Discussion on Simplification (a).}

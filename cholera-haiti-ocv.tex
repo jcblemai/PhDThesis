@@ -2,9 +2,9 @@
 \chapter[Spatial stochastic model for modeling cholera elimination]{Estimating the probability of eliminating cholera from Haiti with a mass vaccination campaign}%Spatial stochatic model for modeling\\cholera elimination through mass vaccination campaigns}
 
 This chapter describes a model developed for a multi-modelling study. Four teams with existing experience in modeling cholera in Haiti were tasked to model scenarios of mass vaccination administration towards cholera immunity. The timing was meant to take advantage of the low incidence to affect the endemicity of cholera in Haiti to acheive elimination. The multi-model study was led by E. C. Lee and has been published as:
-\begin{fullwidth}
+
 	\longfullcite{Lee:AchievingCoordinatedNational:2020}%\footnote{ECL, ASA, JL, and LCI conceived of the study and contributed to project administration. ECL, DLC, JCL, and LM did the primary modelling analysis, and ECL, DLC, JCL, LM, DP, JP-S, and FF wrote the model supplements. FF, RT, KV, and LCI contributed to data collection. ECL and JL wrote the first draft of the report. ECL, DLC, JCL, LM, DP, JP-S, JDS, FF, MEH, IML, ASA, JL, and LCI contributed to the study design, and all authors contributed to data interpretation and revision of the report.}. 
-\end{fullwidth}
+
 
 For this collaborative effort, a hidden Markov model of cholera transmission is developed, with specific modeling choices to account for vaccination and to gather information on elimination timing and probability.
 The present chapter is adapted from Supplement 3 of the aforementioned publication, which describe our model. The reader is refered to the full work by Lee et al. for the full comparison.
@@ -20,15 +20,15 @@ In January 2010, an earthquake hit Haiti, disrupting healthcare and water infras
 	\caption[Incident cholera cases and rainfall in Haiti from 2010 to 2019]{Weekly incident cases and rainfall in the ten departments of Haiti from 2010 to 2019. Note that the first two years are shown with a different scale. The ressurgence in 2016 is linked to hurricane Matthew \parencites{Pasetto:RealtimeForecastingCholera:2018,Khan:AssessmentRiskCholera:2017}. The seasonality pattern is evident especially in Artibonite.}
 	\label{fig:data2}
 \end{fwfigure}
-This introduction in a naive population caused a major outbreak, totalling 820'000 reported cases and 10'000 death, most of them occurring in the first two years\cite{Barzilay:CholeraSurveillanceHaiti:2013}).  Since 2016, cases decreased steadily and finally the last cholera (culture) confirmed case occurred in early 2019\cite{RepubliquedHaiti:ProfilStatistiqueCholera}. Cholera exhibited a seasonal pattern with two annual peaks, and spread in every department of the country.
+This introduction in a naive population caused a major outbreak, totalling 820'000 reported cases and 10'000 death, most of them occurring in the first two years\cite{Barzilay:CholeraSurveillanceHaiti:2013}).  Since 2016, cases decreased steadily and finally the last cholera (culture) confirmed case occurred in early 2019\cite{Mitchell:PAHOWHOHaiti:2020}. Cholera exhibited a seasonal pattern with two annual peaks, and spread in every department of the country.
 
 
 \section{Spatial stochastic model for studying cholera elimination through vaccination campaigns}
 % Describe structure of their model and make appropriate references to their previous work. Ideally this will include at least one diagram illustrating the assumed natural history of disease and how vaccination works within the model and appropriate ODE/PDEs
 
 \paragraph{General principles} The cholera model adopted to study the Haitian epidemic is a stochastic compartmental model applied at the level of the ten Haitian departments. 
-The model is based on a Partially-Observed Markov Process (POMP), simulating the stochastic transitions between compartments as discrete events\cite{King:InapparentInfectionsCholera:2008}. 
-It is the stochastic translation of a deterministic SIRB model based on ordinary differential equations which has been extensively used to simulate the Haitian cholera epidemic in previous studies\cite[-4\baselineskip]{Rinaldo:Reassessment20102011:2012,Bertuzzo:ProbabilityExtinctionHaiti:2016,Pasetto:RealtimeForecastingCholera:2018,Camacho:PredictionCholeraDynamics:2016} and described in \textsc{Chapter 1}.
+The model is based on a Partially-Observed Markov Process (POMP), simulating the stochastic transitions between compartments as discrete events\cite[-8\baselineskip]{King:InapparentInfectionsCholera:2008}. 
+It is the stochastic translation of a deterministic SIRB model based on ordinary differential equations which has been extensively used to simulate the Haitian cholera epidemic in previous studies\cite[-8\baselineskip]{Rinaldo:Reassessment20102011:2012,Bertuzzo:ProbabilityExtinctionHaiti:2016,Pasetto:RealtimeForecastingCholera:2018} and described in \textsc{Chapter 1}. % ,Camacho:PredictionCholeraDynamics:2016
 
 The model subdivides the population of each department\footnote{The case data was provided for the ten departments of Haiti, so the model spatial unit is the department. Other teams decided either the same scale, coarser (national for Lee et al.) or finer (1km grid for Chao et al.)} into compartments counting the number of individuals at the different stages of the disease: susceptible individuals $S$, symptomatic $I$ and asymptomatic $A$ infected and recovered individuals $R$. The main feature of our model is that it contains an environmental compartment describing the bacterial concentration $B$ in the local environment, which is used to estimate the force of infection\cite{Rinaldo:Reassessment20102011:2012, Bertuzzo:PredictionSpatialEvolution:2011}. Precipitation is an important environmental driver of cholera transmission\cite{Camacho:CholeraEpidemicYemen:2018}, especially in Haiti\shortcite{Rinaldo:Reassessment20102011:2012}. In our model, rainfall increases the rate at which bacteria shed by infected individuals enter the environmental reservoir and thus increases the bacterial concentration and finally the force of infection\cite{Lemaitre:RainfallDriverEpidemic:2019}. A diagram of the model is given in fig.~\ref{figEPFL}.
 \subsection{Model dynamics} 
@@ -186,7 +186,7 @@ The parameters of the model are shown in tab.~\ref{paramEPFL}.
 % Table with all model parameters indicating whether each is fit or assumed (with some description of assumptions) and appropriate references to primary literature (please don't cite previous parameters used in modeling studies).
 
 \begin{table*}
-\caption{Parameters of the model. References:%\fullciteshortb{Levine:DurationInfectionDerivedImmunity:1981, Koelle:DisentanglingExtrinsicIntrinsic:2004, Bertuzzo:SpacetimeEvolutionCholera:2008, Kaper:Cholera:1995}
+\caption{Parameters of the model. %References:%\fullciteshortb{Levine:DurationInfectionDerivedImmunity:1981, Koelle:DisentanglingExtrinsicIntrinsic:2004, Bertuzzo:SpacetimeEvolutionCholera:2008, Kaper:Cholera:1995}
 }
 \begin{tabular}{lcccl}
 \toprule

@@ -65,7 +65,7 @@ Without laboratory equipment, it is impossible to distinguish cholera from anoth
 
 \paragraph{WaSH} Water, Sanitation and Hygiene (WaSH) is a broad term that includes many intervention strategies that are key to the long term elimination of cholera. The improved sanitary conditions have been the main factor that led to cholera elimination in first world countries. WaSH is divided into short and long term measures. Short term strategies involve sterilization, decontamination, hand washing, education sessions and water purification and filtering (chlorination, ...)\cite{Rebaudet:NationalAlertresponseStrategy:2018,Fewtrell:WaterSanitationHygiene:2005}. Long-term sanitation strategies involve the construction of infrastructures for fecal sludge management, sewage systems, toilets and access to safe water sources. From a modeling point of view, WaSH reduces exposure (water purification, sari filtration\cite{Colwell:ReductionCholeraBangladeshi:2003}) and shedding (sewage and fecal sludge management). By its nature and the possible long term effects, WaSH improvement is difficult to quantify in modeling frameworks.
 
-\paragraph{Vaccination} is a safe and effective way to protect individuals from cholera, and to reduce the propagation of the epidemic. It can be used in a preventive or reactive way. Several vaccine exists for cholera, with different characteristics. As of today, two main oral cholera vaccines (OCVs) are used in vaccination campaigns around the world: WC-rBS and BivWC\footnote[][-3\baselineskip]{Another vaccine, Vaxchora, was recently approved by the FDA, mostly for travelers.}. The main characteristics of these two vaccines are shown in tab.~\ref{tab:vacc}.
+\paragraph{Vaccination} is a safe and effective way to protect individuals from cholera, and to reduce the propagation of the epidemic. It can be used in a preventive or reactive way. Several vaccine exists for cholera, with different characteristics. As of today, two main oral cholera vaccines (OCVs) are used in vaccination campaigns around the world: WC-rBS and BivWC\footnote[][-2\baselineskip]{Another vaccine, Vaxchora, was recently approved by the FDA, mostly for travelers.}. The main characteristics of these two vaccines are shown in tab.~\ref{tab:vacc}.
 
 \begin{table}[h]
 \centering\small
@@ -91,9 +91,7 @@ Usage & Since 1998 in most recent outbreaks & Between 1997 and 2009 in Uganda, T
 \caption[Characteristic of currently available vaccines][-2\baselineskip]{Characteristic of currently available vaccines. The proposed value for field effectiveness, along with vaccine efficacy (not shown here) is really difficult to evaluate, cannot be written in a simple way without omitting crucial information. A good review of research on cholera vaccine is the WHO Position paper on cholera vaccines~\fullcite{WHO:CholeraVaccinesWHO:2017}. See also~\textcite{WHO:BackgroundPaperWholeCell:2017,Azman:PopulationLevelEffectCholera:2016,Luquero:FirstOutbreakResponse:2013,WHO:BackgroundPaperIntegration:2009,Luquero:UseVibrioCholerae:2014,Qadri:EfficacySingledoseRegimen:2018,Bi:ProtectionCholeraKilled:2017,Azman:ImpactOneDoseTwoDose:2015,Tohme:OralCholeraVaccine:2015}.}
 \label{tab:vacc}
 \end{table}
-
  Vaccine can either be administered in a targeted fashion or to the whole population in mass vaccination campaigns. Despite the efforts to build a worldwide vaccine stockpile, the demand for cholera vaccine vastly exceeds the supply\cite[-1\baselineskip]{Parker:AdaptingGlobalShortage:2017a,Seidlein:PreventingCholeraOutbreaks:2018}.
-
 
 \section{Cholera Modeling}
 
@@ -133,11 +131,11 @@ The cholera dynamics are described by the following set of coupled ordinary diff
 \frac{dV^S_i}{dt} &=& \nu_i(t) \frac{S_i}{S_i+R_i}-\mu V^S_i \label{eq:VS2}\\
 \frac{dV^I_i}{dt} &=& \sigma (1-\eta) F_i(t) V^S_i - (\gamma + \mu + \alpha) V^I_i \label{eq:VI2}\\
 \frac{dV^R_i}{dt} &=& \nu_i(t) \frac{R_i}{S_i+R_i} + (1-\sigma) (1-\eta) F_i(t) V^S_i + \gamma V^I_i - (\mu+\rho_v) V^R_i \label{eq:VR2}\\
-\frac{dB_i}{dt} &=& - \mu_B B_i +\frac{p}{W_i}\left[1 + \phi J_i(t) \right] \left((1-m)(I_i +V_i^I)+m \sum_{j=1}^n Q_{ij} (I_j +V_j^I)\right)-  l \left( B_i - \sum_{j=1}^n P_{ji} \frac{W_j}{W_i} B_j \right)
+\frac{dB_i}{dt} &=& - \mu_B B_i +\frac{p}{W_i}\left[1 + \lambda J_i(t) \right] \left((1-m)(I_i +V_i^I)+m \sum_{j=1}^n Q_{ij} (I_j +V_j^I)\right)-  l \left( B_i - \sum_{j=1}^n P_{ji} \frac{W_j}{W_i} B_j \right)
 \end{eqnarray}
 \endgroup
 \end{fullwidth}
-where the population~$H_i$ of each node is assumed to be at demographic equilibrium, thus $S_i=H_i-I_i-R_i-V_i^S-V_i^I-V_i^R$.
+Here demographic equilibrium is assumed, hence the population~$H_i$ of each node is assumed to be constant, which implies that the number of susceptible individuals at time $t$ is $S_i(t) = H_i - I_i(t) - R_i(t) - V_i^S(t) - V^I_i(t) - V_i^R(t)$, but it is also possible, to model $\frac{dS_i}{dt}$ dynamically.   Cholera related and unrelated death rates are named  $\alpha$ and $\mu$ respectively.
 
 The force of infection, i.e the rate at which individual enters in contact with the diseases, is written as:
 
@@ -146,7 +144,11 @@ F_i(t) = \beta \left[ (1 - m) \frac{B_i}{K + B_i} + m \sum_{j=1}^n Q_{ij} \frac{
 \label{force}
 \end{equation}
 
-The parameter~$\beta$ represents the maximum exposure rate, which may decrease in time due to awareness of the population on the cholera transmission factors\cite{Bertuzzo:ProbabilityExtinctionHaiti:2016}. The fraction $B_{i}/(K+B_{i})$ is the probability of becoming infected due to the exposure to a concentration~$B_i$ of \textit{V.~cholerae}, $K$ being the half-saturation constant\cite{Codeco:EndemicEpidemicDynamics:2001}. The force of infection in a given node depends for a fraction ($1-m$) to the local concentration of \textit{V.~cholerae}, $B_i$, while the remaining fraction $m$, represents the community-level probability that individuals travel outside their node, accounts for the contribution of the concentration~$B_j$ of the remote communities. 
+The compartment $B$ quantifies the concentration of \textit{V. cholerae} in the local (conceptualized) water reservoir, which is used to estimate the probability of exposure to the contaminated water in eqn.~\eqref{eq:force} through the term $\beta_B  \frac{B}{K+B}$, where  $\beta_B$ is the maximum exposure rate and $K$ is the half-saturation constant of the dose-response function of \textit{V.~cholerae}\cite{Codeco:EndemicEpidemicDynamics:2001}. Parameter $K$ is set to unity by considering the change of variable $\tilde{B}=B/K$. The parameter $\mu_B$ expresses the rate of decay of bacteria in the environment. 
+
+The parameter~$\beta$ represents the maximum exposure rate, which may varies in time due to non-pharmaceutical interventions or the awareness of the population\cite{Bertuzzo:ProbabilityExtinctionHaiti:2016}.
+
+ The fraction $B_{i}/(K+B_{i})$ is the probability of becoming infected due to the exposure to a concentration~$B_i$ of \textit{V.~cholerae}, $K$ being the half-saturation constant\cite{Codeco:EndemicEpidemicDynamics:2001}. The force of infection in a given node depends for a fraction ($1-m$) to the local concentration of \textit{V.~cholerae}, $B_i$, while the remaining fraction $m$, represents the community-level probability that individuals travel outside their node, accounts for the contribution of the concentration~$B_j$ of the remote communities. 
 The human mobility is accounted with the matrix $Q_{ij}$ representing the probabilities that an individual living in node $i$ reaches~$j$ as a destination. Because of human mobility, a susceptible individual residing at node $i$ can be exposed to pathogens in the destination community $j$. 
 In the lack of detailed mobility data,  the probabilities~$Q_{ij}$ can be estimated through a gravity approach\cite{Erlander:GravityModelTransportation:1990} to model human mobility:
 
@@ -156,10 +158,11 @@ Q_{ij} = \frac{H_j e^{-d_{ij}/D}}{\sum_{k \neq i}^n H_k e^{-d_{ik}/D}} \, ,
 \end{equation}
 where the attractiveness of node~$j$ depends on its population size $H_j$, while the deterrence factor is assumed to be dependent on the distance~$d_{ij}$ between the two communities via an exponential kernel (with shape factor~$D$).  
 
-Due to the contact with contaminated water, a fraction $\sigma$ of the infected individuals develops symptoms, passing from compartment $S$ to $I$. The remaining fraction~$(1-\sigma)$ does not develop symptoms, does not contribute to the disease transmission, and is considered temporally immune, thus passing from compartment $S$ to $R$.  Symptomatic infected individuals recover at a rate~$\gamma$, or die due to cholera or other causes at rates~$\alpha$ or $\mu$, respectively.
-Recovered individuals lose their immunity at rate~$\rho$, thus passing from compartments $R$ to $S$, or die at a rate~$\mu$.  % TODO Too many times property.
+Individuals are removed from the susceptible compartment $S$ at rate $F(t)$.  A fraction $\sigma$ of the infected individuals develops symptoms, passing from compartment $S$ to $I$ and shed \textit{V.~cholerae} into the local watershed at rate $\theta$.  The remaining fraction~$(1-\sigma)$ does not develop symptoms and does not contribute to the disease transmission\footnote{In the model presented in \textsc{Chapter 3}, asymptomatic indivuals are assume to contribute to disease transmission, and are explicitely modeled in a compartment $A$.}, and is considered temporally immune, thus passing from compartment $S$ to $R$.  Symptomatic infected individuals recover at a rate~$\gamma$\footnote{Hence the mean infectious period is $\frac{1}{\gamma}$ [duration]. Correspondingly the life expectancy without cholera would be $\frac{1}{\mu}$.}, or die due to cholera or other causes at rates~$\alpha$ or $\mu$, respectively.
+Recovered individuals lose their immunity at rate~$\rho$, the average rate of loss of immunity for individuals that previously had been asymptomatic or symptomatic, or die at a rate~$\mu$. In both case they return to susceptible (loss of immunity or death with constant population is associated to a birth).
 
-The environmental concentration of \textit{V.~cholerae} at a node $i$ may increase due to both human mobility and to hydrologic dispersion. Contribution from human account from a fraction $1-m$ on the local infected individuals and from a fraction $m$ on the symptomatic infected individuals moving according to the mobility model. The increase in bacteria concentration is modeled with the rate~$p/W_i$, where $p$ is the rate at which bacteria excreted by an infected individual reach and contaminate the local water reservoir of volume $W_i$ (assumed to be proportional to population size, i.e., $W_i=c H_i$ as in\textcite{Rinaldo:Reassessment20102011:2012}) and $\mu_B$ is the rate of decay of \textit{V.~cholerae}. Bacteria undergo hydrologic dispersal at a rate~$l$: pathogens travel from node~$i$ to~$j$ with probability $P_{ij}$, which is assumed to be one if node~$j$ is the downstream nearest neighborhood $i$, and zero otherwise. In order to express the worsening of sanitation conditions caused by rainfall-induced runoff, when relevant, which causes additional pathogen loads to enter the water reservoir due to effects such as the overflow of pit latrines and washout of open-air defecation sites\cite{Gaudart:SpatioTemporalDynamicsCholera:2013}, the contamination rate $p$ is increased by the rainfall intensity $J_i(t)$ via a coefficient $\phi$\cite{Rinaldo:Reassessment20102011:2012,Righetto:RainfallMediationsSpreading:2013}. By introducing the dimensionless bacterial concentrations $B_i^*=B_i/K$,  it is possible to group three model parameters into a single ratio $\theta=p/(cK)$\cite{Bertuzzo:SpacetimeEvolutionCholera:2008}.
+
+The environmental concentration of \textit{V.~cholerae} at a node $i$ may increase due to both human mobility and to hydrologic dispersion. Contribution from human account from a fraction $1-m$ on the local infected individuals and from a fraction $m$ on the symptomatic infected individuals moving according to the mobility model. The increase in bacteria concentration is modeled with the rate~$p/W_i$, where $p$ is the rate at which bacteria excreted by an infected individual reach and contaminate the local water reservoir of volume $W_i$ (assumed to be proportional to population size, i.e., $W_i=c H_i$ as in\textcite{Rinaldo:Reassessment20102011:2012}) and $\mu_B$ is the rate of decay of \textit{V.~cholerae}. Bacteria undergo hydrologic dispersal at a rate~$l$: pathogens travel from node~$i$ to~$j$ with probability $P_{ij}$, which is assumed to be one if node~$j$ is the downstream nearest neighborhood $i$, and zero otherwise. In order to express the worsening of sanitation conditions caused by rainfall-induced runoff, when relevant, which causes additional pathogen loads to enter the water reservoir due to effects such as the overflow of pit latrines and washout of open-air defecation sites\cite{Gaudart:SpatioTemporalDynamicsCholera:2013}, the contamination rate $p$ is increased by the rainfall intensity $J_i(t)$ via a coefficient $\lambda$\cite{Rinaldo:Reassessment20102011:2012,Righetto:RainfallMediationsSpreading:2013}. By introducing the dimensionless bacterial concentrations $B_i^*=B_i/K$,  it is possible to group three model parameters into a single ratio $\theta=p/(cK)$\cite{Bertuzzo:SpacetimeEvolutionCholera:2008}.
 
 The estimation of the local incidence is computed integrating over the new symptomatic individuals,
 
@@ -167,11 +170,18 @@ The estimation of the local incidence is computed integrating over the new sympt
 \frac{d C_i}{dt} \ = \ \sigma F_i S_i  \, , \label{eq:C}
 \end{equation}
 
-During the vaccination campaign, OCV doses are assumed to be distributed with rate $\nu_i(t)$ to susceptible and recovered individuals, which enter the compartments $V^S$ and $V^R$. As the OCV provides a partial immunity having efficacy $\eta$, $0\leq \eta \leq 1$, vaccinated susceptibles ($V^S$) can become infected ($V^I$) through a decreased force of infection of a factor $(1-\eta)$ with respect to non-vaccinated individuals. Vaccinated infected individuals behave exactly like infected ones, but are placed in a different compartment to exclude them from future vaccination campaigns. After recovering at  rate $\gamma$, they lose their vaccine protection at rate $\rho_{v}$.
+During the vaccination campaign, oral cholera vaccines (OCV)  doses are assumed to be distributed with rate $\nu_i(t)$ to susceptible and recovered individuals, which enter the compartments $V^S$ and $V^R$. As the OCV provides a partial immunity having efficacy $\eta$, $0\leq \eta \leq 1$, vaccinated susceptibles ($V^S$) can become infected ($V^I$) through a decreased force of infection of a factor $(1-\eta)$ with respect to non-vaccinated individuals. Vaccinated infected individuals behave exactly like infected ones, but are placed in a different compartment to exclude them from future vaccination campaigns. After recovering at  rate $\gamma$, they lose their vaccine protection at rate $\rho_{v}$.
 
-SAY ABOUT NEXT
 
-%%Colwell:ReductionCholeraBangladeshi:2003
+In the next chapters on cholera, derivations of this models are used:
+\begin{itemize}
+	\item \textsc{Chapter 2}: The model is very similiar, with only one spatial node, the addition of the incubating individuals $E$ and $V_E$ and of a more precise rainfall formulation. The force of infection is generalized to encompass non-linear rainfall effects and human-to-human transmission. A stochastic version is also proposed.
+	\item  \textsc{Chapter 3}: The model is also a very similar stochastic translation of the present model, with mobility (but no hydrological transport) implemented as human-to-human transmission. The vaccines effect is described more precisely. The recovery period is erlang distributed with several $R$ compartments. The rainfall uses the same non-linear effect introduced in 
+\end{itemize}
+The COVID-19 models later proposed are different, but share some features (e.g the mobility formulation is close in \textsc{Chaper 4} and \textsc{Chapter 6}) and the general structure of compartmental model.
+
+
+
 
 %ffective targeted interventions 
 %could eliminate 50\% of the region’s cholera by covering 35·3 million people (95% CrI 26·3 million to 62·0 million),

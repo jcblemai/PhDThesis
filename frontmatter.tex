@@ -15,22 +15,22 @@
 %\cleardoublepage
 %\begin{fullwidth}
 
-%\newenvironment{dedication}
- % {\clearpage           % w- want a new page
-  % \thispagestyle{empty}% no header and footer
-  % \vspace*{\stretch{2}}% some space at the top 
+\newenvironment{dedication}
+  {\clearpage           % w- want a new page
+   \thispagestyle{empty}% no header and footer
+   \vspace*{\stretch{2}}% some space at the top 
    %\itshape             % the text is in italics
   
-%\leftskip=10cm
-%\raggedright
-%\parindent=0pt
-%\begin{fullwidth}
- % }
-  %{\par % end the paragraph
-   %\vspace{\stretch{3}} % space at bottom is three times that at the top
-   %\clearpage           % finish off the page
-%\end{fullwidth}  }
- %\begin{dedication}
+\leftskip=10cm
+\raggedright
+\parindent=0pt
+\begin{fullwidth}
+  }
+  {\par % end the paragraph
+   \vspace{\stretch{3}} % space at bottom is three times that at the top
+   \clearpage           % finish off the page
+\end{fullwidth}  }
+ \begin{dedication}
 %\hspace{7.5cm}Vedrò con mio diletto \\
 %\hspace{7.5cm}L'alma dell'alma mia, dell'alma mia  \\
 %\hspace{7.5cm}Il core del mio cor  \\
@@ -53,9 +53,9 @@
 %\hspace{7.5cm}Pien di contento, pien di contento \\
 %\hspace{11cm}-- Anastasio
 
-%\hspace{7.5cm} On vise le Porsche Panamera et dire aux proches que ça ira. \\
-%\hspace{11cm}-- \textsc{Maes}
-%\end{dedication}
+\hspace{7.5cm} \textit{On vise le Porsche Panamera et dire aux proches que ça ira.} \\
+\hspace{14cm}-- \textsc{Maes}
+\end{dedication}
 
 %\cleardoublepage
 
@@ -68,6 +68,8 @@
  Damiano, many thanks for making me stay employed and sane, for making this enjoyable, for all the good time spend together, and for your critical eye. I own you this thesis.
  
  Scientifically, this thesis has benefited enormously from discussion and work with Javier. I have learnt so much and I am grateful
+ 
+ Mario
  
  Upon my arrival at the ECHO lab in 2017, I've been welcomed by wonderful people who have made this journey fun. Thanks Silvia for the best tea cookie , Giezi and Luca, because sports and meta-science talks are meant to be. Later, Mitra, Cristiano and Paolo.
  
@@ -91,3 +93,6 @@ Finallement, Marion ! Merci de m'avoir soutenue tout au long de cette incroyable
  \chapter{Summary}
  
  \chapter{Résumé}
+ 
+ \pdfbookmark[section]{\contentsname}{toc}
+\begin{fullwidth}\tableofcontents\listoffigures\listoftables\end{fullwidth}

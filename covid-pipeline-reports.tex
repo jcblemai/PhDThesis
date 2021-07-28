@@ -1,9 +1,9 @@
 \begin{fullwidth}
-\chapter[Scenario planning tools and reports for the covid-19 pandemic]{Scenario planning tools and reports for \\the covid-19 pandemic}
+\chapter[Response to the covid-19 pandemic: scenario planning tools and reports]{Response to the covid-19 pandemic: scenario planning tools and reports}
 \label{sec:covid-pipeline-reports}
 Coronavirus disease 2019 (COVID-19) has caused strain on health systems worldwide due to its high mortality rate and the large portion of cases requiring critical care and mechanical ventilation. During these uncertain times, public health decision makers, from city health departments to federal agencies, sought the use of epidemiological models for decision support in allocating resources, developing non‑pharmaceutical interventions, and characterizing the dynamics of COVID‑19 in their jurisdictions. In response, a flexible scenario modeling pipeline was developed, that could quickly tailor models for decision makers seeking to compare projections of epidemic trajectories and healthcare impacts from multiple intervention scenarios in different locations. Here, the components and configurable features of the COVID Scenario Pipeline are presented, with a vignette detailing its current use. Model limitations and active areas of development to meet ever‑changing decision maker needs are also presented.
   
-This chapter presents modeling works tailored for the response to COVID-19. The COVID Scenario Pipeline is an ongoing project, still developed by the Johns Hopkins University Infectious Disease Dynamics COVID-19 Working Group. It is presented here at an early stage: taking a perspective from July 2020. The state of knowledge on the SARS-CoV-2 and COVID-19 was rapidly expanding, and the present chapter highlights the challenges of dealing with such uncertainties. This chapter is based on:
+This chapter presents modeling works tailored for the response to COVID-19. The COVID Scenario Pipeline is an ongoing project, still developed with many improvements since the presented version; here a perspective from July 2020 is taken. The state of knowledge on the SARS-CoV-2 and COVID-19 was rapidly expanding, and the present chapter highlights the challenges of dealing with such uncertainties. This chapter is based on:
 \longfullcite{Lemaitre:ScenarioModelingPipeline:2021}, where Kyra H. Grantz, Joshua Kaminsky, Hannah R. Meredith, Shaun A. Truelove contributed equally.
   \end{fullwidth}
 
@@ -29,9 +29,9 @@ This chapter presents modeling works tailored for the response to COVID-19. The 
 
 \section{Introduction}
 
-In late 2019, the virus responsible for coronavirus disease 2019 (COVID-19) was detected in Wuhan, China\cite{Zhu:NovelCoronavirusPatients:2020}. Since its emergence, SARS-CoV-2 has spread rapidly, causing significant morbidity and mortality; prompting the World Health Organization to declare a pandemic on 11 March 2020\cite{WHO:WHODirectorGeneralOpening}. With 4.07\textsc{m} confirmed deaths and 190\textsc{m} confirmed cases as of July 2021, it is one of the deadliest pandemic in history. In addition to its significant individual health impacts, COVID-19 has put considerable strain on health systems, as a large fraction of cases require mechanical ventilation or critical care\cite{Huang:ClinicalFeaturesPatients:2020}. In every stage of the pandemic thus far, there has been a need for flexible decision support tools that can be used to model and compare critical planning scenarios. 
+In late 2019, the virus responsible for coronavirus disease 2019 (COVID-19) was detected in Wuhan, China\cite{Zhu:NovelCoronavirusPatients:2020}. Since its emergence, SARS-CoV-2 has spread rapidly, causing significant morbidity and mortality; prompting the World Health Organization to declare a pandemic on 11 March 2020\cite{WHO:WHODirectorGeneralOpening:2020}. With 4.07\textsc{m} confirmed deaths and 190\textsc{m} confirmed cases as of July 2021, it is one of the deadliest pandemic in history. In addition to its significant individual health impacts, COVID-19 has put considerable strain on health systems, as a large fraction of cases require mechanical ventilation or critical care\cite{Huang:ClinicalFeaturesPatients:2020}. In every stage of the pandemic thus far, there has been a need for flexible decision support tools that can be used to model and compare critical planning scenarios. 
 
-Epidemiological models have played an important role in shaping public health policy and interventions throughout the pandemic. The methods used have ranged widely—from agent-based modeling approaches that simulate the global movement of individuals and their contacts in household, workplace, and leisure settings\cite{Ferguson:ReportImpactNonpharmaceutical:2020}, to population-level models that incorporate features like age-specific transmission, asymptomatic and presymptomatic transmission, and metapopulation structure\cite{Branas:FlatteningCurveIt:2020,Moghadas:ProjectingHospitalUtilization:2020,Davies:AgedependentEffectsTransmission:2020}, to curve fitting approaches that use data from early in the COVID-19 pandemic to project future burden\cite{IHMECOVID-19healthserviceutilizationforecastingteam:ForecastingImpactFirst:2020}. Likewise, the goals of these models have varied widely, from assessing importation risk, estimating the fraction of cases attributable to transmission from unobserved infections, projecting the impact of non-pharmaceutical interventions that target different populations, and forecasting the needs of the healthcare system. 
+Epidemiological models have played an important role in shaping public health policy and interventions throughout the pandemic. The methods used have ranged widely—from agent-based modeling approaches that simulate the global movement of individuals and their contacts in household, workplace, and leisure settings\cite{Ferguson:ReportImpactNonpharmaceutical:2020}, to population-level models that incorporate features like age-specific transmission, asymptomatic and presymptomatic transmission, and metapopulation structure\cite{Chinazzi:EffectTravelRestrictions:2020,Branas:FlatteningCurveIt:2020,Moghadas:ProjectingHospitalUtilization:2020,Davies:AgedependentEffectsTransmission:2020}, to curve fitting approaches that use data from early in the COVID-19 pandemic to project future burden\cite{IHME:ForecastingImpactFirst:2020}. Likewise, the goals of these models have varied widely, from assessing importation risk, estimating the fraction of cases attributable to transmission from unobserved infections, projecting the impact of non-pharmaceutical interventions that target different populations, and forecasting the needs of the healthcare system. 
 
 Within this space, there was a need for a modeling pipeline that could provide flexible but sophisticated epidemiological models to decision makers who needed to plan and compare specific interventions. Here, our scenario modeling pipeline is detailed: a modular framework that projects epidemic trajectories and health care impacts under different suites of interventions in order to aid in scenario planning. The flexibility of our approach has allowed us to provide rapid support to multiple organizations at the same time, while customizing our models to situation-specific questions and data. This framework has been used to provide tailored estimates of the relative impacts of different scenarios of disease transmission, severity, and control, thus guiding intervention policies in several states, countries, and humanitarian aid settings.
 
@@ -53,11 +53,11 @@ The pipeline runs these components in sequence, according to the specifications 
 
 “Epidemic seeding” refers to how the disease transmission module is initialized with infected individuals. A seeding module must produce one of more seeding files that specifies an added number of incident cases occurring due to “seeding” at particular dates and locations. The pipeline currently contains two epidemic seeding options: (1) seeding according to first case appearance in data, and (2) seeding according to an air travel importation model. 
 
-\paragraph{Seeding according to earliest identified cases.} This seeding option enables users to seed the model according to COVID-19 case data. It currently supports user-supplied data and downloads from two commonly used public sources, the Johns Hopkins University Center for Systems Science and Engineering (JHU-CSSE) COVID-19 Dashboard\cite{Dong:InteractiveWebbasedDashboard:2020} and USAFacts, a database that collates data from US state health departments\cite{USAFacts:USCOVID19Cases:2021}. Drawing from the user-specified data source, this option identifies the first five days that cases were reported in each modeled location. It is assumed that confirmed cases were infected a user-specified number of days prior to when they were reported, and that there is a user-specified ratio of infections to confirmed cases. Seed infections are, hence, created in each modeled location on the estimated days of infection for the first 5 days with reported cases; they are drawn stochastically from a Poisson distribution where the mean is the product of the number of reported cases and the user-specified ratio. 
+\paragraph{Seeding according to earliest identified cases} This seeding option enables users to seed the model according to COVID-19 case data. It currently supports user-supplied data and downloads from two commonly used public sources, the Johns Hopkins University Center for Systems Science and Engineering (JHU-CSSE) COVID-19 Dashboard\cite{Dong:InteractiveWebbasedDashboard:2020} and USAFacts, a database that collates data from US state health departments\cite{USAFacts:USCOVID19Cases:2021}. Drawing from the user-specified data source, this option identifies the first five days that cases were reported in each modeled location. It is assumed that confirmed cases were infected a user-specified number of days prior to when they were reported, and that there is a user-specified ratio of infections to confirmed cases. Seed infections are, hence, created in each modeled location on the estimated days of infection for the first 5 days with reported cases; they are drawn stochastically from a Poisson distribution where the mean is the product of the number of reported cases and the user-specified ratio. 
 
-To facilitate the generation of the seeding file for US settings, the \verb|create_seeding.R| script is provided, which pulls data directly from USAFacts. 
+To facilitate the generation of the seeding file for US settings,  a script is provided, which pulls data directly from USAFacts. 
 
-\paragraph{Seeding according to an air importation model.} A previously published model of measles importation was adapted to model the rate of COVID-19 importation to specific locations due to air travel\cite{Truelove:EpidemicsAirTravel:2020}. This seeding option, available in the Github repository “\url{HopkinsIDD/covidImportation}”\cite{Truelove:HopkinsIDDCovidImportationInitial:2020}, uses complete itinerary (origin to final destination) air travel volume data from OAG\cite{OAG:FlightDataOAG:2020} for all airports in the world, source location populations, and source location incidence data, to inform a model with which absolute counts of importation are estimated on a daily basis into airports\shortcite{Truelove:HopkinsIDDCovidImportationInitial:2020}. 
+\paragraph{Seeding according to an air importation model} A previously published model of measles importation was adapted to model the rate of COVID-19 importation to specific locations due to air travel\cite{Truelove:EpidemicsAirTravel:2020}. This seeding option, available in the Github repository “\url{HopkinsIDD/covidImportation}”\cite{Truelove:HopkinsIDDCovidImportationInitial:2020}, uses complete itinerary (origin to final destination) air travel volume data from OAG\cite{OAG:FlightDataOAG:2020} for all airports in the world, source location populations, and source location incidence data, to inform a model with which absolute counts of importation are estimated on a daily basis into airports\shortcite{Truelove:HopkinsIDDCovidImportationInitial:2020}. 
 
 Geographic areas surrounding airports are classified spatially into “airport catchment areas” with a Voronoi tessellation of space in reference to the latitude and longitude coordinates of the airport\cite{Balcan:ModelingSpatialSpread:2010}. When there are multiple airports within close proximity, the user may specify a threshold distance under which airports may be grouped into a single cluster that is defined by its centroid. The probability of importation is assigned to each intersection of a Voronoi tile and an administrative unit boundary. This probability is calculated as the proportion of the airport catchment area population that lives in that intersection, assuming that population is distributed evenly by area. All air importations on a given day are then aggregated to the administrative unit level and seeded into the epidemic model as newly infected individuals.
 
@@ -70,10 +70,19 @@ Geographic areas surrounding airports are classified spatially into “airport c
 
 \subsection{Module 2: Transmission model and intervention scenarios.}
 The disease transmission module takes in seeding information and produces an epidemic model output file that contains, at minimum for subsequent module compatibility, daily counts of incident infections, indexed to their time of symptom onset. The currently implemented default transmission module comprises a metapopulation model with stochastic Susceptible-Exposed-Infected-Recovered (SEIR) disease dynamics.
+\marginnote{The model for SARS-CoV-2 transmission is now entirely configurable to any compartment model following an arbitrary transition graph, allowing for multi-strain, age-stratified or vaccination models.}
+
 
 \paragraph{Disease dynamics} The core model is a modified SEIR compartmental model where the time in the “Infected” compartment follows an Erlang distribution (i.e., the infected compartment is split into k compartments) to produce more realistic infectious periods where the chance of recovery depends on the time since infection\cite{Yan:QuantitativeMethodsInvestigating:2019}, and a coefficient ($\alpha$) can be set to help the model approximate non-homogeneous mixing between susceptible and infected individuals and non-exponential growth\cite{Finkenstadt:StochasticModelExtinction:2002}. Currently k is fixed at three compartments. Transition of individuals between disease compartments is simulated stochastically with binomial random draws:
-\marginnote{The model for SARS-CoV-2 transmission is entirely configurable to any compartment model following an arbitrary transition graph, allowing for multi-strain, age-stratified or vaccination models.}
+\marginnote{\textsc{Initial parameters} Typically sigma and gamma are parameterized in our model with estimates of the range of the serial interval (SI) or generation time, such that
+\begin{equation}
+\text{SI}=\frac{1}{2}\left(\frac{1}{\gamma }\right)+\frac{1}{\sigma },
+\end{equation}
+which assumes that the average infection occurs halfway through an index case’s infectious period. 
+The serial interval represents which is the interval between two subsequent infections. For SARS-CoV-2, the serial interval was estimated to be in range $6.5-8.2$, from: \fullcite[][tab. S4]{Bi:EpidemiologyTransmissionCOVID19:2020}. 
 
+The basic reproductive number $R_0$, the number of newly infected caused by an infected in a fully susceptible population, has been estimated in the range 2 -- 3. From: \fullcite{Riou:PatternEarlyHumantohuman:2020}. This very early work also characterize $R_0$ and the dispersion of the number of secondary cases as important epidemic characteristic.
+}
 {\begin{eqnarray}
 N_{S \to E} (t) &=& \text{Binom}\left(S, 1 - \exp \left(- \Delta t \cdot \text{FOI}(t) \right)\right) \\
 N_{E \to I^{( 1)}} (t) &=& \text{Binom}\left(E, 1 - \exp \left(- \Delta t \cdot \sigma  \right) \right) \\
@@ -94,6 +103,9 @@ H &=& S(t)+E(t)+\sum_{j=1}^{k} I^{\left(j\right)}(t)+R(t) \\
 where $H$ is the total population, $\beta$ is the daily transmission probability as defined by $R_0$ and the infectious period, and $\alpha$ is the mixing coefficient.
 
 
+%\begin{mybox}{Initial parameters}
+
+
 \paragraph{Metapopulation dynamics}
 The model is capable of simulating disease spread in multiple locations jointly according to assumptions about population mobility between individual model locations (e.g., administrative units). The SEIR disease dynamics described above are simulated in each model location with a modification to the force of infection term that accounts for this impact of mobility on disease spread.
 
@@ -104,12 +116,7 @@ The force of infection in a given location i is calculated from a combination of
 \end{equation}
 \end{fullwidth}
 
-with $p_{away}$ the percent of the time individuals that move spend away; $p_{away} \approx 0.5$ in the case of commuting. $H_i$ is the population of node $i$. Then, the transition is:
-
-\begin{equation}
-N_{S_i \longrightarrow I_1^{i}}(t) = \text{Binom}(S^i, 1 - \exp(-\Delta t \cdot \text{FOI}_i))
-\end{equation}
-where M is a mobility matrix such that $M_{i,j}$ represents the daily movement of individuals (e.g., commuting) from origin $i$ to destination $j$, $p_a$ is the proportion of time that moving individuals spend away, and $H_i$ is the population of node $i$. The transition of individuals between disease compartments may be modified to index by location $i$, for example:
+with $p_{away}$ the percent of the time individuals that move spend away; $p_{away} \approx 0.5$ in the case of commuting. $H_i$ is the population of node $i$. M is a mobility matrix such that $M_{i,j}$ represents the daily movement of individuals (e.g., commuting) from origin $i$ to destination $j$, $p_a$ is the proportion of time that moving individuals spend away, and $H_i$ is the population of node $i$. The transition of individuals between disease compartments may be modified to index by location $i$, for example:
 
 \begin{equation}
 N_{S_i \to E_i} (t) = \text{Binom}\left(S_i ,1 - \exp \left(- \Delta t \cdot\text{FOI}_{i}(t) \right) \right)
@@ -132,20 +139,19 @@ Transmission modifiers like non-pharmaceutical interventions or other exogenous 
 \end{equation}
 
 where $\beta_i'(t)$ is the daily transmission rate after accounting for transmission modifier $r_i(t)$ at the specified location $i$ at time $t$. When transmission modifiers are in effect $\beta_i'(t)$ replaces $\beta_i(t)$ in the force of infection term $\text{FOI}_i(t)$.
-
-
-The specification of transmission modifiers is completely user-specified. A set of common non-pharmaceutical intervention scenarios that can be applied for user-specified dates and locations are included (tab. S1 of the postprint), which have been compiled according to our review of the literature on the potential impact of non-pharmaceutical interventions on respiratory virus transmission.
-
 Note that several effects at the same time in the same place have a compounded effect on transmission of reductions. The effect of the $k$ intervention in place at time $t$ and node $i$ is:
 \begin{equation}
 	\beta_i'(t) =  \beta_i(t) \cdot  \prod_k \left(1-r_k(t) \right), \label{eq:npi_comp}
 \end{equation}
-but the compounding effect may be choosen to be additive (\ie usefull for vaccination rate) instead of multiplicative.
+but the compounding effect may be choosen to be additive (\eg for vaccination rate) instead of multiplicative.
+
+The specification of transmission modifiers is completely user-specified. A set of common non-pharmaceutical intervention scenarios that can be applied for user-specified dates and locations are included\footnote{see the NPI database in tab. S1 of the postprint, which is shows how past epidemics allowed to identify the range of possibilities before evidence for COVID-19 became available}, which have been compiled according to our review of the literature on the potential impact of non-pharmaceutical interventions on respiratory virus transmission.
+
 
 \subsection{Module 3: Calculation of health outcomes}
 This pipeline module translates outputs from the transmission model into health outcomes such as hospitalizations and deaths. It takes in counts of daily incident infections and produces daily counts for specific health outcomes at appropriate time delays.
 
-The current default implementation produces hospital and intensive care unit (ICU) admissions, current hospital and ICU occupancy, ventilators needs, and number of deaths. Our modeling of health outcomes assumes that there is some transition probability from infection to death, infection to hospitalization, hospitalization to ICU admission, and ICU admission to ventilator use. In our modeling of health outcomes, is considered the probability of its occurrence (e.g., probability that infections are hospitalized), the time delay relative to its disease course (e.g., time between hospital admission and ICU admission), and where applicable, the duration in a given state (e.g., how long a patient remains ventilated).
+The current default implementation\footnote{At the time of submission. The pipeline outcome module now allow arbitrary transition graph between compartments, allowing to accuratly reflects any healthcare and reporting system.} produces hospital and intensive care unit (ICU) admissions, current hospital and ICU occupancy, ventilators needs, and number of deaths. Our modeling of health outcomes assumes that there is some transition probability from infection to death, infection to hospitalization, hospitalization to ICU admission, and ICU admission to ventilator use. In our modeling of health outcomes, is considered the probability of its occurrence (e.g., probability that infections are hospitalized), the time delay relative to its disease course (e.g., time between hospital admission and ICU admission), and where applicable, the duration in a given state (e.g., how long a patient remains ventilated).
 
 For settings where hospitalization, ICU admission, and ventilator use is infrequent, it may be more appropriate to think of these health outcome projections as different levels of disease severity.
 
@@ -160,7 +166,7 @@ It is assumed that the number of infections admitted to the hospital is a draw f
 \begin{equation}
 n_{t_\text{inf} + t_\text{inf} \to \text{hosp}}^{hosp} \sim \text{Binom}\left(n_{t_\text{inf}}^\text{inf}, p_{\text{hosp}\mid \text{inf}} \right)
 \end{equation}
-where $n^\text{hosp}$ is the number of hospital admissions, $n^\text{inf}$ is the number of infections, $t_\text{inf}$ is the time of infection, $t_{\text{inf} \to \text{hosp}}$ is the mean time delay between infection and hospital admission, and $p_\text{hosp} \mid \text{inf}$ is the probability of hospitalization given infection (tab~\ref{tab:csp-outcomes}).
+where $n^\text{hosp}$ is the number of hospital admissions, $n^\text{inf}$ is the number of infections, $t_\text{inf}$ is the time of infection, $t_{\text{inf} \to \text{hosp}}$ is the mean time delay between infection and hospital admission, and $p_{\text{hosp} \mid \text{inf}}$ is the probability of hospitalization given infection (tab~\ref{tab:csp-outcomes}).
 
 \begin{table*}[t]
 \label{tab:csp-outcomes}
@@ -169,10 +175,10 @@ where $n^\text{hosp}$ is the number of hospital admissions, $n^\text{inf}$ is th
 \toprule
  Column name (notation) & Description\\
 \midrule
-\verb|p_hosp_inf| ($p_{\text{hosp} \mid \text{inf}}$)	& Probability of hospitalization among infected individuals\\
-\verb|p_icu_hosp| ($p_{\text{icu} \mid \text{hosp}}$)	&Probability of ICU admission among hospitalized individuals\\
-\verb|p_vent_icu| ($p_{\text{vent} \mid \text{icu}}$) &	Probability of ventilation among individuals in the ICU\\
-\verb|p_death_inf| ($p_{\text{death} \mid \text{inf}}$)&	Probability of death among infected individuals\\
+\verb|p_hosp_inf| $(p_{\text{hosp} \mid \text{inf}})$	& Probability of hospitalization among infected individuals\\
+\verb|p_icu_hosp| $(p_{\text{icu} \mid \text{hosp}})$	&Probability of ICU admission among hospitalized individuals\\
+\verb|p_vent_icu| $(p_{\text{vent} \mid \text{icu}})$ &	Probability of ventilation among individuals in the ICU\\
+\verb|p_death_inf| $(p_{\text{death} \mid \text{inf}})$ &	Probability of death among infected individuals\\
 \verb|rr_hosp_inf|	& Relative risk of hospitalization (given infection) relative to the average across all geoids\\
 \verb|rr_death_inf| & Relative risk of death (given infection) relative to the average across all geoids\\
 \bottomrule
@@ -195,152 +201,26 @@ The severity of disease from SARS-CoV-2 infection can vary greatly between locat
 
 While location-specific data is not required to differ for all health outcome transition probabilities (i.e., some probabilities can be constant across all locations), the location-specific file should include the variables described in tab.~\ref{tab:csp-outcomes} and population-wide average values for the probability of hospitalization (\verb|p_hosp_inf|) and death (\verb|p_death_inf|) given infection.
 
-To facilitate construction of such files a companion package, covidSeverity, is provided. It produces location-specific relative death and hospitalization rates based on the age distribution of the local population\cite{Lauer:HopkinsIDDCovidSeverityInitial:2020}. The package generates these outputs for US counties based on data from the US Census Bureau, and  this is provided as a model input file as part of the main pipeline implementation (see \verb|COVIDScenarioPipeline/sample_data/geoid-params.csv|). The package also includes built-in functionality to pull data from WorldPop\sidenote{\url{worldpop.org}} and generate adjustments for any location of interest\shortcite{Lauer:HopkinsIDDCovidSeverityInitial:2020}.
+To facilitate construction of such files a companion package, covidSeverity, is provided. It produces location-specific relative death and hospitalization rates based on the age distribution of the local population\cite{Lauer:HopkinsIDDCovidSeverityInitial:2020}. The package generates these outputs for US counties based on data from the US Census Bureau, and  this is provided as a model input file as part of the main pipeline implementation (see \verb|COVIDScenarioPipeline/sample_data/geoid-params.csv|). The package also includes built-in functionality to pull data from WorldPop\sidenote{\url{worldpop.org}} and generate adjustments for any location of interest\cite{Lauer:HopkinsIDDCovidSeverityInitial:2020}.
 
 The covidSeverity package applies a logistic generalized additive model (GAM) with a penalized cubic spline for age and random effect for age-specific estimates of risk of each health outcome from the literature, thus producing estimates of risk for 10-year, aggregated age categories. These age-specific estimates are then applied to the population age distribution in a given location.
 
-The epidemic transmission model, the intervention module and the outcome calculation are implemented in python, just-in-time compiled to machine code using Numba\cite{Lam:NumbaLLVMbasedPython:2015}. 
-
-\marginnote{Since this description, the team working on the pipeline has brought many improvements, both computational and conceptual, that have enabled the pipeline to remain useful in 2021.}
+The epidemic transmission model, the intervention module and the outcome calculation are implemented in python, just-in-time compiled to machine code using Numba\cite{Lam:NumbaLLVMbasedPython:2015} for performance. Since this description, the team working on the pipeline has brought many improvements, both computational and conceptual, that have enabled the pipeline to remain useful in 2021.
 
 \subsection{Module 4: Summarization of model outputs}
 This component of the pipeline provides wrapper functions for the lightweight summarization of model outputs into quantiles, plotting functions for common figures, and R Markdown templates to facilitate the rapid generation of technical reports. This module is available in the R package report.generation in the Github repository “\verb|HopkinsIDD/COVIDScenarioPipeline|.”
 
-Two key functions that read and process individual transmission (\verb|load_scenario_sims_filtered|) and health outcome (\verb|load_hosp_sims_filtered|) model output files are provided. In managing individual files with these functions, the processing time and memory load is reduced. Both of these functions take processing functions as arguments, thus enabling aggregation and filtering to occur at the level of individual files.
+Two key functions that read and process individual transmission and health outcome model output files are provided. In managing individual files with these functions, the processing time and memory load is reduced. Both of these functions take processing functions as arguments, thus enabling aggregation and filtering to occur at the level of individual files.
 
-The package contains technical report R Markdown templates for US states, US counties, and individual countries, a diagnostic report template called “\verb|sanity_check_report|”, and a template that is maintained solely for integration testing. When report.generation is installed and loaded, the templates become available to the user. Many parameters are drawn from the configuration file automatically and pre-written R Markdown chunks about the module options and methods can be referenced within the package.
+The package contains technical report R Markdown templates for US states, US counties, and individual countries, a diagnostic report template, and a template that is maintained solely for integration testing. When report.generation is installed and loaded, the templates become available to the user. Many parameters are drawn from the configuration file automatically and pre-written R Markdown chunks about the module options and methods can be referenced within the package.
 
-Common figures include summary tables and time courses for estimated health outcomes under different interventions, maps that portray cumulative cases at the county level, comparisons between model estimates and observed cases and deaths, and visualizations for when ICU and ventilator capacity for each county is exceeded. The vignette below walks through example report outputs in more detail and a template-generated report example is provided in the “Supplementary Material” (Example Report).
+Common figures include summary tables and time courses for estimated health outcomes under different interventions, maps that portray cumulative cases at the county level, comparisons between model estimates and observed cases and deaths, and visualizations for when ICU and ventilator capacity for each county is exceeded. The vignette in the \textsc{Appendix} walks through example report outputs in more detail and a template-generated report example is provided in the “Supplementary Material” of the postprint.
 
 \subsection{Model specification}
-All components and settings for simulations from the COVID Scenario Pipeline model are specified in an easily-modifiable YAML configuration file. Different options are described in detail in the \textsc{Results} and an example of the complete set of configuration options is provided in the “Supplementary Material”.
+All components and settings for simulations from the COVID Scenario Pipeline model are specified in an easily-modifiable YAML configuration file. Different options are described in detail in the \textsc{Results} and an example of the complete set of configuration options is provided in the “Supplementary Material” of the postprint.
 
-\subsection{Model access and use}
-The project is open-source under the GNU General Public License v3.0 license, and code is available at \url{github.com/HopkinsIDD/COVIDScenarioPipeline}. The master branch of this repository consists of a Python package “SEIR” and two R packages “hospitalization” and “report.generation,” which correspond to the second, third, and fourth modules of the model pipeline (\url{zenodo.org/badge/latestdoi/245866576}). Air importation-based seeding is implemented in the covidImportation package (\url{github.com/HopkinsIDD/covidImportation}), while seeding according to the earliest identified cases is performed in scripts within the \url{HopkinsIDD/COVIDScenarioPipeline} repository.
-
-\section{Results: scenario modeling vignette}
-Here is presented a vignette with 50 model simulations in a fictional setting (Location X) with nine counties (named A through I) in demonstrative intervention scenarios from January 31 to December 31, 2020. In this vignette, a walk through is offered on how to set up and run the pipeline, demonstrate some of the spatial and temporal features for modeling non-pharmaceutical interventions, and display some of the plotting functions useful for summarizing the model output.
-
-To run the model, users will require a second GitHub repository specific to their model location. A template for such a spatial repository may be found at “\verb|COVID19_Minimal|” (\url{github.com/HopkinsIDD/COVID19_Minimal}), and complete details on downloading and running the model are available in the template’s wiki at \url{github.com/HopkinsIDD/COVID19_Minimal/} wiki.
-
-Once a working environment is setup, the next step is to create a configuration file to describe the model specifications. A skeleton configuration file is included in the \verb|COVID19_Minimal| template, and the full configuration file accompanying the results of this vignette is in the “Supplementary Material”.
-
-First, the broad parameters of the run, such as the date range covered and the number of simulations to run are provided (see first section in “Supplementary Material”, Example YAML Configuration File).
-
-Next the spatial setup information identifying the location of files containing geographic data and the geographic targets for modeling are described. The \verb|spatial_setup| section of the configuration file identifies a geographical data (geodata) file that contains the population data for each county or administrative subunit in the location(s) of interest and a mobility matrix file that contains the daily trip counts for each pair of counties. Users may employ the R scripts “\verb|build_US_setup.R|” or “\verb|build_nonUS_setup.R|,” which are provided with the repository, to generate compatible geodata and mobility matrix files. For users modeling non-US settings, the Github repository “\url{COVID-19-Mobility-Data-Network/mobility}” can be used to fit real-time or sparse travel data with mobility models in order to generate similarly compatible mobility matrixes\cite{Giles:COVID19MobilityDataNetworkMobilityV0:2020,Giles:MobilityPackageModeling:2020}.
-
-In situations with high cross-border mobility, it may be important to model a region larger than the location of interest in order to appropriately capture disease transmission risk in a given location. Here, Locations X, Y, and Z are modeled even though Location X is the sole location of interest:
-\begin{lstlisting}[language=yaml]
-spatial_setup: 
-  base_path: data/location-x ## base path to spatial files 
-  setup_name: location-x ## spatial folder name 
-  geodata: geodata.csv ## path to geodata file with modeled geoids 
-  mobility: mobility.csv ## path to mobility matrix 
-  popnodes: pop ## column name of population in geodata 
-  nodenames: geoid ## column name of unique location identifiers in geodata 
-  modeled_states: 
-    - X 
-    - Y 
-    - Z
-\end{lstlisting}
-
-The locations of the seeding files are then specified (see seeding section in “Supplementary Material”, Example YAML Configuration File), with a separate section to describe the air importation model parameters as appropriate (see importation in “Supplementary Material”, Example YAML Configuration File).
-
-Next, the parameters that determine the course of the disease are choosen. The seir section of the configuration file defines parameters used in the SEIR disease transmission model, including the level of population mixing (where 1 is homogeneous mixing, and <1 is heterogeneous), the incubation period of the virus, the infectious period, and the baseline basic reproductive number R0. These values may be fixed or drawn randomly from a distribution, according to the configuration file:
-\begin{lstlisting}[language=yaml]
-seir: 
-  parameters: 
-    alpha: 1 ## mixing coefficient 
-    sigma: 1 / 5.2 ## inverse of the incubation period in days 
-    gamma: ## inverse of the infectious period in days 
-      distribution: uniform 
-      low: 1 / 6 
-      high: 1 / 2.6 
-    R0s: ## baseline basic reproductive number 
-      distribution: uniform 
-      low: 2 
-      high: 3
-\end{lstlisting}
-
-Typically sigma and gamma are parameterized in our model with estimates of the range of the serial interval (SI) or generation time, such that
-\begin{equation}
-\text{SI}=\frac{1}{2}\left(\frac{1}{\gamma }\right)+\frac{1}{\sigma },
-\end{equation}
-which assumes that the average infection occurs halfway through an index case’s infectious period.
-
-The next step is defining the modeled intervention scenarios. Here, five scenarios are considered in our vignette example: (1) a no intervention scenario (named Uncontrolled), in which R0 remains unchanged over the course of the outbreak; (2) social distancing measures with fixed effectiveness in place from March 19 to December 31 (\verb|SocialDistancing_fixed|); (3) social distancing measures with declining compliance, which were modeled as 10\% reductions in effectiveness every 2 weeks beginning March 19 (\verb|SocialDistancing_fatigued|); (4) social distancing measures following a 3-week on–off “pulsing” cycle from March 19 to August 12 (\verb|SocialDistancing_pulsed|); and (5) social distancing measures with spatial heterogeneity (\verb|SocialDistancing_checker|), where three of nine counties implement social distancing measures with fixed effectiveness from March 19 to December 31.
-
-%\begin{mybox}{Initial parameters}
-\marginnote{\textsc{Initial parameters}The serial interval represents which is the interval between two subsequent infections. For SARS-CoV-2, the serial interval was estimated to be in range $6.5-8.2$, from: \fullcite[][tab. S4]{Bi:EpidemiologyTransmissionCOVID19:2020}. 
-
-The basic reproductive number $R_0$ -- the number of newly infected caused by an infecteds in a fully susceptible population, has been estimated in the range 2 -- 3. From: \fullcite{Riou:PatternEarlyHumantohuman:2020}. This very early work also characterize $R_0$ and the dispersion of the number of secondary cases as important epidemic characteristic.
+\marginnote{\textsc{Model access and use} The project is open-source under the GNU General Public License v3.0 license, and code is available at \url{github.com/HopkinsIDD/COVIDScenarioPipeline}. The master branch of this repository consists of a Python package “SEIR” and two R packages “hospitalization” and “report.generation,” which correspond to the second, third, and fourth modules of the model pipeline (\url{zenodo.org/badge/latestdoi/245866576}). Air importation-based seeding is implemented in the covidImportation package (\url{github.com/HopkinsIDD/covidImportation}), while seeding according to the earliest identified cases is performed in scripts within the \url{HopkinsIDD/COVIDScenarioPipeline} repository.
 }
-
-An intervention may be specified in a single block for all model locations, as in the case of the \verb|SocialDistancing_fixed| scenario, or for unique location identifiers (“geoids”) as in the \verb|SocialDistancing_checker| scenario:
-\begin{lstlisting}[language=yaml]
-SocialDistancing_fixed: ## scenario name 
-  template: ReduceR0 
-  period_start_date: 2020-03-19 ## intervention start date 
-  period_end_date: 2020-12-31 ## intervention end date 
-  value: ## randomly draw an intervention effectiveness value 
-         ##from a uniform distribution between .71 and .83 
-    distribution: uniform 
-    low: .71 
-    high: .83 
-SocialDistancing_checker: 
-  template: ReduceR0 
-  affected_geoids: ["County B", "County E", "County F"] 
-  ## ^ matches location IDs in geodata file 
-  period_start_date: 2020-03-19 
-  period_end_date: 2020-12-31 
-  value: 
-    distribution: uniform 
-    low: .71
-    high: .83
-\end{lstlisting}
-
-Other intervention scenarios require multiple blocks to be stacked together, as in the case of the \verb|SocialDistancing_pulsed| scenario, shown in truncated form below: 
-
-\begin{lstlisting}[language=yaml]
-SD_Pulse1: 
-  template: ReduceR0 
-  period_start_date: 2020-03-19 
-  period_end_date: 2020-04-08 
-  value: 
-    distribution: uniform 
-    low: .71 
-    high: .83 
-SD_Pulse2: 
-  template: ReduceR0 
-  period_start_date: 2020-04-30 
-  period_end_date: 2020-05-20 
-  value: 
-    distribution: uniform
-    low: .71 
-    high: .83 
-# [... SD_Pulse3 and SD_Pulse4 ...]
-SocialDistancing_pulsed: 
-  template: Stacked 
-  scenarios: 
-    - SD_Pulse1 
-    - SD_Pulse2
-    - SD_Pulse3
-    - SD_Pulse4
-\end{lstlisting}
-
-Then, the health outcome risk specifications are set up. In the hospitalization section of the configuration file, it is specified whether the model calculates health outcome risks with age-adjusted estimates, the average infection fatality ratios (IFR), and the time delays between different health outcomes. The time delays are modeled with lognormal distributions and parameterized with the log median and log standard deviation. For ease of use, a table of estimates found in the literature is provided in tab. S2 of the postprint.
-
-After the simulation runs complete, wrapid summaries of the results are produced using R Markdown templates provided by the report.generation package. The report section of the configuration file specifies scenario labels and colors, IFR scenario labels, and table display dates. These settings, along with other model parameters, can be loaded into a technical report template.
-
-Here it is described how the \verb|state_report| template in the report.generation package can be used to display our model results as an example. The full template-generated report linked to this vignette is provided in the “Supplementary Material” (Example Report). First, the configuration file is loaded to pull in the model settings and file paths. Then, a number of predefined functions to load and plot the data are used.
-
-For example, one standard report figure compares time series of the daily number of hospital beds needed across intervention scenarios (fig.~\ref{fig:pipeline-seir}) using the \verb|load_hosp_geocombined_totals| and \verb|plot_ts_hosp_state_sample| functions from the report.generation package in order to load and plot the data. To plot variations of these figures, one only need to change which health outcome variable is specified in \verb|plot_ts_hosp_state_sample|.
-
-While fig.~\ref{fig:pipeline-seir} displays aggregate results, our reports also provide location-specific risk and logistical outputs at the county- or administrative subunit-level. For example, the age-adjusted infection fatality ratios and risk of ICU admission among hospitalized infections for the modeled counties within the distribution of all counties in the United States are presented in fig.~\ref{fig:pipeline-outcome}\textsc{a,b}. Using the \verb|load_hosp_geounit_relative_to_threshold| and \verb|plot_needs_relative_to_threshold_heatmap| functions from report.generation, the potential need for beds in excess of health system capacity by model location is displayed in our reports (fig.~\ref{fig:pipeline-outcome}\textsc{c}). Values of the location-specific healthcare capacity, represented by the number of staffed hospital, acute care, or intensive care beds available and/or number of ventilators available, are user-defined; these can be based on assumptions of the average availability per person or input from data where available.
-
-A map of model outputs makes it easier to visualize spatial and temporal heterogeneity in different intervention scenarios (fig.~\ref{fig:pipeline-map}). This functionality is provided in the \verb|load_cum_inf_geounit_dates| and \verb|plot_geounit_map| functions in the report.generation package.
-
-Each report template is equipped to load static R Markdown reference chunks, which is pre-written and provided with the package. These chunks provide details on our methods, limitations, and key references, pulling in parameters from the configuration file as needed.
 
 \section{Discussion}
 The COVID scenario pipeline is presented as an open-source modeling framework that aims to balance epidemiological rigor with the flexibility and urgency required by public health policymaking. The modularity of our framework has enabled us to adapt our assumptions about COVID-19 epidemiology, transmission, and health outcome risks in response to emerging information and to different settings. The pipeline implementation of non-pharmaceutical interventions is highly adaptable for policymakers desiring to compare the impact of different potential scenarios.
