@@ -371,9 +371,10 @@ textheight=690pt,
 \frontmatter
 %\blankpage
 %\input{frontmatter}
+ \pdfbookmark[section]{\contentsname}{toc}
+\begin{fullwidth}\tableofcontents\listoffigures\listoftables\end{fullwidth}
 \mainmatter
 \input{introduction}
-\input{matmet}
 \input{cholera} % 1
 \input{cholera-rainfall} % 2
 \input{cholera-haiti-ocv} % 3
@@ -383,7 +384,7 @@ textheight=690pt,
 \input{conclusions}
 
 \backmatter
-\begin{appendices}\input{appendices}\end{appendices}
+\begin{appendices}\input{appendices}\input{matmet}\end{appendices}
 \begin{fullwidth}\printbibliography\end{fullwidth}
 
 \end{document}
