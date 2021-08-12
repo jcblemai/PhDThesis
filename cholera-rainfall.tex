@@ -17,7 +17,7 @@ The mechanism behind the spatio-temporal transmission dynamics of a cholera epid
  \begin{marginfigure}[-2\baselineskip]
 \centering
 \includegraphics{fig/cholera-rainfall.png}
-\margincaption[Daily cholera cases and rainfall in Haiti]{\footnotesize Daily cholera cases (red) and daily rainfall (blue) in Haiti from September 15, 2010 to October
+\margincaption[Similarities between daily cholera incidence and rainfall in Haiti]{\footnotesize Daily cholera cases (red) and daily rainfall (blue) in Haiti from September 15, 2010 to October
 16, 2011. A clear visual correlation between heavy rainfall event and case resurgence is observed. Adapted from \fullcite{Gaudart:SpatioTemporalDynamicsCholera:2013}.}
 \label{fig:rain}
 \end{marginfigure}
@@ -33,7 +33,7 @@ In this chapter, the explanatory power of these different types of rainfall-driv
 \section{Case study: the 2015 cholera outbreak in Juba, South Sudan}\label{sec:data sets}
 \begin{figure}\centering
   \includegraphics{fig_cholera-rainfall/Lemaitre_ACTROP_2018_42_R1_fig2.png}
-  \caption[Cholera cases and precipitation during the 2015 epidemic in Juba][2\baselineskip]{Reported cholera cases (dots) and precipitation (bars) during the 2015 cholera epidemic in Juba. The timing of the vaccination campaign is highlighted in yellow.}\label{fig:report}
+  \caption[Cholera cases and precipitation during the 2015 cholera epidemic in Juba][2\baselineskip]{Reported cholera cases (dots) and precipitation (bars) during the 2015 cholera epidemic in Juba. The timing of the vaccination campaign is highlighted in yellow.}\label{fig:report}
 \end{figure}
 In the past years, South Sudan had been struck by several cholera outbreaks\footnote{More details on the history of cholera in South Sudan are found in: \fullcite{Sciarra:MathematicalModelingCholera:2018}}. Here our analysis focuses on the 2015 outbreak in Juba, when a particular double peak of cholera cases was associated to a strong intra-seasonal precipitation event, as shown in fig.~\ref{fig:report}. Access was to granted to epidemiological records for the 2014 and 2015 cholera epidemics that include cholera cases and hospitalization at the second-lowest administrative level (Payams), reported by the Ministry of Health of South Sudan. The cases in the 7 Payams that constitute the administrative area of Juba have been aggregated to obtain the reported time series for the county level. The population data for Juba county is taken from the South Sudan National Bureau of Statistics\cite{SSNBS:PopulationProjectionsSouth:2015}.
 These values were validated against the growth rate value stated by CIA\cite{CIA:SouthSudan:2015}. Daily rainfall estimates [mm d$^{-1}$] were obtained from the Climate Data Library (National Oceanic and Atmospheric Administration, NOAA)\cite{IRI/LDEO:ClimateDataLibrary:2016} for the years 2014 and 2015, with spatial resolution of {0.1}$^\circ$ (approximately $10$ km at the equator). The precipitation considered in the model have been averaged over the study area. In 2015, 167'377 OCV doses were distributed in the county of Juba during 6 days of a mass vaccination campaign started in July 31, 2015\cite{Abubakar:FirstUseGlobal:2015,Azman:EffectivenessOneDose:2016,Parker:AdaptingGlobalShortage:2017}, and are taken into account in our model.
@@ -146,7 +146,7 @@ The relevance of the two rainfall-driven transmission pathways is assesed here b
     \textsc{mech}&      $\times$ &  $\times$  &      $\times$    &    $\times$       &   $\times$ \\
 \bottomrule
 \end{tabular}
-\caption[Parameters considered in the eight compared models.]{Parameters considered in the eight compared models.  $\lambda$ and $\alpha$ characterize the functional forms considering the precipitation eqn.~\eqref{eq:nonlinear_rain}. $\beta_I$ is the exposure for human-to-human transmission. A dash -- indicate that the parameter is set to zero, whereas a cross $\times$  indicate that the parameter is used.}
+\caption[Parameters considered in the eight compared models]{Parameters considered in the eight compared models.  $\lambda$ and $\alpha$ characterize the functional forms considering the precipitation eqn.~\eqref{eq:nonlinear_rain}. $\beta_I$ is the exposure for human-to-human transmission. A dash -- indicate that the parameter is set to zero, whereas a cross $\times$  indicate that the parameter is used.}
 \label{tab:models}
 \end{table}
 
@@ -196,7 +196,7 @@ The summary statistics of the deterministic and stochastic models considered in 
    \textsc{mech} &  12 & -357.55 & 771.73 & 2.4E-06 &  13 & \makecell{-320.38\vspace{-.1cm} \\ \scriptsize{(0.024)}} & 702.09 & 4.8E-04 \\ 
    \bottomrule
 \end{tabular}
-\caption[Model comparison statistics.]{Model comparison statistics. For each model is reported its number of parameters $n$, the associated estimated log-likelihood $\hat{\ell}$ (and its Monte Carlo standard error for the stochastic model), and the inverse of the Bayes Factor ($BF^{-1}$) with respect to the model with the largest evidence. The BFs for the deterministic models were computed directly from the parameters posteriors, whereas for the stochastic models they were estimated with the Bayesian Information Criterion (BIC) as $BF_{i} \approx e^{\frac{1}{2} \left( BIC_i - BIC_{min}\right)}$. The BIC for the deterministic models was computed using the maximum log-likelihood value visited with the MCMC algorithm across chains. Best values in each column are indicated in bold.}\label{tab:stats}
+\caption[Model comparison statistics]{Model comparison statistics. For each model is reported its number of parameters $n$, the associated estimated log-likelihood $\hat{\ell}$ (and its Monte Carlo standard error for the stochastic model), and the inverse of the Bayes Factor ($BF^{-1}$) with respect to the model with the largest evidence. The BFs for the deterministic models were computed directly from the parameters posteriors, whereas for the stochastic models they were estimated with the Bayesian Information Criterion (BIC) as $BF_{i} \approx e^{\frac{1}{2} \left( BIC_i - BIC_{min}\right)}$. The BIC for the deterministic models was computed using the maximum log-likelihood value visited with the MCMC algorithm across chains. Best values in each column are indicated in bold.}\label{tab:stats}
 \end{table}
 When considering only the BIC, model \textsc{me} ranks first for both the deterministic and the stochastic formulations. Interestingly, all models that include human-to-human transmission present smaller or equal log-likelihoods than their counterparts with only the bacteria compartment, which suggests that the data does not support both environmental and human-to-human transmission within the set of the models considered here.
 
