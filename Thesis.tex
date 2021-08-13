@@ -363,6 +363,9 @@ textheight=690pt,
 \makeatother
 \newcommand\ProcessThreeDashes{\llap{\color{cyan}\mdseries-{-}-}}
 
+%https://tex.stackexchange.com/questions/560991/change-font-color-of-appendices-page-that-appears-with-the-appendix-package
+\renewcommand\appendixpagename{\normalfont  \Huge \textsc{Appendices}}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%% DOC %%%%%%%%%%%%%%%%
@@ -376,8 +379,8 @@ textheight=690pt,
 \mainmatter
 %\input{introduction}
 \input{cholera} % 1
-\input{cholera-rainfall} % 2
-%\input{cholera-haiti-ocv} % 3
+%\input{cholera-rainfall} % 2
+\input{cholera-haiti-ocv} % 3
 %\input{covid-pipeline-reports} % 4
 %\input{covid-switzerland-npi} % 5
 %\input{covid-italy-ocp} % 6
