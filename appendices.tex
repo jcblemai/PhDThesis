@@ -5,18 +5,13 @@
 \setcounter{equation}{0}
 
 \chapter{Appendix to chapter 2}
-\section{Stochastic cholera transmission model}\label{sec:stoch}
-We here implement the equivalent of the ODE system presented in the main text as a continuous time Markov process account for transitions between classes (S,I,R,V) as
-discrete events. The model can be expressed in terms of a stochastic
-counting process \cite{Breto2009}, letting \(N_{AB}(t)\) denote the number of individuals
+\section{Stochastic equivalent of the cholera transmission model}\label{sec:stoch}
+The equivalent of the ODE system presented in eqns. \eqref{eq:S2j}--\eqref{eq:VR2j} (on page \pageref{eq:S2j}) is  a continuous time Markov process account that transitions between compartments as discrete events. The model is expressed in terms of a stochastic counting process\cite{Breto:TimeSeriesAnalysis:2009}: let \(N_{AB}(t)\) be the number of individuals
 transitioning between classes \(A,B\in \mathcal{X}\) in the time
-interval \([0,t)\), where
-\(\mathcal{X} = \{S, E, I, R, V^S, V^E, V^I, V^R\}\), and
-\(N_{\bullet A}\) denote the number of births into \(A\) and
-\(N_{A\bullet}\) the number of exists from \(A\). Then the number of transition during a timestep $\Delta t$ is
-\(\Delta N_{AB}(t) = N_{AB}(t+\Delta t) - N_{AB}(t)\). Following the ODE
-system, we have that given the state of the system at time \(t\),
-\(\mathcal{X}_t\), the transition rates read:
+interval \([0,t)\), and \(N_{\bullet A}\) denote the number of births into \(A\) and \(N_{A\bullet}\) the number of deaths from \(A\).  The possibles states are
+\(\mathcal{X} = \{S, E, I, R, V^S, V^E, V^I, V^R\}\).
+The number of individuals transitioning  during a timestep $\Delta t$ is
+\(\Delta N_{AB}(t) = N_{AB}(t+\Delta t) - N_{AB}(t)\). Given the state of the system at time \(t\), \(\mathcal{X}_t\), the system equations are:
 
 \begin{gather}
 \label{eq:stochsys}
@@ -32,8 +27,8 @@ system, we have that given the state of the system at time \(t\),
     \mathbb{P}\left[ \Delta N_{RS}(t) = 1 \right|\mathcal{X}_t] &= \rho R(t) \Delta t + o(\Delta t)\\
     \mathbb{P}\left[ \Delta N_{RV^R}(t) = 1 \right|\mathcal{X}_t] &= r_v(t) R(t) \Delta t + o(\Delta t)\\
     \mathbb{P}\left[ \Delta N_{R\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu R(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V^SV^E}(t) = 1 \right|\mathcal{X}_t] &=  \sigma (1-e_v) F^{stoch}(t) V^S(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V^SV^R}(t) = 1 \right|\mathcal{X}_t] &=  (1-\sigma) (1-e_v) F^{stoch}(t) V^S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{V^SV^E}(t) = 1 \right|\mathcal{X}_t] &=  \sigma (1-\eta) F^{stoch}(t) V^S(t) \Delta t + o(\Delta t)\\
+    \mathbb{P}\left[ \Delta N_{V^SV^R}(t) = 1 \right|\mathcal{X}_t] &=  (1-\sigma) (1-\eta) F^{stoch}(t) V^S(t) \Delta t + o(\Delta t)\\
     \mathbb{P}\left[ \Delta N_{V^S\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu V^S(t) \Delta t + o(\Delta t)\\
     \mathbb{P}\left[ \Delta N_{V^EV^I}(t) = 1 \right|\mathcal{X}_t] &= \phi V^E(t) \Delta t + o(\Delta t)\\
     \mathbb{P}\left[ \Delta N_{V^E\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu V^E(t)(t) \Delta t + o(\Delta t)\\
@@ -46,22 +41,20 @@ system, we have that given the state of the system at time \(t\),
 
 assuming that \(\mathbb{P}[\Delta N_{AB} > 1|\mathcal{X}_t] = o(\Delta t) \; \forall A,B \in \mathcal{X}\) and \(\mathbb{P}[\Delta N_{A\bullet} > 1|\mathcal{X}_t] = o(\Delta t) \; \forall A \in \mathcal{X}\).
 
-Overdispertion in the infection process can be introduced by multiplying
+Overdispertion in the infection process is introduced by multiplying
 the force of infection by a time-continuous white noise process
 \(\xi(t)\) defined as the differentiation of an integrated noise
 process \(\xi(t) = \frac{d}{dt}\Gamma(t)\), here taken to be a Gamma
-with mean \(\Delta t\) and variance \(\sigma^2 \Delta t\) \cite{Breto2011}: \[
-\Gamma (t+\Delta t) - \Gamma (t) \sim \text{Gamma}\left( \frac{\Delta t}{\sigma^2}, \sigma^2\right).
-\]
-
-Since \(\xi(t)\) is non-negative it can serve as a multiplicative noise on
-the force of infection: \[
-F^{stoch}(t) = F(t) \xi(t),
-\]
-which yields to overdispertion in the transitions \(\Delta N_{SE}(t), \Delta N_{SR}(t), \Delta N_{V^SV^E}(t), and \Delta N_{V^SV^R}(t)\).
-
-The ensuing stochastic variations of the state variables are:
-
+with mean \(\Delta t\) and variance \(\sigma^2 \Delta t\)\cite{Breto:CompoundMarkovCounting:2011}: 
+\begin{equation}
+\Gamma (t+\Delta t) - \Gamma (t) \sim \text{Gamma}\left( \frac{\Delta t}{\sigma^2}, \sigma^2\right). \label{eqn:sta}
+\end{equation}
+Since \(\xi(t)\) is non-negative it serves as a multiplicative noise on
+the force of infection:
+\begin{equation}
+F^{stoch}(t) = F(t) \xi(t), \label{eqn:stb}
+\end{equation}
+which yields to overdispertion in the transitions $\Delta N_{SE}(t)$, $\Delta N_{SR}(t)$, $\Delta N_{V^SV^E}(t)$, and $\Delta N_{V^SV^R}(t)$. The ensuing transitions of the state variables are:
 \begin{gather}
 \label{eq:stochstates}
 \begin{aligned}
@@ -77,70 +70,65 @@ The ensuing stochastic variations of the state variables are:
 \end{gather}
 where the equation for \(\Delta S(t)\) enforces a constant total population.
 
-Let \(C(t_j)\) denote the number of people that develop symptoms and seek healthcare during the
+Let \(C(t_j)\) denote the number of people that develop symptoms during the
 observation interval \([t_j, t_{j+1})\) (i.e. the incidence), we have
 that:
-
 \begin{equation}
-    C(t_j) = [N_{EI}(t_{j+1}) - N_{EI}(t_j)] + [N_{V^EV^I}(t_{j+1}) - N_{V^EV^I}(t_j)].
+    C(t_j) = [N_{EI}(t_{j+1}) - N_{EI}(t_j)] + [N_{V^EV^I}(t_{j+1}) - N_{V^EV^I}(t_j)]. \label{eq:stochrep}
 \end{equation}
-
-A full partially observed markov process formulation requires a measurement model linking the time series of incidence data for the 2015 cholera epidemic in Juba to \(C(t_j)\), in addition to the process model in (\ref{eq:stochsys}). We here choose to take a Poisson measurement model accounting for over- or under-reporting of cholera incidence, i.e.
+The measurement model of our  partially observed markov process formulation links the time series of incidence data for the 2015 cholera epidemic in Juba to \(C(t_j)\). We here choose to take a Poisson measurement model accounting for over- or under-reporting of cholera incidence, i.e.
 \[
 	\text{cases}(t_j) \sim \text{Poisson}(\epsilon C(t_j)).
 \]
 where \(\epsilon > 0\) represents the over- or under-reporting.
 
-\section{Calibration details}
-
-\label{sec:calibration}
-
-Model parameters in the SIRB cholera models represent physical rates. However, in the literature there is no consensus on their values or on their  probability distribution. Moreover, most existing studies do not single out mitigation measures~\cite{mari15,pasetto17}, nor highlight intrinsic uncertainties~\cite{rinaldo12,pasetto17}. Numerical calibration is therefore required to assess their value in any particular application. Parameter identifiability is one of the major problems during the calibration of SIR-like epidemiological models. This is mainly due to the impossibility to directly measure the exact figures of individual infections in each compartment, the uncertainty associated to epidemiological data and the net effect of possible model over-parametrization. Calibration thus often results in combination of parameters that produce almost identical fits (termed equifinality). For example, Eisenberg et al. \cite{eisenberg_identifiability_2013} highlighted that the presence of uncertain measurements might generate strongly correlated parameters, which cannot be unambiguously  identified.
-Following the above considerations, we decided to keep fixed the following model parameters: 
-\begin{itemize}
-  \item the rate of natural mortality, the inverse of life expectancy, is set to $\mu=1/56 $~[y$^{-1}$] according to demographic data in 2015 ~\cite{CIA2015}; 
-  \item the mortality due to cholera, which is altogether neglected (i.e. $\alpha=0$) because of the low fatality reported for the South Sudan epidemics. This assumption is consistent with the hypothesis of constant population and equilibrium demography; 
-  \item the recovery rate for infected individuals, set to $\gamma=0.2$ as previously suggested~\cite{rinaldo12}. Its value is consistent with the duration of the symptoms detailed in the south sudanese epidemiological records \cite{sciarra16};
-  \item the vaccine efficacy, set to $\eta$ = 0.63 as estimated by Qadri et al.~\cite{quadri16}.
-\end{itemize} 
-
-\begin{table}[h!]
-\centering
-\begin{tabular}{lcc}
-\toprule
-			Parameter & Unit & Bounds\\
-\midrule
-    $\lambda_{\mathcal{C}}$ &   -    &   (0; 50) \\
-    $\alpha_\mathcal{C}$    &   -    &   (0.01; 40)\\
-    $\lambda_{\mathcal{E}}$ &    -   &   (0; 50) \\
-    $\alpha_\mathcal{E}$    &  -     &   (0.01; 40) \\
-   $\beta_I$               & d$^{-1}$&  (0 ;100)  \\
-   \hline
-  $\theta$               & (individuals$\cdot$d$)^{-1}$ &(0; 1)  \\
-  $\beta_B$             &d$^{-1}$     & \\
-  $\mu_B$ &  d$^{-1}$ & (0.001,40) \\
-  $\sigma$ &- &(0.3; 0.001) \\
-  $\rho$ &  d$^{-1}$ & (0.00034; 0.03)\\
-  $R_0/H$ & - &  (0; 0.5) \\
-  $\log(\epsilon)$ & - &  (-3; 3)\\
-\bottomrule
-\end{tabular}
-\caption[Parameters that are estimated via calibration]{Parameters that are estimated via calibration, the associated measurement units and upper-lower bounds of their uniform prior distributions. Note that the first five parameters are calibrated only for the specific model (see Table~1 in the main text). $\lambda$ and $\alpha$ characterize the functional forms considering the precipitation (eq.~10 in the main text). $\beta_I$ is the exposure for human-to-human transmission. $\theta$ is the contamination rate, $\beta_B$ the maximum exposure rate, $\mu_B$ is the bacteria death rate, $\sigma$ is the percentage of symptomatic infected, $\rho$ is the loss of immunity, $R_0$ are the initial  recovered individuals in April 2014, and $\epsilon$ the reporting rate.}
-\label{tab:prior}
-\end{table}
-
-For each considered model, the posterior probability distributions of the remaining model parameters are sampled by an efficient implementation of the Markov Chain Monte Carlo \textsc{(mcmc)} algorithm: the Differential Evolution Adaptive Metropolis (\textsc{dream}) \cite{vrugt09}, which was developed to explore high-dimensional parameter spaces. Such probabilistic approach requires as input the prior distributions of the parameters, which we assumed to be uniform (upper and lower bounds of the parameters  are given in Table~\ref{tab:prior}). Because large variations in the parameters might occur among different model formulations, wide bounds, as shown in Table~\ref{tab:prior}, are assigned to the parameters. The same reasoning has been applied in previous studies \cite{bertuzzo16,akman_2016}. Given the parameters' prior distribution, \textsc{dream} searches and selects new samples in the posterior distribution by using multiple \textsc{mcmc} chains that run in parallel and that jointly contribute to the computation of the proposal parameter samples. \textsc{Mcmc} chains  converge toward the posterior probability distribution based on the assigned likelihood function of the data given the model output. Here, we choose a Poisson measurement model accounting for the possibility of over- or under-reporting~\cite{camacho18}. Each datapoint at reporting date $t_i$,  $y_{t_i}$, is assumed to come from a Poisson distribution centered on the predicted incidence $C_i$ produced by a model and its associated parameter vector $\boldsymbol{\theta}$ altered by the reporting rate $\epsilon$, as:
+%section{Calibration details}
+%odel parameters in the proposed models represent physical rates. However, in the literature there is no consensus on their values or on their probability distribution.
+%ollowing considerations on parameter identifiability, the following model parameters are fixed: 
+%begin{itemize}
+% \item the rate of natural mortality, the inverse of life expectancy, is set to $\mu=1/56 $~[y$^{-1}$] according to demographic data in 2015\cite{CIA:SouthSudan:2015}; 
+% \item the mortality due to cholera, which is altogether neglected (i.e. $\alpha=0$) because of the low fatality reported for the South Sudan epidemics;
+% \item the recovery rate for infected individuals, set to $\gamma=0.2$;
+% \item the vaccine efficacy, set to $\eta$ = 0.63\cite{quadri16}.
+%end{itemize} 
 %
-\begin{equation}
- y_{t_i}  \sim Poiss\left(\epsilon \,C_{t_i}(\boldsymbol{\theta})\right), \; \epsilon > 0,
- \label{eq:obs}
-\end{equation}
+%begin{table}[h!]
+%centering
+%begin{tabular}{lcc}
+%toprule
+%			Parameter & Unit & Bounds\\
+%midrule
+%   $\lambda_{\mathcal{c}}$ &  --    &   (0; 50) \\
+%   $\alpha_\mathcal{c}$    &   --    &   (0.01; 40)\\
+%   $\lambda_{\mathcal{e}}$ &    --   &   (0; 50) \\
+%   $\alpha_\mathcal{e}$    &  --     &   (0.01; 40) \\
+%  $\beta_I$               & d$^{-1}$&  (0 ;100)  \\
+%  \hline
+% $\theta$               & (individuals$\cdot$d$)^{-1}$ &(0; 1)  \\
+% $\beta_B$             &d$^{-1}$     & \\
+% $\mu_B$ &  d$^{-1}$ & (0.001,40) \\
+% $\sigma$ & -- &(0.3; 0.001) \\
+% $\rho$ &  d$^{-1}$ & (0.00034; 0.03)\\
+% $R_{t_i}/H$ & -- &  (0; 0.5) \\
+% $\log(\epsilon)$ & -- &  (-3; 3)\\
+%bottomrule
+%end{tabular}
+%caption[Parameters that are estimated via calibration]{Parameters that are estimated via calibration, the associated measurement units and upper-lower bounds of their uniform prior distributions. Note that the first five parameters are used only in some of the proposed formulations. It is recalled that $\lambda$ and $\alpha$ characterize the functional form of the precipitation effect, while $\beta_I$ is the exposure for human-to-human transmission. $\theta$ is the contamination rate, $\beta_B$ the maximum exposure rate, $\mu_B$ is the bacteria death rate, $\sigma$ is the percentage of symptomatic infected, $\rho$ is the loss of immunity, $R_{t_i}$ are the initial  recovered individuals in April 2014, and $\epsilon$ the reporting rate.}
+%label{tab:prior}
+%end{table}
 %
-where the predicted incidence reads $ C_{t_i} = \int_{t_i}^{t_{i+1}} \phi \left(E(t) + V^E(t)\right) dt  $ for the deterministic model, and $ C_{t_i} = [N_{EI}(t_{i+1}) - N_{EI}(t_i)] + [N_{V^EV^I}(t_{i+1}) - N_{V^EV^I}(t_i)] $, where $N_{AB}$ denotes the stochastic counting process of transitions between classes $A$ and $B$ for the stochastic model, as described in section~\ref{sec:stoch}.
-
-Inference on the parameters of the stochastic model was drawn using the multiple iterated filtering (MIF) algorithm proposed by \cite{Ionides2015}, which is a frequentest-based approach for identifying the MLE that has proved successful even for a range of complex models of cholera dynamics \cite{king08,baracchini16}. We here employ the MIF2 algorithm which employs iterated Bayes maps in the \texttt{pomp} package in R \cite{King2016, King2018} using 120 initial parameter vectors for each model, built using Sobol sequences over the parameter bounds. For each of these parameter vectors we performed 300 filtering iterations with 3'000 particles, with a geometric annealing of the standard deviation of the random walk in the parameter space set to yield 40\% of the initial filtering value after 50 iterations.
-
-Calibration of both stochastic and deterministic models is performed against recorded suspected cholera cases in Juba from June 05, 2015 to September 26, 2015, using a Poisson likelihood function derived from \ref{eq:obs}.
+%or each considered model, the posterior probability distributions of the remaining model parameters are sampled by an efficient implementation of the Markov Chain Monte Carlo \textsc{(mcmc)} algorithm: the Differential Evolution Adaptive Metropolis (\textsc{dream}) \cite{vrugt09}, which was developed to explore high-dimensional parameter spaces. Such probabilistic approach requires as input the prior distributions of the parameters, which we assumed to be uniform (upper and lower bounds of the parameters  are given in Table~\ref{tab:prior}). Because large variations in the parameters might occur among different model formulations, wide bounds, as shown in Table~\ref{tab:prior}, are assigned to the parameters. The same reasoning has been applied in previous studies \cite{bertuzzo16,akman_2016}. Given the parameters' prior distribution, \textsc{dream} searches and selects new samples in the posterior distribution by using multiple \textsc{mcmc} chains that run in parallel and that jointly contribute to the computation of the proposal parameter samples. \textsc{Mcmc} chains  converge toward the posterior probability distribution based on the assigned likelihood function of the data given the model output. Here, we choose a Poisson measurement model accounting for the possibility of over- or under-reporting~\cite{camacho18}. Each datapoint at reporting date $t_i$,  $y_{t_i}$, is assumed to come from a Poisson distribution centered on the predicted incidence $C_i$ produced by a model and its associated parameter vector $\boldsymbol{\theta}$ altered by the reporting rate $\epsilon$, as:
+%
+%begin{equation}
+%y_{t_i}  \sim Poiss\left(\epsilon \,C_{t_i}(\boldsymbol{\theta})\right), \; \epsilon > 0,
+%\label{eq:obs}
+%end{equation}
+%
+%here the predicted incidence reads $ C_{t_i} = \int_{t_i}^{t_{i+1}} \phi \left(E(t) + V^E(t)\right) dt  $ for the deterministic model, and $ C_{t_i} = [N_{EI}(t_{i+1}) - N_{EI}(t_i)] + [N_{V^EV^I}(t_{i+1}) - N_{V^EV^I}(t_i)] $, where $N_{AB}$ denotes the stochastic counting process of transitions between classes $A$ and $B$ for the stochastic model, as described in section~\ref{sec:stoch}.
+%
+%nference on the parameters of the stochastic model was drawn using the multiple iterated filtering (MIF) algorithm proposed by \cite{Ionides2015}, which is a frequentest-based approach for identifying the MLE that has proved successful even for a range of complex models of cholera dynamics \cite{king08,baracchini16}. We here employ the MIF2 algorithm which employs iterated Bayes maps in the \texttt{pomp} package in R \cite{King2016, King2018} using 120 initial parameter vectors for each model, built using Sobol sequences over the parameter bounds. For each of these parameter vectors we performed 300 filtering iterations with 3'000 particles, with a geometric annealing of the standard deviation of the random walk in the parameter space set to yield 40\% of the initial filtering value after 50 iterations.
+%
+%alibration of both stochastic and deterministic models is performed against recorded suspected cholera cases in Juba from June 05, 2015 to September 26, 2015, using a Poisson likelihood function derived from \ref{eq:obs}.
 
 
 \chapter{Appendix to chapter 4}

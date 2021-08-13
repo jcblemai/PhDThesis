@@ -32,7 +32,7 @@
   % Set up the spacing using fontspec features
 %\renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
 % \renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
-
+\renewcommand{\epsilon}{\varepsilon} % because eb garamond doesn't have epsilon
 
 % math stuff:
 %\usepackage{amssymb} % does not play well with garamond math
@@ -376,7 +376,7 @@ textheight=690pt,
 \mainmatter
 %\input{introduction}
 \input{cholera} % 1
-%\input{cholera-rainfall} % 2
+\input{cholera-rainfall} % 2
 %\input{cholera-haiti-ocv} % 3
 %\input{covid-pipeline-reports} % 4
 %\input{covid-switzerland-npi} % 5
@@ -384,7 +384,7 @@ textheight=690pt,
 %\input{conclusions}
 
 \backmatter
-%\begin{appendices}\input{appendices}\input{matmet}\end{appendices}
+\begin{appendices}\input{appendices}\input{matmet}\end{appendices}
 %\begin{fullwidth}\printbibliography\end{fullwidth}
 
 \end{document}
