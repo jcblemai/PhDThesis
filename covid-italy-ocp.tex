@@ -47,7 +47,8 @@ The formulation of the optimal control problem has three main components: 1) an 
 The objective, the model, and the constraints may be tailored to specific applications within the proposed framework.
 
 % Description:objective
-\subsection{Objective function.} Optimizing calls for a metric, whose selection is critical in determining the optimal solution and its outcome. The choice of an objective function relates health, economy, and ethics. Possible candidates are the minimization of e.g.~DALYs (the Disability-Adjusted Life Years), the number of deaths, and economic loss\cite{Du:ComparativeCosteffectivenessSARSCoV2:2021}. All these objectives are linked and may be combined together. As the model considered for this work does not have risk-classes, without loss of generality it is optimized for the minimization of the incidence on Italy from January 11, 2021 to April 11, 2021. Minimization of the deaths would yield the same results under the assumptions the model used.
+\subsection{Objective function}
+ Optimizing calls for a metric, whose selection is critical in determining the optimal solution and its outcome. The choice of an objective function relates health, economy, and ethics. Possible candidates are the minimization of e.g.~DALYs (the Disability-Adjusted Life Years), the number of deaths, and economic loss\cite{Du:ComparativeCosteffectivenessSARSCoV2:2021}. All these objectives are linked and may be combined together. As the model considered for this work does not have risk-classes, without loss of generality it is optimized for the minimization of the incidence on Italy from January 11, 2021 to April 11, 2021. Minimization of the deaths would yield the same results under the assumptions the model used.
 
 % Description:constraints
 \subsection{Constraints} Two types of constraints are defined: supply constraints, which determine the weekly delivery to the national stockpile; and logistic constraints, which limits the maximum rate of local vaccine distribution in each province.
@@ -65,7 +66,7 @@ From the national stockpile, doses may be allocated to any of the 107 Italian pr
 
 
  % Description:model
-\subsection{Epidemiological model.} 
+\subsection{COVID-19 transmission model} 
 The optimal control framework may be used with any compartmental SARS-CoV-2 transmission model that can be approximated by ordinary differential equations. To demonstrate its usefulness, it is applied a complex model based on previous work that was aimed to describe the first wave of COVID-19 infections in Italy \parencite{Gatto:SpreadDynamicsCOVID19:2020,Bertuzzo:GeographyCOVID19Spread:2020}. 
 %Incidence and deaths are projected using the spatially distributed epidemiological model devised by Gatto et \textit{al.}\cite{Gatto:SpreadDynamicsCOVID19:2020} and further improved by Bertuzzo et \textit{al.}\cite{Bertuzzo:GeographyCOVID19Spread:2020}. 
 
@@ -81,7 +82,7 @@ The model subdivides the Italian population into its 107 provinces represented a
 \centering
 \includegraphics{fig_italy-ocp/figures/OCPItalydrawio2.pdf}
 %    \includegraphics[width=0.40\textwidth]{fig_italy-ocp/figures/map_nd.png}
-\margincaption[Optimal control model compartments diagram]{Diagram representing the compartments of the epidemiological model and the possible transitions in a single province. The control is the vaccination rate (teal arrows), aiming at minimizing incident infections (pink arrow). Individuals in compartments outside of the yellow block are able to move along the mobility network.}
+\margincaption[Diagram of the COVID-19 model compartments and transitions]{Diagram representing the compartments of the epidemiological model and the possible transitions in a single province. The control is the vaccination rate (teal arrows), aiming at minimizing incident infections (pink arrow). Individuals in compartments outside of the yellow block are able to move along the mobility network.}
     \label{fig:model_description_diag}
 \end{marginfigure}
 Apart from hospitalized $H$, quarantined $Q$, dead $D$, and symptomatic individuals $I$, a fraction of the other individuals commutes between provinces along the mobility network, thus node-to-node disease transmission is introduced along the network shown in fig.~\ref{fig:model_description_network}. The COVID-19 transmission dynamics are described by the following set of ordinary differential equations in each node $i$: 
@@ -119,7 +120,7 @@ Namely the force of infection $\lambda_i(t)$ is split between the sum of the loc
 \begin{marginfigure}
 \centering
 \includegraphics{fig_italy-ocp/figures/map_nd.png}
-\margincaption[Optimal control mobility network]{Mobility network: the force of infection in a province is coupled to the dynamics of other connected provinces. To reduce the problem to a tractable size, only the most important connections (red edges) are considered when optimizing, but the full network (red and grey edges) is used to assess our strategies. Nodes size and color display each province's population, and edges width shows the straight of the coupling between each pair of provinces.}
+\margincaption[Mobility network connecting the 107 provinces of Italy]{Mobility network: the force of infection in a province is coupled to the dynamics of other connected provinces. To reduce the problem to a tractable size, only the most important connections (red edges) are considered when optimizing, but the full network (red and grey edges) is used to assess our strategies. Nodes size and color display each province's population, and edges width shows the straight of the coupling between each pair of provinces.}
     \label{fig:model_description_network}
 \end{marginfigure}
 
@@ -147,7 +148,7 @@ The objective for our model is to minimize the total incidence of infections, i.
 \begin{figure}[!ht]%[width=0.75\textwidth]
     \centering
     \includegraphics{fig_italy-ocp/figures/DA_italy1.pdf}
-    \caption[Data assimilation and scenarios for optimization]{Data assimilation and scenarios for optimization. Comparison between the model outputs (95\% confidence interval (CI) of the ensemble, blue shaded area) and the corresponding epidemiological data from March 2020 to January 2021. The orange and green shaded area respectively show the ensemble dynamics (95\% CI) of what is called pessimistic and optimistic transmission scenarios from January to April. The optimal vaccination strategy in the optimistic (or pessimistic) scenario is computed with respect to the the continuous green (or orange) line, representing the model trajectory obtained using the median of each ensemble parameter. A. The data on the daily hospitalizations is estimated as described in \parencite{Bertuzzo:GeographyCOVID19Spread:2020}; this data at the regional level is assimilated on a moving window of 14 days to update the model parameters describing the local transmission rates (see SI). B. Daily number of newly exposed individuals versus the reported positive cases. Note that, the model assumes the presence of 90\% asymptomatics among the exposed individuals, who are possibly not detected by the surveillance system. C. Daily number of deaths. %\textbf{D.} Estimated reproduction number. The fluctuations during summer 2020 are mainly due to local outbreaks generated by  imported cases which cannot be directly considered in the model since the data is not public available.  
+    \caption[Model fit with data assimilation and projected scenarios for optimization]{Data assimilation and projected scenarios for optimization. Comparison between the model outputs (95\% confidence interval (CI) of the ensemble, blue shaded area) and the corresponding epidemiological data from March 2020 to January 2021. The orange and green shaded area respectively show the ensemble dynamics (95\% CI) of what is called pessimistic and optimistic transmission scenarios from January to April. The optimal vaccination strategy in the optimistic (or pessimistic) scenario is computed with respect to the the continuous green (or orange) line, representing the model trajectory obtained using the median of each ensemble parameter. A. The data on the daily hospitalizations is estimated as described in \parencite{Bertuzzo:GeographyCOVID19Spread:2020}; this data at the regional level is assimilated on a moving window of 14 days to update the model parameters describing the local transmission rates (see SI). B. Daily number of newly exposed individuals versus the reported positive cases. Note that, the model assumes the presence of 90\% asymptomatics among the exposed individuals, who are possibly not detected by the surveillance system. C. Daily number of deaths. %\textbf{D.} Estimated reproduction number. The fluctuations during summer 2020 are mainly due to local outbreaks generated by  imported cases which cannot be directly considered in the model since the data is not public available.  
     }\label{fig:model_DA}
 \end{figure}
 
@@ -331,7 +332,7 @@ Our results suggest that it is possible to considerably increase the impact of v
     %\includegraphics[scale=0.23]{figures/ts_optimal_selected.pdf} \\
     %\includegraphics[scale=0.23]{figures/ts_optimal_stackplot.pdf}
     \includegraphics[width=\textwidth]{fig_italy-ocp/figures/ts_both.pdf}
-    \caption[Optimal vaccine allocation for the baseline, pessimistic scenario. ]{Optimal vaccine allocation for the baseline, pessimistic scenario. \textsc{A.} Cumulative proportion of vaccine doses administered in the 107 provinces, (some of which are highlighted) . The local distribution rate is limited by a rate that is proportional to population. This logistic constraint is visualized here as the maximum slope, equal for every province.
+    \caption[Optimal vaccine allocation for the baseline scenario]{Optimal vaccine allocation for the baseline, pessimistic scenario. \textsc{A.} Cumulative proportion of vaccine doses administered in the 107 provinces, (some of which are highlighted) . The local distribution rate is limited by a rate that is proportional to population. This logistic constraint is visualized here as the maximum slope, equal for every province.
     \textsc{B.} Stacked cumulative absolute number of vaccines in the 107 provinces of Italy. The national stockpile is shown in black, and is replenished every week (say on Mondays) with 479'700 doses. The name of the provinces with a final allocation of more than 150'000 doses is shown on the right.}
     \label{fig:OC_stackplot}
 \end{figure}
@@ -340,7 +341,7 @@ The optimal vaccine allocation obtained as the solution of the optimal control f
 The strategy must obey the imposed logistic and supply constraints: 1) The vaccine stockpile is replenished every Monday by a fixed amount of doses (e.g., 479'700 doses in the baseline scenario), and 2) the maximum possible distribution capacity per province is limited, proportionally to the node population, so that the number of doses distributed across the country can be of 0.5\textsc{m} per day at maximum (more details in SI fig.~\ref{fig:OC_logistic_constraints}). \begin{marginfigure}[-10\baselineskip]
     \centering
     \includegraphics{fig_italy-ocp/figuresSI/SI_ts_optimal_stackplot_proportional.pdf}
-    \margincaption[Time allocation for the pessimistic scenario]{Time allocation for the pessimistic scenario with a stockpile delivery of 479'700. Each week, the 479'700 doses are spread accross the provinces. This view unravel the temporal pattern in the allocation.}
+    \margincaption[Temporal vaccine allocation for the pessimistic scenario]{Temporal vaccine allocation for the pessimistic scenario with a stockpile delivery of 479'700. Each week, the 479'700 doses are spread accross the provinces. This view unravel the temporal pattern in the allocation.}
     \label{fig:OC_temporal_alloaction}
 \end{marginfigure}
 
@@ -368,7 +369,7 @@ To further investigate these patterns, in fig.~\ref{fig:OC_scatter}.\textsc{a} i
 
 
 %% ***********************************************************************************************
-\section{Discussion and Conclusion}
+\section{Discussion}
 %% ***********************************************************************************************
 Without any constraint on supply, each country would vaccinate its population as fast as possible according to the available infrastructure. However limitations in vaccine supply and rate of delivery are a reality for every country, hence the available doses should be deployed in space and time following a fair and effective strategy. 
 
