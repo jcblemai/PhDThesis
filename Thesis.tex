@@ -232,6 +232,19 @@
     [\vspace*{0.5\baselineskip}]% after
 
 
+% manual list of abbreviation https://tex.stackexchange.com/questions/149708/simple-list-of-abbreviations-manually
+\usepackage{calc}
+\makeatletter
+\newcommand{\tocfill}{\cleaders\hbox{$\m@th \mkern\@dotsep mu . \mkern\@dotsep mu$}\hfill}
+\makeatother
+\newcommand{\abbrlabel}[1]{\makebox[3cm][l]{#1\ \tocfill}}
+\newenvironment{abbreviations}{\begin{list}{}{\renewcommand{\makelabel}{\abbrlabel}%
+        \setlength{\labelwidth}{3cm}\setlength{\leftmargin}{\labelwidth+\labelsep}%
+                                              \setlength{\itemsep}{0pt}}}{\end{list}}
+%% This code creates the groups
+% -----------------------------------------
+\usepackage{etoolbox}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% FULLFIGURE %%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -373,21 +386,23 @@ textheight=690pt,
 \begin{document}
 %\frontmatter
 %\blankpage
-\input{frontmatter}
+%\input{frontmatter}
 \pdfbookmark[section]{\contentsname}{toc}
 \begin{fullwidth}\tableofcontents\listoffigures\listoftables\end{fullwidth}
 \mainmatter
-\input{introduction}
-\input{cholera} % 1
-\input{cholera-rainfall} % 2
-\input{cholera-haiti-ocv} % 3
+%\input{introduction}
+%\input{cholera} % 1
+%\input{cholera-rainfall} % 2
+%\input{cholera-haiti-ocv} % 3
 \input{covid-pipeline-reports} % 4
-\input{covid-switzerland-npi} % 5
-\input{covid-italy-ocp} % 6
-\input{conclusions}
+%\input{covid-switzerland-npi} % 5
+%\input{covid-italy-ocp} % 6
+%\input{conclusions}
+
+\input{abbreviations}
 
 \backmatter
-\begin{appendices}\input{appendices}\input{matmet}\end{appendices}
-\begin{fullwidth}\printbibliography\end{fullwidth}
+%\begin{appendices}\input{appendices}\input{matmet}\end{appendices}
+%\begin{fullwidth}\printbibliography\end{fullwidth}
 
 \end{document}
