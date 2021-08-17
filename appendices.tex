@@ -260,9 +260,10 @@ where \(\epsilon > 0\) represents the over- or under-reporting.
 
 \chapter{Appendix to chapter 5}
 
+\section{Canton of Vaud hospitalization data}
+%Access to precise hospitalization data was granted while working with CHUV, the coordinating hospital of Canton de Vaud, on scenario modeling reports as presented in \textsc{Chapter 4}. It allowed us to refine our estimates\cite{Rees:COVID19LengthHospital:2020} of stays in hospital and the load of the health system. 
 
-\section{Model Parameters from truncated data}
-Access to precise hospitalization data was granted while working with CHUV, the coordinating hospital of Canton de Vaud, on scenario modeling reports as presented in \textsc{Chapter 4}. It allowed us to refine our estimates\cite{Rees:COVID19LengthHospital:2020} of stays in hospital and the load of the health system. 
+The dataset contains individual-level data from 1093 patients, hospitalized in the canton of Vaud up to April 14, 2020. Of all patients, 41\% (448/1093) were female and 59\% were male (645/1093) with a median age of 70 years (fig.~\ref{fig:vdage}). Of all the hospitalized cases, 20\% (214/1093) required use of an Intensive Care Unit (ICU).
 
 \begin{figure}[!htb]% [width = .7\textwidth]
     \centering
@@ -278,24 +279,20 @@ Access to precise hospitalization data was granted while working with CHUV, the 
 \end{figure}
 
 
-Access to individual-level data from 1093 patients, hospitalized in the canton of Vaud up to April 14, 2020 was granted. Of all patients, 41\% (448/1093) were female and 59\% were male (645/1093) with a median age of 70 years (fig.~\ref{fig:vdage}). Of all the hospitalized cases, 20\% (214/1093) required use of an Intensive Care Unit (ICU).
+
 
 
 Of 777 patients with a known outcome on April 14, 104 died (13\%). 
-The hospitalized Case Fatality Ratio (hCFR) is estimated by adjusting for the distribution of time hospitalization to death accounting for the fact that outcomes have not been yet observed for all patients (right-censoring\footnote{The dataset presented here is two weeks more recent than the one visible in the example scenario planning report for Canton de Vaud (see Results, \textsc{Chapter 4}). It takes into account 137 additional patients, and the comparison with fig.~\ref{fig:vdage} strikingly shows how the distribution changes as the system is observed longer.}). To account for multiple outcomes (death and discharge), a parametric competing risk survival model is implemented\cite{Ghani:MethodsEstimatingCase:2005}. A Bayesian approach is choosen\cite{Bellot:TreebasedBayesianMixture:2018}, that enables us to fit parametric distributions to times to events using accelerated failure models. This method allows for the joint estimation of the probability of each event type and the distributions of times to events. In this case the probability of death, i.e. the hCFR. A \textsc{covid}-19 modeling study in France identified mixtures of probabilities of times to death, with a group dying faster with exponentially-distributed times and one dying slower\cite{Salje:EstimatingBurdenSARSCoV2:2020}. The Bayesian survival framework is extended to test for mixture in times to death and recovery. Model patients being discharged from ICU and subsequently dying, which was the case for 4/138 patients with known outcome, are not taken into account. Neither are accounted for multiple ICU stays per patient since this information was not available. Both Gamma and Log-Normal distributions are fitted separately to patients that did not go into ICU, and patients that did. For the former, it is modeled times from hospitalization to death or discharge, and for the latter times from ICU entry to both outcomes. Models were fit with Stan\cite{Carpenter:StanProbabilisticProgramming:2017}, and selection was done using Bayesian leave-one-out cross-validation\cite{Vehtari:PracticalBayesianModel:2017}. \\
+The hospitalized Case Fatality Ratio (hCFR) is estimated by adjusting for the distribution of time hospitalization to death accounting for the fact that outcomes have not been yet observed for all patients (right-censoring\footnote[][-2\baselineskip]{The dataset presented here is two weeks more recent than the one visible in the example scenario planning report for Canton de Vaud (see Results, \textsc{Chapter 4}). It takes into account 137 additional patients, and the comparison with fig.~\ref{fig:vdage} strikingly shows how the distribution changes as the system is observed longer.}). To account for multiple outcomes (death and discharge), a parametric competing risk survival model is implemented\cite{Ghani:MethodsEstimatingCase:2005}. A Bayesian approach is choosen\cite{Bellot:TreebasedBayesianMixture:2018}, that enables us to fit parametric distributions to times to events using accelerated failure models. This method allows for the joint estimation of the probability of each event type and the distributions of times to events. In this case the probability of death, i.e. the hCFR. A \textsc{covid}-19 modeling study in France identified mixtures of probabilities of times to death, with a group dying faster with exponentially-distributed times and one dying slower\cite{Salje:EstimatingBurdenSARSCoV2:2020}. The Bayesian survival framework is extended to test for mixture in times to death and recovery. Model patients being discharged from ICU and subsequently dying, which was the case for 4/138 patients with known outcome, are not taken into account. Neither are accounted for multiple ICU stays per patient since this information was not available. Both Gamma and Log-Normal distributions are fitted separately to patients that did not go into ICU, and patients that did. For the former, it is modeled times from hospitalization to death or discharge, and for the latter times from ICU entry to both outcomes. Models were fit with Stan\cite[-5\baselineskip]{Carpenter:StanProbabilisticProgramming:2017}, and selection was done using Bayesian leave-one-out cross-validation\cite[-3\baselineskip]{Vehtari:PracticalBayesianModel:2017}. \\
 \begin{figure}[!htb]
     \centering
-        \caption[Survival functions of death and discharge for hospitalized patients and patients in ICU][-3\baselineskip]{Survival functions of death and discharge for hospitalized patients and patients in ICU. The lines represent the mean estimated cumulative probability of dying (full) and 1 minus the cumulative probability of discharge (dotted) estimated with non-parametric (Aalen-Johansen estimator, shading gives the 95\% CI) and parametric (assuming gamma and log-normal distributions, shading indicate the 95\% CrI) methods. Time is in days from hospitalization for patients that did not require ICU, and time from ICU admission for those that did. The point at which the lines join represents the probability that the final outcome is death, which was estimated to be 28.1\% (95\% CrI: 16.4-40.9) for patients in ICU and 13.0\% (95\% CrI: 9.9-16.6) for patients not requiring ICU based on the log-normal distribution.}
+        \caption[Survival functions of death and discharge for hospitalized patients and patients in ICU][-8\baselineskip]{Survival functions of death and discharge for hospitalized patients and patients in ICU. The lines represent the mean estimated cumulative probability of dying (full) and 1 minus the cumulative probability of discharge (dotted) estimated with non-parametric (Aalen-Johansen estimator, shading gives the 95\% CI) and parametric (assuming gamma and log-normal distributions, shading indicate the 95\% CrI) methods. Time is in days from hospitalization for patients that did not require ICU, and time from ICU admission for those that did. The point at which the lines join represents the probability that the final outcome is death, which was estimated to be 28.1\% (95\% CrI: 16.4-40.9) for patients in ICU and 13.0\% (95\% CrI: 9.9-16.6) for patients not requiring ICU based on the log-normal distribution.}
     \includegraphics{fig_covid-switzerland-npi/fig_supp/survival_analaysis.png}
     \label{fig:delays}
 \end{figure}
 
 
-Times to death and discharge were best described by log-normal distributions with a single group both for patients having required ICU or not (fig.~\ref{fig:delays}). When accounting for right-censoring and assuming log-normally distributed times to events, an overall hCFR is estimated at 16.0\% (95\% credible interval, CrI: 12.5-19.8), resulting from a hCFR of 28.1\% (95\% CrI: 16.4-40.9) for patients requiring ICU and 13.0\% (95\% CrI: 9.9-16.6) for patients that did no require it. Estimated hCFRs were slightly higher when assuming gamma-distributed times to events (overall hCFR of 20.3\%, 95\% CrI: 15.9-24.1).
-
-
-\noindent The distribution of times of hospitalization processes are shown in fig.~\ref{fig:vdtimes}, and fitted distribution parameters given in tab.~\ref{tab:vdparams}.
-
+Times to death and discharge were best described by log-normal distributions with a single group both for patients having required ICU or not (fig.~\ref{fig:delays}). When accounting for right-censoring and assuming log-normally distributed times to events, an overall hCFR is estimated at 16.0\% (95\% credible interval, CrI: 12.5-19.8), resulting from a hCFR of 28.1\% (95\% CrI: 16.4-40.9) for patients requiring ICU and 13.0\% (95\% CrI: 9.9-16.6) for patients that did no require it. Estimated hCFRs were slightly higher when assuming gamma-distributed times to events (overall hCFR of 20.3\%, 95\% CrI: 15.9-24.1). The distribution of times of hospitalization processes are shown in fig.~\ref{fig:vdtimes}, and fitted distribution parameters given in tab.~\ref{tab:vdparams}.
 
 \begin{table}[t]
 \caption[Observed hospitalization time distributions]{Observed hospitalization time distributions. All times are in days and taken from the date of hospitalization if not specified otherwise. Note that these estimates are biased due to right-censoring of observations and probably under-estimate the true distributions. Estimates that account for right-censoring are shown in tab.~\ref{tab:survpars}.}
@@ -328,7 +325,7 @@ Time from ICU to death & 6.97 & 4.98 & 1.68 & 0.77\\
 Group & Event & median & mean-log & SD-log & scale & shape\\
 \midrule
 Without ICU & Death & 10 (7.3--16) & 2.3 (2--2.8) & 1.2 (0.95--1.5) & 21 (21--22) & 1.1 (0.83--1.4)\\
- & Discharge & 6.1 (5.6-6.6) & 1.8 (1.7--1.9) & 0.93 (0.87--0.99) & 4.3 (4.4--4.2) & 1.8 (1.6-2)\\ \addlinespace
+ & Discharge & 6.1 (5.6--6.6) & 1.8 (1.7--1.9) & 0.93 (0.87--0.99) & 4.3 (4.4--4.2) & 1.8 (1.6--2)\\ \addlinespace
 ICU & Death & 13 (6.2--30) & 2.6 (1.8--3.4) & 1.3 (0.87--1.9) & 21 (12--23) & 1.2 (0.74--1.9)\\
  & Discharge & 6.4 (4.3--9.3) & 1.8 (1.5--2.2) & 1.3 (1.1--1.6) & 9.1 (8.1--11) & 1 (0.75--1.4)\\
 \bottomrule
@@ -337,326 +334,196 @@ ICU & Death & 13 (6.2--30) & 2.6 (1.8--3.4) & 1.3 (0.87--1.9) & 21 (12--23) & 1.
      \label{tab:survpars}
 \end{fwtable}
 
-\section{Model Description}
-We build a \textsc{covid}-19 compartmental transmission model based on the Susceptible Exposed Infected Recovered (SEIR) template with three I compartments. The schematic with the different transitions and compartments is shown in SM Fig.~\ref{fig:diagram}. Infected individuals have some probability of developing severe symptoms which require hospitalization after a delay from symptom onset ($I_h$). Hospitalization can lead to recovery or death, either through normal hospitalization ($H_{s}$ and $H_d$ respectively) or passing through Intensive Care Units (ICUs) ($U_{s}$ and $U_d$ respectively). Data from the canton of Vaud show a high proportion of deaths outside of hospitals ($\approx 50\%$), we therefore also include a pathway from infection to death without passing through hospitalization ($I_d$). 
+%We build a \textsc{covid}-19 compartmental transmission model based on the Susceptible Exposed Infected Recovered (SEIR) template with three I compartments. The schematic with the different transitions and compartments is shown in SM Fig.~\ref{fig:diagram}. Infected individuals have some probability of developing severe symptoms which require hospitalization after a delay from symptom onset ($I_h$). Hospitalization can lead to recovery or death, either through normal hospitalization ($H_{s}$ and $H_d$ respectively) or passing through Intensive Care Units (ICUs) ($U_{s}$ and $U_d$ respectively). Data from the canton of Vaud show a high proportion of deaths outside of hospitals ($\approx 50\%$), we therefore also include a pathway from infection to death without passing through hospitalization ($I_d$). 
 
 
-The time spent in the observable hospitalization states were used to define the number of stages in each compartment by fitting Erlang distributions to the data of canton de Vaud. To account for right-censoring we do not fit directly to observed times to events but rather to the estimated log-normal distributions described in the survival analysis section above. We fit the rate parameter of the Erlang distributions for shape parameters between 1 and 10 by minimizing the Kullback-Leibler (KL) divergence between the Erlang and estimated log-normal distributions. The final fit was taken to be the one with the smallest KL-divergence. \\
+%The time spent in the observable hospitalization states were used to define the number of stages in each compartment by fitting Erlang distributions to the data of canton de Vaud. To account for right-censoring we do not fit directly to observed times to events but rather to the estimated log-normal distributions described in the survival analysis section above. We fit the rate parameter of the Erlang distributions for shape parameters between 1 and 10 by minimizing the Kullback-Leibler (KL) divergence between the Erlang and estimated log-normal distributions. The final fit was taken to be the one with the smallest KL-divergence. \\
 
 
-We found that all hospitalization processes were best represented with exponential distributions (Erlang with shape parameter of 1). Rates of transitions are shown Table~\ref{parRates} and branching probabilities in Table~\ref{parProb}.
-
-\subsection{Model equations}\label{sec:stoch}
-We implemented the model as a discrete-state model based on a Partially-Observed Markov Process (POMP), or equivalentyl a Hidden Markov Model (HMM), simulating the transitions between compartments as discrete events using stochastic count processes \cite{king_inapparent_2008, breto_time_2009}. Let \(N_{AB}(t)\) be the number of individuals transiting between compartments \(A,B\in \mathcal{X}\) in the time interval \([0,t)\)  where $\mathcal{X}$ is the state vector,
-$$\mathcal{X} = \{S, E, I_{1,2,3} , I_d, I_h, H_{s}, H_{d}, H_{u}, U_{s}, U_{d}, R, D\}$$
-
-The number of transitions during a time-step $\Delta t$ is
-\(\Delta N_{AB}(t) = N_{AB}(t+\Delta t) - N_{AB}(t)\). We model time-varying $R_0(t) = \beta(t)/(3r_I)$ as a geometric random walk defined by its calibrated variance, where $\beta$ is the transmission parameter and $1/(3r_I)$ is the mean duration spent in the infectious compartments $I_1$ to $I_3$. The force of infection is expressed in terms of $\beta(t)$ in the model. Given the state of the system at time \(t\), \(\mathcal{X}_t\), the model reads:
-
-\begin{gather}
-\label{eq:stochsys}
-\begin{aligned}
-    \mathbb{P}\left[ \Delta N_{SE}(t) = 1 \right|\mathcal{X}_t] &=  \beta(t)  \frac{I_1(t) + I_2(t) + I_3(t)}{P} S(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{EI_1}(t) = 1 \right|\mathcal{X}_t] &= r_{E} E(t) \Delta t + o(\Delta t) \\
-    \mathbb{P}\left[ \Delta N_{I_1 I_2}(t) = 1 \right|\mathcal{X}_t] &= 3r_{I} I_1(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{I_2 I_3}(t) = 1 \right|\mathcal{X}_t] &= 3r_{I} I_2(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{I_3 I_d}(t) = 1 \right|\mathcal{X}_t] &= p_{I_d|I_3} \cdot 3r_{I}  I_3(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{I_3 I_h}(t) = 1 \right|\mathcal{X}_t] &= p_{I_h|I_3} \cdot 3r_{I}   I_3(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{I_3 R}(t) = 1 \right|\mathcal{X}_t] &= p_{R|I_3} \cdot 3r_{I}  I_3(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{I_d R}(t) = 1 \right|\mathcal{X}_t] &= p_{R|I_d} \cdot r_{I}  I_d(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{I_d D}(t) = 1 \right|\mathcal{X}_t] &= p_{D|I_d}\cdot r_{I} I_d(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{I_h H_d}(t) = 1 \right|\mathcal{X}_t] &= p_{H_d|I_h} \cdot r_{I_h}  I_h(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{I_h H_u}(t) = 1 \right|\mathcal{X}_t] &= p_{H_u|I_h} \cdot r_{I_h} I_h(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{I_h H_s}(t) = 1 \right|\mathcal{X}_t] &= p_{H_s|I_h} \cdot r_{I_h} I_h(t) \Delta t + o(\Delta t)\\
-   \mathbb{P}\left[ \Delta N_{H_s R}(t) = 1 \right|\mathcal{X}_t] &=  r_{H_s} H_s(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{H_u U_d}(t) = 1 \right|\mathcal{X}_t] &=   p_{U_d|H_u} \cdot r_{H_u} H_u(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{H_u U_s}(t) = 1 \right|\mathcal{X}_t] &=   p_{U_s|H_u} \cdot r_{H_u} H_u(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{H_d D}(t) = 1 \right|\mathcal{X}_t] &=   r_{H_d} H_d(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{U_s R}(t) = 1 \right|\mathcal{X}_t] &=   r_{U_s} U_s(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{U_d D}(t) = 1 \right|\mathcal{X}_t] &=   r_{U_d} U_d(t) \Delta t + o(\Delta t)\\
-\end{aligned}
-\end{gather}
-
-\noindent assuming that \(\mathbb{P}[\Delta N_{XY} > 1|\mathcal{X}_t] = o(\Delta t) \; \forall X,Y \in \mathcal{X}\). Branching probabilities from stage $X$ to $Y$ are noted $p_{Y|X}$ and rates of stay in stage $X$ is noted $r_X$.
-The ensuing stochastic variations of the state variables are:
-
-\begin{gather}
-\label{eq:stochstates}
-\begin{aligned}
-    \Delta E(t) &= \Delta N_{SE}(t) - \Delta N_{EI_1}(t))\\
-    \Delta I_1(t) &= \Delta N_{EI_1}(t) - \Delta N_{I_1 I_2}\\
-    \Delta I_2(t) &= \Delta N_{I_1 I_2} - \Delta N_{I_2 I_3}\\
-    \Delta I_3(t) &=  \Delta N_{I_2 I_3} - \Delta N_{I_3 I_d} - \Delta N_{I_3 I_h} -  \Delta N_{I_3 R}\\
-    \Delta I_d(t) &= \Delta N_{I_3 I_d} - \Delta N_{I^d R} - \Delta N_{I^d D}\\
-    \Delta I_h(t) &= \Delta N_{I_3 I_h} -  \Delta N_{I_h H_d} -  \Delta N_{I_h H_u} -  \Delta N_{I_h H_s} \\
-    \Delta H_s(t) &= \Delta N_{I_h H_s} -  \Delta N_{H_s R}\\
-   \Delta H_d(t) &= \Delta N_{H_s H_d} -  \Delta N_{H_d D}\\
-    \Delta H_u(t) &= \Delta N_{I_h H_u} - \Delta N_{H_u U_d} - \Delta N_{H_u U_a} - \Delta N_{H_u U}\\
-    \Delta U(t) &=  \Delta N_{H_u U} - \Delta N_{U R}\\
-    \Delta U_d(t) &=  \Delta N_{H_u U_d} - \Delta N_{U_d D}\\
-    \Delta D(t) &=  \Delta N_{I^d D} + \Delta N_{U_d D} + \Delta N_{H_d D}\\
-    \Delta R(t) &= \Delta N_{I_3 R} + \Delta N_{I^d R} +  \Delta N_{H_s R} + \Delta N_{U R} \\
-     S(t) &= P - \sum_{X \in \mathcal{X} \backslash \{S\}} X(t),
-\end{aligned}
-\end{gather}
-where the equation for \(S(t)\) enforces a constant total population. The total population for each canton and for Switzerland is taken from the 2018 estimate of the Federal Statistical Office \cite{office_federal_de_la_statistique_population_2018}.
-
-
-\begin{table}[ht!]
-\centering
-\caption[Transition rates from each compartment of the model]{Transition rates from each compartment of the model. Compartments $I_{1,2,3}$ are composed of several stages so the rate of exit from each one is $3r_{I}$. We parameterize the model conditioning on a mean generation time of 5.2 days \parencite{Ganyani:EstimatingGenerationInterval:2020}, and an exposed and non-infectious duration of 2.9 days \parencite{He:TemporalDynamicsViral:2020}, yielding a mean duration of 4.6 days in the infectious compartments. All rates are given in day$^{-1}$ and the subscript subscript in the parameter names indicate the compartment from which exits happen at the given rate.}
-\begin{tabular}{lccl}
-\toprule
-Rate & Source & Value or starting bound & Corresponding duration  \\
-\midrule
-$r_{E}$ & \parencite{He:TemporalDynamicsViral:2020} & $1/2.9$& infected but non-infectious state \\
-$r_{I}$ & \parencite{He:TemporalDynamicsViral:2020, Ganyani:EstimatingGenerationInterval:2020}  & $1/4.6$  & infectious state\\
-$r_{I_h}$ & \parencite{Scire:ReproductiveNumberCOVID19:2020} & $1/1.6$& end of the infectious period to hospitalization \\
-$r_{H_s}$ & Vaud data & $1/7.6$ & hospitalization to discharge \\
-$r_{H_d}$ & Vaud data & $1/23.7$ & hospitalization to death \\
-$r_{H_u}$ & Vaud data & $1/2.35$  & hospitalization to ICU admission \\
-$r_{U_s}$ & Vaud data & $1/9.3$  & ICU admission to discharge \\
-$r_{U_d}$ & Vaud data & $1/25.6$ & ICU admission to death \\
-$r_{I_d}$ & Fitted & $1/50 - 1/1$ &end of the infectious period to death when not hospitalized \\
-\bottomrule
-\end{tabular}
-\label{parRates}
-\end{table}
-
-\begin{table}[ht!]
-\centering
-\caption[Branching probabilities of the model]{Branching probabilities of the model. The probability from stage $A$ to stage $B$ is $p_{B|A}$. There are seven different pathways from susceptible to either death or recovery. We assume that the proportion of severe infections that have sever symptoms which would require hospitalization is of 7.5\% \parencite{Verity:EstimatesSeverityCoronavirus:2020}, that 50\% of deaths happen outside of hospitals (data from cantons of Vaud as above and Geneva from OpenZH), that the hospitalized case fatality ratio is of 16\% (data from canton of Vaud, see above), the probability of going into ICU for hospitalized patients is of 20\% (data from canton of Vaud), and an population-level infection fatality ratio (IFR) of 0.75 \% which is in the range of published estimates \parencite{Verity:EstimatesSeverityCoronavirus:2020,Russell:EstimatingInfectionCase:2020}.
-}
-
-\begin{tabular}{lccl}
-\toprule
-Parameter & Source & Value &  Description \\
-\midrule
-IFR & Assumed & 0.0075 & Infection fatality ratio \\
-$p_s$ & Assumed &  0.075 & Probability of severe symptoms\\
-$p_h$ &  Vaud data $|$ IFR &  0.31 & Probability of hospitalization given severe symptoms  \\
-$p_{I_d|I_3}$ & Vaud data $|$ IFR, $p_s$ & $p_s (1-p_h)$&  Probability of death outside of the hospital given sever symptoms  \\
-$p_{I_h|I_3}$ & Vaud data $|$ IFR, $p_s$  & $p_s p_h$   &  Probability of hospitalization given infection \\
-$p_{R|I_3}$   & Deduced  $|p_s$ & $(1-p_s)$    &  Probability of not having sever symptoms\\
-$p_{D|I_d}$   & Vaud data $|$ IFR, $p_s$  &  0.073   &  Probability of death given severe symptoms and not hospitalized \\
-$p_{R|I_d}$   & Vaud data $|$ IFR, $p_s$ &  $1-p_{D|I_d}$   & Probabilitys of recovery given severe symptoms \\
-$p_{H_s|I_h}$ & Vaud data &  0.72   &  probability of discharge without ICU given hospitalization\\
-$p_{H_d|I_h}$ & Vaud data &  0.11    &  Probability of death given not going into ICU\\
-$p_{H_u|I_h, !H_s}$ & Vaud data &  0.61   &  Probability of ICU given not discharged without ICU\\
-$p_{U_d|H_u}$ & Vaud data & 0.28   &  Probability of death given ICU \\
-\bottomrule
-\end{tabular}
-\label{parProb}
-\end{table}
-
-\section{Model Selection and Fitting/Calibration}
-
-We calibrate the model separately for each canton on the daily death and hospitalization until April 24. The calibration procedure is based on a frequentist multiple iterated filtering algorithm (MIF2~\cite{ionides_inference_2006}). The observation model is formulated as follows:
-$$
-\begin{aligned}
-deaths(t) &\sim Poisson(\Delta D(t)) \\
-\Delta hosp(t) &\sim Skellam(\Delta H(t), \Delta D_H(t) + \Delta R_H(t)) \\
-\end{aligned}
-$$
-\noindent where, $\Delta D(t)$, $\Delta H(t)$, $\Delta D_H(t)$, $\Delta R_H(t)$ are respectively the number of new deaths, hospitalized, and deaths and discharged from hospitals at time $t$, and $\Delta hosp(t)$ is the difference between the number of current hospitalizations at times $t$ and $t-1$, for which we choose a Skellam distribution \cite{skellam_frequency_1946}. The full log-likelihood of the observation model was taken as the sum of the individual log-likelihoods of the $\Delta hosp(t)$ and of the $deaths(t)$. We did not use cases due to the difference in testing procedure in time and between cantons.
-
-\section{Assessment of Model Fit}
-SM Figures \ref{fig:chfit} and \ref{fig:cantonfit} show model fits at the national and cantonal levels respectively. We note that hospitalization processes in all cantons and the national level were parameterized with data from the canton of Vaud. Difference in hospital protocols and procedures in each canton as well as transfers of patient between cantons will cause differences between observed and modelled ICU occupancy. 
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width = .5\textwidth]{fig_covid-switzerland-npi/fig_supp/CH_fits.png}
-    \caption[Model fit at at national level]{Model fit at at national level. Model results are given in terms of the 95\% (light gray) and 50\% quantile ranges of the smoothing distribution of R$_0$ at the maximum likelihood estimates of inferred parameters. Data (points) from \parencite{probst_daenuprobstcovid19-cases-switzerland_2020}}. Our model tends to overestimate current ICU using time distributions from canton de Vaud, while death (cumulative and incidence) and current hospitalization are well captured. We do not model cases reporting due to differences in the reporting processes in time.
-    \label{fig:chfit}
-\end{figure}
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width = .8\textwidth]{fig_covid-switzerland-npi/fig_supp/caton_fits.png}
-    \caption[Cantonal level fits]{Cantonal level fits, with the same legend as in SM Fig.~\ref{fig:chfit}. Data (points) from \parencite{openzh_openzhcovid_19_2020}.}
-    \label{fig:cantonfit}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=.8\textwidth]{fig_covid-switzerland-npi/fig_supp/GE_seroprevalence_comparison.png}
-    \caption[Qualitative comparison between modelled infected in the canton of Genève and seroprevalence estimates]{Qualitative comparison between modelled proportion of people infected in the canton of Genève and seroprevalence estimates. Model estimates (ribbons, dark shading give the IQR and light shading the 95\% quantile range) are compared to seroprelavence estimates (points, error bars give the 95\% CrI)   taken from Figure 1 in \parencite{stringhini_repeated_2020} [Accessed May 15 2020]. Seroprevalence estimates do not correspond to infection status on the date of the survey due to the delay between infection and seroconversion. We roughly account for this delay by plotting seropervalence estimates shifted backwards in time to represent the delay between infection and symptom onset (6 days \parencite{bi_epidemiology_2020}) and from symptom onset to seroconversion (about 80\% of seroconversions occur within 15 days \parencite{huang_systematic_2020}), resulting in a total shift of 21 days. Note that seroprevelance estimates were not used in model fitting. Quantitative evaluation of adequacy between modelled proportion infected and seroprevalence estimates would require modelling explicitly seroconversion.}
-    \label{fig:seroprev}
-\end{figure}
-
-\begin{table}[]
-    \centering
-        \caption[Estimated values of R$_0$ at the beginning of the epidemic]{Estimated values of R$_0$ at the beginning of the epidemic (March 1 to March 10) and after the implementation of non-pharmaceutical interventions (March 29 to April 5). Estimates given in terms of the median and 95\% quantile range (in parenthesis).}
-
-\begin{tabular}{ccccc}
-\toprule
-\multicolumn{1}{c}{ } & \multicolumn{2}{c}{March 01-March 10} & \multicolumn{2}{c}{March 29-April 05} \\
-\cmidrule(l{3pt}r{3pt}){2-3} \cmidrule(l{3pt}r{3pt}){4-5}
- & median & 95\% QR & median & 95\% QR\\
-\midrule
-Switzerland & 2.8 & (2.5-3.1) & 0.4 & (0.27-0.6)\\
-Bern & 2.4 & (2-3) & 0.5 & (0.26-0.9)\\
-Basel-Landschaft & 2.8 & (2.2-3.7) & 0.22 & (0.03-0.7)\\
-Basel-Stadt & 3.1 & (2.6-3.8) & 0.3 & (0.13-0.6)\\
-Fribourg & 2.7 & (2.2-3.4) & 0.4 & (0.2-0.8)\\
-Geneve & 2.6 & (2.1-3) & 0.5 & (0.24-0.8)\\
-Jura & 1.4 & (1.2-1.6) & 0.7 & (0.4-1)\\
-Neuchatel & 2 & (1.7-2.3) & 0.6 & (0.4-1)\\
-Ticino & 4 & (3-5) & 0.5 & (0.29-1)\\
-Vaud & 2.7 & (2.4-3) & 0.5 & (0.3-0.8)\\
-Valais & 1.8 & (1.4-2.2) & 0.29 & (0.07-0.7)\\
-Zurich & 2.3 & (1.8-2.8) & 0.5 & (0.25-0.9)\\
-\bottomrule
-\end{tabular}
-    \label{tab:r0}
-\end{table}
+%\section{Model equations}\label{sec:stoch}
+%As in \textsc{Chapter 2} and 3, the model is implemented as a discrete-state model based on a Partially-Observed Markov Process (POMP), or equivalently a Hidden Markov Model (HMM), simulating the transitions between compartments as discrete events using stochastic count processes\cite{King:InapparentInfectionsCholera:2008,Breto:TimeSeriesAnalysis:2009}. Let \(N_{AB}(t)\) be the number of individuals transiting between compartments \(A,B\in \mathcal{X}\) in the time interval \([0,t)\)  where $\mathcal{X}$ is the state vector,
+%$$\mathcal{X} = \{S, E, I_{1,2,3} , I_d, I_h, H_{s}, H_{d}, H_{u}, U_{s}, U_{d}, R, D\}$$
+%
+%Using the same notation as previous chapters, the number of transitions during a time-step $\Delta t$ is
+%\(\Delta N_{AB}(t) = N_{AB}(t+\Delta t) - N_{AB}(t)\). We model time-varying $R_0(t) = \beta(t)/(3r_I)$ as a geometric random walk defined by its calibrated variance, where $\beta$ is the transmission parameter and $1/(3r_I)$ is the mean duration spent in the infectious compartments $I_1$ to $I_3$. The force of infection is expressed in terms of $\beta(t)$ in the model. Given the state of the system at time \(t\), \(\mathcal{X}_t\), the model reads:
+%\begin{gather}
+%\label{eq:stochsys}
+%\begin{aligned}
+%    \mathbb{P}\left[ \Delta N_{SE}(t) = 1 \right|\mathcal{X}_t] &=  \beta(t)  \frac{I_1(t) + I_2(t) + I_3(t)}{P} S(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{EI_1}(t) = 1 \right|\mathcal{X}_t] &= r_{E} E(t) \Delta t + o(\Delta t) \\
+%    \mathbb{P}\left[ \Delta N_{I_1 I_2}(t) = 1 \right|\mathcal{X}_t] &= 3r_{I} I_1(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{I_2 I_3}(t) = 1 \right|\mathcal{X}_t] &= 3r_{I} I_2(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{I_3 I_d}(t) = 1 \right|\mathcal{X}_t] &= p_{I_d|I_3} \cdot 3r_{I}  I_3(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{I_3 I_h}(t) = 1 \right|\mathcal{X}_t] &= p_{I_h|I_3} \cdot 3r_{I}   I_3(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{I_3 R}(t) = 1 \right|\mathcal{X}_t] &= p_{R|I_3} \cdot 3r_{I}  I_3(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{I_d R}(t) = 1 \right|\mathcal{X}_t] &= p_{R|I_d} \cdot r_{I}  I_d(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{I_d D}(t) = 1 \right|\mathcal{X}_t] &= p_{D|I_d}\cdot r_{I} I_d(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{I_h H_d}(t) = 1 \right|\mathcal{X}_t] &= p_{H_d|I_h} \cdot r_{I_h}  I_h(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{I_h H_u}(t) = 1 \right|\mathcal{X}_t] &= p_{H_u|I_h} \cdot r_{I_h} I_h(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{I_h H_s}(t) = 1 \right|\mathcal{X}_t] &= p_{H_s|I_h} \cdot r_{I_h} I_h(t) \Delta t + o(\Delta t)\\
+%   \mathbb{P}\left[ \Delta N_{H_s R}(t) = 1 \right|\mathcal{X}_t] &=  r_{H_s} H_s(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{H_u U_d}(t) = 1 \right|\mathcal{X}_t] &=   p_{U_d|H_u} \cdot r_{H_u} H_u(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{H_u U_s}(t) = 1 \right|\mathcal{X}_t] &=   p_{U_s|H_u} \cdot r_{H_u} H_u(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{H_d D}(t) = 1 \right|\mathcal{X}_t] &=   r_{H_d} H_d(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{U_s R}(t) = 1 \right|\mathcal{X}_t] &=   r_{U_s} U_s(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{U_d D}(t) = 1 \right|\mathcal{X}_t] &=   r_{U_d} U_d(t) \Delta t + o(\Delta t)\\
+%\end{aligned}
+%\end{gather}
+%
+%\noindent assuming that \(\mathbb{P}[\Delta N_{XY} > 1|\mathcal{X}_t] = o(\Delta t) \; \forall X,Y \in \mathcal{X}\). Branching probabilities from stage $X$ to $Y$ are noted $p_{Y|X}$ and rates of stay in stage $X$ is noted $r_X$.
+%The ensuing stochastic variations of the state variables are:
+%\begin{gather}
+%\label{eq:stochstates}
+%\begin{aligned}
+%    \Delta E(t) &= \Delta N_{SE}(t) - \Delta N_{EI_1}(t))\\
+%    \Delta I_1(t) &= \Delta N_{EI_1}(t) - \Delta N_{I_1 I_2}\\
+%    \Delta I_2(t) &= \Delta N_{I_1 I_2} - \Delta N_{I_2 I_3}\\
+%    \Delta I_3(t) &=  \Delta N_{I_2 I_3} - \Delta N_{I_3 I_d} - \Delta N_{I_3 I_h} -  \Delta N_{I_3 R}\\
+%    \Delta I_d(t) &= \Delta N_{I_3 I_d} - \Delta N_{I^d R} - \Delta N_{I^d D}\\
+%    \Delta I_h(t) &= \Delta N_{I_3 I_h} -  \Delta N_{I_h H_d} -  \Delta N_{I_h H_u} -  \Delta N_{I_h H_s} \\
+%    \Delta H_s(t) &= \Delta N_{I_h H_s} -  \Delta N_{H_s R}\\
+%   \Delta H_d(t) &= \Delta N_{H_s H_d} -  \Delta N_{H_d D}\\
+%    \Delta H_u(t) &= \Delta N_{I_h H_u} - \Delta N_{H_u U_d} - \Delta N_{H_u U_a} - \Delta N_{H_u U}\\
+%    \Delta U(t) &=  \Delta N_{H_u U} - \Delta N_{U R}\\
+%    \Delta U_d(t) &=  \Delta N_{H_u U_d} - \Delta N_{U_d D}\\
+%    \Delta D(t) &=  \Delta N_{I^d D} + \Delta N_{U_d D} + \Delta N_{H_d D}\\
+%    \Delta R(t) &= \Delta N_{I_3 R} + \Delta N_{I^d R} +  \Delta N_{H_s R} + \Delta N_{U R} \\
+%     S(t) &= P - \sum_{X \in \mathcal{X} \backslash \{S\}} X(t),
+%\end{aligned}
+%\end{gather}
+%where the equation for \(S(t)\) enforces a constant total population. The total population for each canton and for Switzerland is taken from the 2018 estimate of the Federal Statistical Office\cite{Officefederaldelastatistique:Population:2018}.
+%
+%
+%\section{Model Parameters}
+%Rates of transitions are shown Table~\ref{parRates} and branching probabilities in Table~\ref{parProb}. Proper indentifiability is needed to capture the dynamics of $R_0$ so most of the parameters where fixed to values of the litterature.
+%The model is parameterized conditioning on a mean generation time of 5.2 days \parencite{Ganyani:EstimatingGenerationInterval:2020}, and an exposed and non-infectious duration of 2.9 days \parencite{He:TemporalDynamicsViral:2020}, yielding a mean duration of 4.6 days in the infectious compartments. All rates are given in day$^{-1}$ and the subscript subscript in the parameter names indicate the compartment from which exits happen at the given rate.
+%
+%
+%\begin{table*}[ht!]
+%\centering\small
+%\begin{tabular}{lccl} 
+%\toprule
+%Rate & Source & Value or starting bound & Corresponding duration  \\
+%\midrule
+%$r_{E}$ & \parencite{He:TemporalDynamicsViral:2020} & $1/2.9$& infected but non-infectious state \\
+%$r_{I}$ & \parencite{He:TemporalDynamicsViral:2020, Ganyani:EstimatingGenerationInterval:2020}  & $1/4.6$  & infectious state\\
+%$r_{I_h}$ & \parencite{Scire:ReproductiveNumberCOVID19:2020} & $1/1.6$& end of the infectious period to hospitalization \\
+%$r_{H_s}$ & Vaud data & $1/7.6$ & hospitalization to discharge \\
+%$r_{H_d}$ & Vaud data & $1/23.7$ & hospitalization to death \\
+%$r_{H_u}$ & Vaud data & $1/2.35$  & hospitalization to ICU admission \\
+%$r_{U_s}$ & Vaud data & $1/9.3$  & ICU admission to discharge \\
+%$r_{U_d}$ & Vaud data & $1/25.6$ & ICU admission to death \\
+%$r_{I_d}$ & Fitted & $1/50 - 1/1$ &end of the infectious period to death when not hospitalized \\
+%\bottomrule
+%\end{tabular}
+%\caption[Transition rates from each compartment of the model]{Transition rates from each compartment of the model. Compartments $I_{1,2,3}$ are composed of several stages so the rate of exit from each one is $3r_{I}$. }
+%\label{parRates}
+%\end{table*}
+%
+%There are seven different pathways from susceptible to either death or recovery. It is assumed that the proportion of severe infections that have severe symptoms which would require hospitalization is of 7.5\% \parencite{Verity:EstimatesSeverityCoronavirus:2020}, that 50\% of deaths happen outside of hospitals (data from cantons of Vaud as above and Geneva from OpenZH), that the hospitalized case fatality ratio is of 16\% (data from canton of Vaud, see above), the probability of going into ICU for hospitalized patients is of 20\% (data from canton of Vaud), and an population-level infection fatality ratio (IFR) of 0.75 \% which is in the range of published estimates\parencite{Verity:EstimatesSeverityCoronavirus:2020,Russell:EstimatingInfectionCase:2020}.
+%\begin{table*}[ht!]
+%\centering\small
+%\begin{tabular}{lccl} 
+%\toprule
+%Parameter & Source & Value &  Description \\
+%\midrule
+%IFR & Assumed & 0.0075 & Infection fatality ratio \\
+%$p_s$ & Assumed &  0.075 & Probability of severe symptoms\\
+%$p_h$ &  Vaud data $|$ IFR &  0.31 & Probability of hospitalization given severe symptoms  \\
+%$p_{I_d|I_3}$ & Vaud data $|$ IFR, $p_s$ & $p_s (1-p_h)$&  Probability of death outside of the hospital given sever symptoms  \\
+%$p_{I_h|I_3}$ & Vaud data $|$ IFR, $p_s$  & $p_s p_h$   &  Probability of hospitalization given infection \\
+%$p_{R|I_3}$   & Deduced  $|p_s$ & $(1-p_s)$    &  Probability of not having sever symptoms\\
+%$p_{D|I_d}$   & Vaud data $|$ IFR, $p_s$  &  0.073   &  Probability of death given severe symptoms and not hospitalized \\
+%$p_{R|I_d}$   & Vaud data $|$ IFR, $p_s$ &  $1-p_{D|I_d}$   & Probabilitys of recovery given severe symptoms \\
+%$p_{H_s|I_h}$ & Vaud data &  0.72   &  probability of discharge without ICU given hospitalization\\
+%$p_{H_d|I_h}$ & Vaud data &  0.11    &  Probability of death given not going into ICU\\
+%$p_{H_u|I_h, !H_s}$ & Vaud data &  0.61   &  Probability of ICU given not discharged without ICU\\
+%$p_{U_d|H_u}$ & Vaud data & 0.28   &  Probability of death given ICU \\
+%\bottomrule
+%\end{tabular}
+%\caption[Branching probabilities of the model]{Branching probabilities of the model. The probability of transition from stage $A$ to stage $B$ is $p_{B|A}$. }
+%\label{parProb}
+%\end{table*}
+%
+%
+%\section{Assessment of Model Fit}
+%In fig. \ref{fig:chfit} and fig. \ref{fig:cantonfit}, model fits at respectively the national and cantonal levels are showed. Note that the hospitalization processes in all cantons and at the national level were parameterized with data from the canton de Vaud. Difference in hospital protocols and procedures in each canton as well as transfers of patient between cantons cause differences between observed and modelled ICU occupancy. This model tends to overestimate current ICU using time distributions from canton de Vaud, while death (cumulative and incidence) and current hospitalization are well captured. 
+% 
+%\begin{figure}[!htb]
+%    \centering
+%    \includegraphics{fig_covid-switzerland-npi/fig_supp/CH_fits.png}
+%    \caption[Model fit at at national level]{Model fit at at national level. Model results are given in terms of the 95\% (light gray) and 50\% quantile ranges of the smoothing distribution of R$_0$ at the maximum likelihood estimates of inferred parameters. Data (points) from \textcite{Probst:DaenuprobstCovid19casesswitzerland:2020}}.     \label{fig:chfit}
+%\end{figure}
+%
+%\begin{figure}[!htb]
+%    \centering
+%    \includegraphics{fig_covid-switzerland-npi/fig_supp/caton_fits.png}
+%    \caption[Cantonal level fits]{Cantonal level fits, with the same legend as in fig.~\ref{fig:chfit}. Data (points) from \textcite{openZH:OpenZHCovid19:2020}.}
+%    \label{fig:cantonfit}
+%\end{figure}
 
 
-\begin{table}[]
-    \centering
-     \caption[Estimated proportion of population infected with SARS-CoV-2 as of April 24 2020]{Estimated proportion of population infected with SARS-CoV-2 as of April 24 2020. Estimates given in terms of the median and 95\% quantile range (in parenthesis).}
-\begin{tabular}{ll}
-\toprule
-Canton & Proportion infected [\%]\\
-\midrule
-Switzerland & 3.9 (3.6-4.3)\\
-Bern & 1.9 (1.4- 2.6)\\
-Basel-Landschaft & 3.9 (2.9-5.0)\\
-Basel-Stadt & 6.7 (5.0-8.6)\\
-Fribourg & 4.0 (3.0-5.4)\\
-Geneve & 11.0 (9.3-13.3)\\
-Jura & 4.2 (2.8- 6.5)\\
-Neuchatel & 6.7 (4.9-9.1)\\
-Ticino & 16.0 (13.5-21.2)\\
-Vaud & 8.0 (6.8- 9.3)\\
-Valais & 5.5 (4.4-7.4)\\
-Zurich & 2.3 (1.8- 2.9)\\
-\bottomrule
-\end{tabular}
-    \label{tab:infection}
-\end{table}
+
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=.8\textwidth]{fig_covid-switzerland-npi/fig_supp/GE_seroprevalence_comparison.png}
+%    \caption[Qualitative comparison between modelled infected in the canton of Genève and seroprevalence estimates]{Qualitative comparison between modelled proportion of people infected in the canton of Genève and seroprevalence estimates. Model estimates (ribbons, dark shading give the IQR and light shading the 95\% quantile range) are compared to seroprelavence estimates (points, error bars give the 95\% CrI)   taken from Figure 1 in \parencite{stringhini_repeated_2020} [Accessed May 15 2020]. Seroprevalence estimates do not correspond to infection status on the date of the survey due to the delay between infection and seroconversion. We roughly account for this delay by plotting seropervalence estimates shifted backwards in time to represent the delay between infection and symptom onset (6 days \parencite{bi_epidemiology_2020}) and from symptom onset to seroconversion (about 80\% of seroconversions occur within 15 days \parencite{huang_systematic_2020}), resulting in a total shift of 21 days. Note that seroprevelance estimates were not used in model fitting. Quantitative evaluation of adequacy between modelled proportion infected and seroprevalence estimates would require modelling explicitly seroconversion.}
+%    \label{fig:seroprev}
+%\end{figure}
+
+%\begin{table}[]
+%    \centering
+%        \caption[Estimated values of R$_0$ at the beginning of the epidemic]{Estimated values of R$_0$ at the beginning of the epidemic (March 1 to March 10) and after the implementation of non-pharmaceutical interventions (March 29 to April 5). Estimates given in terms of the median and 95\% quantile range (in parenthesis).}
+%
+%\begin{tabular}{ccccc}
+%\toprule
+%\multicolumn{1}{c}{ } & \multicolumn{2}{c}{March 01-March 10} & \multicolumn{2}{c}{March 29-April 05} \\
+%\cmidrule(l{3pt}r{3pt}){2-3} \cmidrule(l{3pt}r{3pt}){4-5}
+% & median & 95\% QR & median & 95\% QR\\
+%\midrule
+%Switzerland & 2.8 & (2.5-3.1) & 0.4 & (0.27-0.6)\\
+%Bern & 2.4 & (2-3) & 0.5 & (0.26-0.9)\\
+%Basel-Landschaft & 2.8 & (2.2-3.7) & 0.22 & (0.03-0.7)\\
+%Basel-Stadt & 3.1 & (2.6-3.8) & 0.3 & (0.13-0.6)\\
+%Fribourg & 2.7 & (2.2-3.4) & 0.4 & (0.2-0.8)\\
+%Geneve & 2.6 & (2.1-3) & 0.5 & (0.24-0.8)\\
+%Jura & 1.4 & (1.2-1.6) & 0.7 & (0.4-1)\\
+%Neuchatel & 2 & (1.7-2.3) & 0.6 & (0.4-1)\\
+%Ticino & 4 & (3-5) & 0.5 & (0.29-1)\\
+%Vaud & 2.7 & (2.4-3) & 0.5 & (0.3-0.8)\\
+%Valais & 1.8 & (1.4-2.2) & 0.29 & (0.07-0.7)\\
+%Zurich & 2.3 & (1.8-2.8) & 0.5 & (0.25-0.9)\\
+%\bottomrule
+%\end{tabular}
+%    \label{tab:r0}
+%\end{table}
+%
+%
+%\begin{table}[]
+%    \centering
+%     \caption[Estimated proportion of population infected with SARS-CoV-2 as of April 24 2020]{Estimated proportion of population infected with SARS-CoV-2 as of April 24 2020. Estimates given in terms of the median and 95\% quantile range (in parenthesis).}
+%\begin{tabular}{ll}
+%\toprule
+%Canton & Proportion infected [\%]\\
+%\midrule
+%Switzerland & 3.9 (3.6-4.3)\\
+%Bern & 1.9 (1.4- 2.6)\\
+%Basel-Landschaft & 3.9 (2.9-5.0)\\
+%Basel-Stadt & 6.7 (5.0-8.6)\\
+%Fribourg & 4.0 (3.0-5.4)\\
+%Geneve & 11.0 (9.3-13.3)\\
+%Jura & 4.2 (2.8- 6.5)\\
+%Neuchatel & 6.7 (4.9-9.1)\\
+%Ticino & 16.0 (13.5-21.2)\\
+%Vaud & 8.0 (6.8- 9.3)\\
+%Valais & 5.5 (4.4-7.4)\\
+%Zurich & 2.3 (1.8- 2.9)\\
+%\bottomrule
+%\end{tabular}
+%    \label{tab:infection}
+%\end{table}
 
 
-\section{Mobility analysis}
-SM Fig. \ref{fig:mobcorr} shows the cross-cantonal correlation between reduction in R$_0$ and mobility changes.
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width =\textwidth]{fig_covid-switzerland-npi/fig_supp/mobility_correlation.png}
-    \caption[Cross-cantonal association between reductions in R$_0$ and activity-related mobility]{Cross-cantonal association between reductions in R$_0$ and activity-related mobility. Left: Scatter plots of maximal reduction in activity against maximal estimated reduction in R$_0$, vertical error bars indicate the 95\% quantile range of R$_0$. Center: correlation coefficients per activity. Left: Regression coefficient per activity. A regression coefficient of 1 means that a 1\% decrease in activity was associated with a 1\% decrease in R$_0$.}
-    \label{fig:mobcorr}
-\end{figure}
-
-\section{Changepoint analysis}
-
-We used Bayesian changepoint models to infer dates of changes in R$_0$ reduction using the \textit{mcp} package in R \cite{lindelov_mcp_2020}. We test both models with one, two and three segments between two intercepts to cover possible changes in the speed of decrease of R$_0$ between assuming stable baseline and final post-NPI states as observed in exploratory analysis. We used Bayesian leave-one-out cross-validation to select the number of changepoints \cite{vehtari_practical_2017}.
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width = .75\textwidth]{fig_covid-switzerland-npi/fig_supp/prob_r0_below_one.png}
-    \caption[Cantonal-level probability that R$_0$ was below one at dates of NPIs]{Cantonal-level probability that R$_0$ was below one at dates of NPIs. National scale probability denoted by 'CH'. NPI numbers correspond to 1) Ban of events of more than 1000 people on February 28, 2) School closure on March 13, 3) Closure of all non-essential commercial activities on March 16, 4) Ban of gatherings of more than 5 people and recommended home isolation on March 20.}
-    \label{fig:prob_r0_below_one}
-\end{figure}
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width = .4\textwidth]{fig_covid-switzerland-npi/fig_supp/date_crossing.png}
-    \caption[Date at which R$_0$ fell below 1]{Date at which R$_0$ fell below 1. Estimates are shown in terms of the median (point), IQR (thick error bars) and 95\% quantile range (error bars). National crossing date denoted by 'CH'.}
-    \label{fig:datecross}
-\end{figure}
-
-\begin{table}[!htb]
-    \centering
-    \caption[Model comparison results of changepoint models of R$_0$ time series]{Model comparison results of changepoint models applied to estimated R$_0$ time series. We considered models with two plateaus connected by either one (model1), two (model2) or three (model3) distinct slopes. Model comparison was performed by Bayesian leave-one-out cross-validation \parencite{vehtari_practical_2017}. Difference in estimated log pointwise predictive density (elpd) between two models are considered significant if their absolute value is larger than 5 times their standard error (SE). The best fitting model is ordered first for each canton. National scale models denoted by 'CH'.}
-    \label{tab:chgpnt}
-    \footnotesize
-\begin{tabular}{llrrl}
-\toprule
-Canton & Model & LOO difference & SE & significant\\
-\midrule
-BE & model3 & 0.00 & 0.00 & \\
-BE & model2 & -1.80 & 1.35 & FALSE\\
-BE & model1 & -35.07 & 6.60 & TRUE\\
-\addlinespace
-BL & model3 & 0.00 & 0.00 & \\
-BL & model2 & -0.74 & 0.40 & FALSE\\
-BL & model1 & -5.01 & 3.16 & FALSE\\
-\addlinespace
-BS & model3 & 0.00 & 0.00 & \\
-BS & model2 & -35.92 & 5.27 & TRUE\\
-BS & model1 & -36.50 & 5.42 & TRUE\\
-\addlinespace
-CH & model3 & 0.00 & 0.00 & \\
-CH & model2 & -9.87 & 6.12 & FALSE\\
-CH & model1 & -13.87 & 4.33 & FALSE\\
-\addlinespace
-FR & model3 & 0.00 & 0.00 & \\
-FR & model1 & -27.41 & 6.71 & FALSE\\
-FR & model2 & -28.32 & 7.33 & FALSE\\
-\addlinespace
-GE & model3 & 0.00 & 0.00 & \\
-GE & model2 & -1.01 & 1.00 & FALSE\\
-GE & model1 & -1.04 & 2.36 & FALSE\\
-\addlinespace
-GR & model3 & 0.00 & 0.00 & \\
-GR & model2 & -9.36 & 3.23 & FALSE\\
-GR & model1 & -12.59 & 4.04 & FALSE\\
-\addlinespace
-JU & model2 & 0.00 & 0.00 & \\
-JU & model1 & -24.04 & 7.59 & FALSE\\
-JU & model3 & -24.45 & 7.88 & FALSE\\
-\addlinespace
-NE & model3 & 0.00 & 0.00 & \\
-NE & model2 & -0.01 & 0.27 & FALSE\\
-NE & model1 & -17.39 & 7.16 & FALSE\\
-\addlinespace
-TI & model3 & 0.00 & 0.00 & \\
-TI & model2 & -0.43 & 0.41 & FALSE\\
-TI & model1 & -13.17 & 5.14 & FALSE\\
-\addlinespace
-VD & model3 & 0.00 & 0.00 & \\
-VD & model2 & -15.38 & 5.63 & FALSE\\
-VD & model1 & -45.58 & 5.28 & TRUE\\
-\addlinespace
-VS & model3 & 0.00 & 0.00 & \\
-VS & model2 & -1.01 & 0.36 & FALSE\\
-VS & model1 & -24.92 & 6.44 & FALSE\\
-\addlinespace
-ZH & model3 & 0.00 & 0.00 & \\
-ZH & model2 & -5.26 & 6.34 & FALSE\\
-ZH & model1 & -31.64 & 8.77 & FALSE\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width = .8\textwidth]{fig_covid-switzerland-npi/fig_supp/r0_change_combined.png}
-    \caption[Changepoints of R$_0$ and dates of NPIs]{Changepoints of R$_0$ and dates of NPIs. Left: Dates of initiation and stabilization of reduction in R$_0$ based on changepoint models with single slope in terms of the median (points), IQRs (thick error bars) and 95\% quantile ranges (error bars). Right: Posterior probabilities that R$_0$ started decreasing before the date of implementation of NPIs as described in Figure~1 of the main text. National-level estimates are denoted by 'CH'.}
-    \label{fig:datechanger0}
-\end{figure}
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width = .8\textwidth]{fig_covid-switzerland-npi/fig_supp/mob_change_dates.png}
-    \caption[Changpoints in activity-related mobility]{Changpoints in activity-related mobility. Dates of initiation and stabilization of reduction in each type of mobility based on changepoint models with single slope in terms of the mean (points), 50 \% (thick error bars) and 95\% CrI (error bars). National-level estimates are in panel 'CH'.}
-    \label{fig:mobchangedates}
-\end{figure}
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width = .8\textwidth]{fig_covid-switzerland-npi/fig_supp/mob_change_prob.png}
-    \caption[Probabilities that  mobility started decreasing before the date of NPIs]{Posterior probabilities that activity-related mobility started decreasing before the date of implementation of NPIs as described in Figure~1 of the main text. National-level estimates are denoted by 'CH'.}
-    \label{fig:mobchangeprob}
-\end{figure}
-
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width=.8\textwidth]{fig_covid-switzerland-npi/fig_supp/proportion_Reff_depletion.png}
-    \caption[Proportion of R$_{eff}$reduction linked to depletion of susceptibles]{Proportion the reduction in the effective reproduction number R$_{eff}$ linked to depletion of susceptibles due to buildup of community immunity (through infection-derived immunity).}
-    \label{fig:roportion_Reff_depletion}
-\end{figure}
 
 
 
