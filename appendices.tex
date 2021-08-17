@@ -4,83 +4,83 @@
 \setcounter{figure}{0}
 \setcounter{equation}{0}
 
-\chapter{Appendix to chapter 2}
-\section{Stochastic cholera transmission model}\label{sec:stoch}
-The equivalent of the ODE system presented in eqns. \eqref{eq:S2j}--\eqref{eq:VR2j} (on page \pageref{eq:S2j}) is  a continuous time Markov process account that transitions between compartments as discrete events. The model is expressed in terms of a stochastic counting process\cite{Breto:TimeSeriesAnalysis:2009}: let \(N_{AB}(t)\) be the number of individuals
-transitioning between classes \(A,B\in \mathcal{X}\) in the time
-interval \([0,t)\), and \(N_{\bullet A}\) denote the number of births into \(A\) and \(N_{A\bullet}\) the number of deaths from \(A\).  The possibles states are
-\(\mathcal{X} = \{S, E, I, R, V^S, V^E, V^I, V^R\}\).
-The number of individuals transitioning  during a timestep $\Delta t$ is
-\(\Delta N_{AB}(t) = N_{AB}(t+\Delta t) - N_{AB}(t)\). Given the state of the system at time \(t\), \(\mathcal{X}_t\), the system equations are:
-
-\begin{gather}
-\label{eq:stochsys}
-\begin{aligned}
-    \mathbb{P}\left[ \Delta N_{SE}(t) = 1 \right|\mathcal{X}_t] &= \sigma F^{stoch}(t) S(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{SR}(t) = 1 \right|\mathcal{X_t}] &= (1-\sigma) F^{stoch}(t) S(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{SV^S}(t) = 1 \right|\mathcal{X}_t] &= r_v(t) S(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{E\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu  E(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{EI}(t) = 1 \right|\mathcal{X}_t] &= \phi E(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{EV^E}(t) = 1 \right|\mathcal{X}_t] &= r_v(t) E(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{IR}(t) = 1 \right|\mathcal{X}_t] &= \gamma I(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{I\bullet}(t) = 1 \right|\mathcal{X}_t] &= (\mu+\alpha)(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{RS}(t) = 1 \right|\mathcal{X}_t] &= \rho R(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{RV^R}(t) = 1 \right|\mathcal{X}_t] &= r_v(t) R(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{R\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu R(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V^SV^E}(t) = 1 \right|\mathcal{X}_t] &=  \sigma (1-\eta) F^{stoch}(t) V^S(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V^SV^R}(t) = 1 \right|\mathcal{X}_t] &=  (1-\sigma) (1-\eta) F^{stoch}(t) V^S(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V^S\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu V^S(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V^EV^I}(t) = 1 \right|\mathcal{X}_t] &= \phi V^E(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V^E\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu V^E(t)(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V^IV^R}(t) = 1 \right|\mathcal{X}_t] &= \gamma V^I(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V^I\bullet}(t) = 1 \right|\mathcal{X}_t] &= (\mu+\alpha)V^I(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V^RV^S}(t) = 1 \right|\mathcal{X}_t] &= \rho_{vr} V^R(t) \Delta t + o(\Delta t)\\
-    \mathbb{P}\left[ \Delta N_{V^R\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu V^R(t) \Delta t + o(\Delta t),\\
-\end{aligned}
-\end{gather}
-
-assuming that \(\mathbb{P}[\Delta N_{AB} > 1|\mathcal{X}_t] = o(\Delta t) \; \forall A,B \in \mathcal{X}\) and \(\mathbb{P}[\Delta N_{A\bullet} > 1|\mathcal{X}_t] = o(\Delta t) \; \forall A \in \mathcal{X}\).
-
-Overdispertion in the infection process is introduced by multiplying
-the force of infection by a time-continuous white noise process
-\(\xi(t)\) defined as the differentiation of an integrated noise
-process \(\xi(t) = \frac{d}{dt}\Gamma(t)\), here taken to be a Gamma
-with mean \(\Delta t\) and variance \(\sigma^2 \Delta t\)\cite{Breto:CompoundMarkovCounting:2011}: 
-\begin{equation}
-\Gamma (t+\Delta t) - \Gamma (t) \sim \text{Gamma}\left( \frac{\Delta t}{\sigma^2}, \sigma^2\right). \label{eqn:sta}
-\end{equation}
-Since \(\xi(t)\) is non-negative it serves as a multiplicative noise on
-the force of infection:
-\begin{equation}
-F^{stoch}(t) = F(t) \xi(t), \label{eqn:stb}
-\end{equation}
-which yields to overdispertion in the transitions $\Delta N_{SE}(t)$, $\Delta N_{SR}(t)$, $\Delta N_{V^SV^E}(t)$, and $\Delta N_{V^SV^R}(t)$. The ensuing transitions of the state variables are:
-\begin{gather}
-\label{eq:stochstates}
-\begin{aligned}
-    \Delta E(t) &= \Delta N_{SE}(t) -  \Delta N_{EI}(t) - \Delta N_{EV^E}(t) -  \Delta N_{E\bullet}(t)\\
-    \Delta I(t) &= \Delta N_{EI}(t) -  \Delta N_{IR}(t) -  \Delta N_{I\bullet}(t)\\
-    \Delta R(t) &= \Delta N_{SR}(t) + \Delta N_{IR}(t) -  \Delta N_{RS}(t) -  \Delta N_{RV^R}(t) -  \Delta N_{R\bullet}(t)\\
-    \Delta V^S(t) &= \Delta N_{SV^S}(t) -  \Delta N_{V^SV^E}(t) -\Delta N_{V^SV^R}(t) - \Delta N_{V^S\bullet}(t)\\
-    \Delta V^E(t) &= \Delta N_{EV^E}(t) + \Delta N_{V^SV^E}(t) -  \Delta N_{V^EV^I}(t) - \Delta N_{V^E\bullet}(t)\\
-    \Delta V^I(t) &= \Delta N_{V^EV^I}(t) -  \Delta N_{V^IV^R}(t) - \Delta N_{V^I\bullet}(t)\\
-    \Delta V^R(t) &= \Delta N_{RV^R}(t) +  \Delta N_{V^SV^R}(t) +  \Delta N_{V^IV^R}(t) - \Delta N_{V^RV^S}(t) - \Delta N_{V^R\bullet}(t)\\
-    \Delta S(t) &= - \sum_{A \in \mathcal{X} \backslash \{S\}} \Delta N_{SA}(t) + \sum_{A \in \mathcal{X} \backslash \{S\}} \Delta N_{A\bullet}(t), 
-\end{aligned}
-\end{gather}
-where the equation for \(\Delta S(t)\) enforces a constant total population.
-
-Let \(C(t_j)\) denote the number of people that develop symptoms during the
-observation interval \([t_j, t_{j+1})\) (i.e. the incidence), we have
-that:
-\begin{equation}
-    C(t_j) = [N_{EI}(t_{j+1}) - N_{EI}(t_j)] + [N_{V^EV^I}(t_{j+1}) - N_{V^EV^I}(t_j)]. \label{eq:stochrep}
-\end{equation}
-The measurement model of the partially observed markov process formulation links the time series of incidence data for the 2015 cholera epidemic in Juba to \(C(t_j)\). We here choose to take a Poisson measurement model accounting for over- or under-reporting of cholera incidence, i.e.
-\[
-	\text{cases}(t_j) \sim \text{Poisson}(\epsilon C(t_j)).
-\]
-where \(\epsilon > 0\) represents the over- or under-reporting.
+%\chapter{Appendix to chapter 2}
+%\section{Stochastic cholera transmission model}\label{sec:stoch}
+%The equivalent of the ODE system presented in eqns. \eqref{eq:S2j}--\eqref{eq:VR2j} (on page \pageref{eq:S2j}) is  a continuous time Markov process account that transitions between compartments as discrete events. The model is expressed in terms of a stochastic counting process\cite{Breto:TimeSeriesAnalysis:2009}: let \(N_{AB}(t)\) be the number of individuals
+%transitioning between classes \(A,B\in \mathcal{X}\) in the time
+%interval \([0,t)\), and \(N_{\bullet A}\) denote the number of births into \(A\) and \(N_{A\bullet}\) the number of deaths from \(A\).  The possibles states are
+%\(\mathcal{X} = \{S, E, I, R, V^S, V^E, V^I, V^R\}\).
+%The number of individuals transitioning  during a timestep $\Delta t$ is
+%\(\Delta N_{AB}(t) = N_{AB}(t+\Delta t) - N_{AB}(t)\). Given the state of the system at time \(t\), \(\mathcal{X}_t\), the system equations are:
+%
+%\begin{gather}
+%\label{eq:stochsys}
+%\begin{aligned}
+%    \mathbb{P}\left[ \Delta N_{SE}(t) = 1 \right|\mathcal{X}_t] &= \sigma F^{stoch}(t) S(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{SR}(t) = 1 \right|\mathcal{X_t}] &= (1-\sigma) F^{stoch}(t) S(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{SV^S}(t) = 1 \right|\mathcal{X}_t] &= r_v(t) S(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{E\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu  E(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{EI}(t) = 1 \right|\mathcal{X}_t] &= \phi E(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{EV^E}(t) = 1 \right|\mathcal{X}_t] &= r_v(t) E(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{IR}(t) = 1 \right|\mathcal{X}_t] &= \gamma I(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{I\bullet}(t) = 1 \right|\mathcal{X}_t] &= (\mu+\alpha)(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{RS}(t) = 1 \right|\mathcal{X}_t] &= \rho R(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{RV^R}(t) = 1 \right|\mathcal{X}_t] &= r_v(t) R(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{R\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu R(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{V^SV^E}(t) = 1 \right|\mathcal{X}_t] &=  \sigma (1-\eta) F^{stoch}(t) V^S(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{V^SV^R}(t) = 1 \right|\mathcal{X}_t] &=  (1-\sigma) (1-\eta) F^{stoch}(t) V^S(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{V^S\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu V^S(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{V^EV^I}(t) = 1 \right|\mathcal{X}_t] &= \phi V^E(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{V^E\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu V^E(t)(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{V^IV^R}(t) = 1 \right|\mathcal{X}_t] &= \gamma V^I(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{V^I\bullet}(t) = 1 \right|\mathcal{X}_t] &= (\mu+\alpha)V^I(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{V^RV^S}(t) = 1 \right|\mathcal{X}_t] &= \rho_{vr} V^R(t) \Delta t + o(\Delta t)\\
+%    \mathbb{P}\left[ \Delta N_{V^R\bullet}(t) = 1 \right|\mathcal{X}_t] &= \mu V^R(t) \Delta t + o(\Delta t),\\
+%\end{aligned}
+%\end{gather}
+%
+%assuming that \(\mathbb{P}[\Delta N_{AB} > 1|\mathcal{X}_t] = o(\Delta t) \; \forall A,B \in \mathcal{X}\) and \(\mathbb{P}[\Delta N_{A\bullet} > 1|\mathcal{X}_t] = o(\Delta t) \; \forall A \in \mathcal{X}\).
+%
+%Overdispertion in the infection process is introduced by multiplying
+%the force of infection by a time-continuous white noise process
+%\(\xi(t)\) defined as the differentiation of an integrated noise
+%process \(\xi(t) = \frac{d}{dt}\Gamma(t)\), here taken to be a Gamma
+%with mean \(\Delta t\) and variance \(\sigma^2 \Delta t\)\cite{Breto:CompoundMarkovCounting:2011}: 
+%\begin{equation}
+%\Gamma (t+\Delta t) - \Gamma (t) \sim \text{Gamma}\left( \frac{\Delta t}{\sigma^2}, \sigma^2\right). \label{eqn:sta}
+%\end{equation}
+%Since \(\xi(t)\) is non-negative it serves as a multiplicative noise on
+%the force of infection:
+%\begin{equation}
+%F^{stoch}(t) = F(t) \xi(t), \label{eqn:stb}
+%\end{equation}
+%which yields to overdispertion in the transitions $\Delta N_{SE}(t)$, $\Delta N_{SR}(t)$, $\Delta N_{V^SV^E}(t)$, and $\Delta N_{V^SV^R}(t)$. The ensuing transitions of the state variables are:
+%\begin{gather}
+%\label{eq:stochstates}
+%\begin{aligned}
+%    \Delta E(t) &= \Delta N_{SE}(t) -  \Delta N_{EI}(t) - \Delta N_{EV^E}(t) -  \Delta N_{E\bullet}(t)\\
+%    \Delta I(t) &= \Delta N_{EI}(t) -  \Delta N_{IR}(t) -  \Delta N_{I\bullet}(t)\\
+%    \Delta R(t) &= \Delta N_{SR}(t) + \Delta N_{IR}(t) -  \Delta N_{RS}(t) -  \Delta N_{RV^R}(t) -  \Delta N_{R\bullet}(t)\\
+%    \Delta V^S(t) &= \Delta N_{SV^S}(t) -  \Delta N_{V^SV^E}(t) -\Delta N_{V^SV^R}(t) - \Delta N_{V^S\bullet}(t)\\
+%    \Delta V^E(t) &= \Delta N_{EV^E}(t) + \Delta N_{V^SV^E}(t) -  \Delta N_{V^EV^I}(t) - \Delta N_{V^E\bullet}(t)\\
+%    \Delta V^I(t) &= \Delta N_{V^EV^I}(t) -  \Delta N_{V^IV^R}(t) - \Delta N_{V^I\bullet}(t)\\
+%    \Delta V^R(t) &= \Delta N_{RV^R}(t) +  \Delta N_{V^SV^R}(t) +  \Delta N_{V^IV^R}(t) - \Delta N_{V^RV^S}(t) - \Delta N_{V^R\bullet}(t)\\
+%    \Delta S(t) &= - \sum_{A \in \mathcal{X} \backslash \{S\}} \Delta N_{SA}(t) + \sum_{A \in \mathcal{X} \backslash \{S\}} \Delta N_{A\bullet}(t), 
+%\end{aligned}
+%\end{gather}
+%where the equation for \(\Delta S(t)\) enforces a constant total population.
+%
+%Let \(C(t_j)\) denote the number of people that develop symptoms during the
+%observation interval \([t_j, t_{j+1})\) (i.e. the incidence), we have
+%that:
+%\begin{equation}
+%    C(t_j) = [N_{EI}(t_{j+1}) - N_{EI}(t_j)] + [N_{V^EV^I}(t_{j+1}) - N_{V^EV^I}(t_j)]. \label{eq:stochrep}
+%\end{equation}
+%The measurement model of the partially observed markov process formulation links the time series of incidence data for the 2015 cholera epidemic in Juba to \(C(t_j)\). We here choose to take a Poisson measurement model accounting for over- or under-reporting of cholera incidence, i.e.
+%\[
+%	\text{cases}(t_j) \sim \text{Poisson}(\epsilon C(t_j)).
+%\]
+%where \(\epsilon > 0\) represents the over- or under-reporting.
 
 %section{Calibration details}
 %odel parameters in the proposed models represent physical rates. However, in the literature there is no consensus on their values or on their probability distribution.
@@ -517,10 +517,6 @@ ICU & Death & 13 (6.2--30) & 2.6 (1.8--3.4) & 1.3 (0.87--1.9) & 21 (12--23) & 1.
 %\end{tabular}
 %    \label{tab:infection}
 %\end{table}
-
-
-
-
 
 \chapter{Appendix to chapter 6}
 
