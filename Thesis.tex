@@ -6,7 +6,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% BOOK DATA %%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title[PhD Thesis: infectious disease dynamics modeling towards informed control decisions]{Modelling infectious disease dynamics\\towards informed\\public-health\\interventions:\\ applications on \\COVID-19 and Cholera}
+\title[PhD Thesis: infectious disease dynamics modeling towards informed control decisions]{Modelling infectious disease \\ dynamics towards informed \\ public health interventions: \\ applications on \textsc{covid}-19 and cholera}
+
 \date{\today}
 \author[Joseph Lemaitre]{Joseph \ Lemaitre}
 \publisher{Under the supervision of Prof. Andrea Rinaldo and Dr. Damiano Pasetto.}
@@ -95,6 +96,42 @@
 }
 % Inserts a blank page
 \newcommand{\blankpage}{\newpage\hbox{}\thispagestyle{empty}\newpage}
+
+%%%% Kevin Godny's code for title page and contents from https://groups.google.com/forum/#!topic/tufte-latex/ujdzrktC1BQ
+\makeatletter
+\renewcommand{\maketitlepage}{%
+\begingroup%
+\setlength{\parindent}{0pt}
+{\fontsize{24}{24}\selectfont\textit{\@author}\par}
+
+%\vspace{1.75in}{\fontsize{36}{54}\selectfont\@title\par}
+\vspace{1.75in}{\fontsize{30}{44}\selectfont\@title\par}
+
+\vspace{0.5in}{\fontsize{14}{14}\selectfont\textsf{\smallcaps{\@date}}\par}
+
+\vfill{\fontsize{14}{14}\selectfont\textit{\@publisher}\par}
+
+\thispagestyle{empty}
+\endgroup
+}
+\makeatother
+
+\titlecontents{part}%
+    [0pt]% distance from left margin
+    {\addvspace{0.25\baselineskip}}% above (global formatting of entry)
+    {\allcaps{Part~\thecontentslabel}\allcaps}% before w/ label (label = ``Part I'')
+    {\allcaps{Part~\thecontentslabel}\allcaps}% before w/o label
+    {}% filler and page (leaders and page num)
+    [\vspace*{0.5\baselineskip}]% after
+
+\titlecontents{chapter}%
+    [4em]% distance from left margin
+    {}% above (global formatting of entry)
+    {\contentslabel{2em}\textit}% before w/ label (label = ``Chapter 1'')
+    {\hspace{0em}\textit}% before w/o label
+    {\qquad\thecontentspage}% filler and page (leaders and page num)
+    [\vspace*{0.5\baselineskip}]% after
+%%%% End additional code by Kevin Godby
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -384,25 +421,25 @@ textheight=690pt,
 %%%%%%%%%%%%%%%%% DOC %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-%\frontmatter
-%\blankpage
-%\input{frontmatter}
+\frontmatter
+
+\input{frontmatter}
 \pdfbookmark[section]{\contentsname}{toc}
 \begin{fullwidth}\tableofcontents\listoffigures\listoftables\end{fullwidth}
 \mainmatter
-%\input{introduction}
+\input{introduction}
 %\input{cholera} % 1
 %\input{cholera-rainfall} % 2
 %\input{cholera-haiti-ocv} % 3
-\input{covid-pipeline-reports} % 4
-\input{covid-switzerland-npi} % 5
+%\input{covid-pipeline-reports} % 4
+%\input{covid-switzerland-npi} % 5
 %\input{covid-italy-ocp} % 6
-\input{conclusions}
+%\input{conclusions}
 
-\input{abbreviations}
+%\input{abbreviations}
 
 \backmatter
-\begin{appendices}\input{appendices}\input{matmet}\end{appendices}
+%\begin{appendices}\input{appendices}\input{matmet}\end{appendices}
 %\begin{fullwidth}\printbibliography\end{fullwidth}
 
 \end{document}
