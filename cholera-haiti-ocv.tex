@@ -170,7 +170,7 @@ Our Markov process formulation requires a measurement model linking the time ser
 \[
 	\text{cases}(t_j) \sim \text{NB}(\epsilon(t) C(t_j), p).
 \]
-where \(\epsilon(t) > 0\) represents the proportion of cases reported. To account for the change of the case definition that occurred on January 1st, 2018, the reporting rate changes over time:
+where \(\epsilon(t) > 0\) represents the proportion of cases reported. To account for the change of the case definition that occurred on January 1, 2018, the reporting rate changes over time:
 \begin{equation}
 \epsilon(t) = \left\{
     \begin{array}{ll}
@@ -195,8 +195,8 @@ Parameter & Calibration & Value or bound & Unit & description \\
 \midrule
 $\beta^i$ ($\times 10$ dept.) & yes & $[0,\infty]$ & -- & Exposure  \\
 $c^i$ ($\times 10$ dept.) & yes & $[0,\infty]$& -- & Force of infection in dept. $i$ from cases in other depts. \\
-$\epsilon_1$& yes & $[0,2]$ & --& reporting fraction before January 1st, 2018\\
-$\epsilon_2$& yes & $[0,2]$ & --& reporting fraction after January 1st, 2018\\
+$\epsilon_1$& yes & $[0,2]$ & --& reporting fraction before January 1, 2018\\
+$\epsilon_2$& yes & $[0,2]$ & --& reporting fraction after January 1, 2018\\
 $\sigma_w$ & yes& $[0,0.1]$ & --&  std-dev of the perturbation of $F(t)$\\
 $p$& yes &$[0,\infty]$ & --&  dispersion parameter of reporting\\
 $\theta_I$  & yes &   $[0,\infty]$ & --& Shedding sympt.  \\
@@ -220,7 +220,7 @@ $\eta_{1d}(t), \eta_{2d}(t)$ & no  & as in spec. & --& Vaccine efficacy for 1 an
 % Description of additional data
 \paragraph{Data} Remote-sensed precipitation estimates from NASA's TRMM and GPM missions are used\footnote{TRMM 3B42 RT Derived Daily Product \parencite{Huffman:TRMMMultisatellitePrecipitation:2007} is used from October 2010 to March 2015,  and GPM from from April 2015 to December 2019.}. Rainfall measurements are provided on a regular grid. To get a value for each department, the measurements are averaged over the extent of the department. The time series of future rainfall up to the year 2030 is constructed by sampling from the past 20 years of data  with replacement blocks of 15 days. To keep the correct seasonality the day of the year of each block is preserved.
 
-\paragraph{Fitting procedure} The model is calibrated separately for each department on the weekly reported cases from March 1st, 2014 to January 1st 2019. The calibration procedure is based on a frequentist multiple iterated filtering algorithm (MIF2)\cite{Ionides:InferenceDynamicLatent:2015}. The initial conditions on March 1st, 2014 are derived by enforcing the model dynamics on the reported cases from the start of the epidemic in 2010. The MIF2 algorithm performance deteriorates quickly with the spatial dimension of the model as the number of particles needed for calibration increase exponentially\cite{Park:GuidedIntermediateResampling:2017}\footnote{As mentionned, new methods have addressed these limitations\parencite{Asfaw:PartiallyObservedMarkov:2021, Park:InferenceHighdimensionalImplicit:2020}}. To address this problem each department is first calibrated independently. In a second step, using the departmental calibration as a starting point, the entire spatial model is calibrated.
+\paragraph{Fitting procedure} The model is calibrated separately for each department on the weekly reported cases from March 1, 2014 to January 1st 2019. The calibration procedure is based on a frequentist multiple iterated filtering algorithm (MIF2)\cite{Ionides:InferenceDynamicLatent:2015}. The initial conditions on March 1, 2014 are derived by enforcing the model dynamics on the reported cases from the start of the epidemic in 2010. The MIF2 algorithm performance deteriorates quickly with the spatial dimension of the model as the number of particles needed for calibration increase exponentially\cite{Park:GuidedIntermediateResampling:2017}\footnote{As mentionned, new methods have addressed these limitations\parencite{Asfaw:PartiallyObservedMarkov:2021, Park:InferenceHighdimensionalImplicit:2020}}. To address this problem each department is first calibrated independently. In a second step, using the departmental calibration as a starting point, the entire spatial model is calibrated.
 The department-specific calibration procedure is as follow:
 
 \begin{enumerate}
