@@ -7,7 +7,7 @@ This chapter describes a model developed for a multi-modelling study. Four teams
 
 
 For this collaborative effort, a hidden Markov model of cholera transmission is developed, with specific modeling choices to account for vaccination and to gather information on elimination timing and probability.
-The present chapter is adapted from Supplement 3 of the aforementioned publication, which focuses on the model designed by our team. The reader is refered to the publication by Lee et al. for the modeling exercise results and the comparison between models predictions.
+The present chapter is adapted from Supplement 3 of the aforementioned publication, which focuses on the model designed by our team. The reader is referred to the publication by Lee et al. for the modeling exercise results and the comparison between models predictions.
 \label{ch:cholera-haiti-ocv}
 \end{fullwidth}
 
@@ -166,7 +166,7 @@ observation interval \([t_j, t_{j+1})\) (i.e. the true incidence). Thus:
     C(t_j) = [N_{SI}(t_{j+1}) - N_{SI}(t_j)] + [N_{V^SI}(t_{j+1}) - N_{V^SI}(t_j)].
 \end{equation}
 
-Our Markov process formulation requires a measurement model linking the time series of the reported incidence to \(C(t_j)\) as the observed variable to the process model in eqn. \eqref{eq:stochstart}--\eqref{eq:stochend}. A negative-binomial measurement model accounting for over- or under-reporting of cholera incidence os choosen, i.e.
+Our Markov process formulation requires a measurement model linking the time series of the reported incidence to \(C(t_j)\) as the observed variable to the process model in eqn. \eqref{eq:stochsys} . A negative-binomial measurement model accounting for over- or under-reporting of cholera incidence os choosen, i.e.
 \[
 	\text{cases}(t_j) \sim \text{NB}(\epsilon(t) C(t_j), p).
 \]
