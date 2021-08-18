@@ -6,7 +6,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%% BOOK DATA %%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title[PhD Thesis: infectious disease dynamics modeling towards informed control decisions]{Modelling infectious disease \\ dynamics towards informed \\ public health interventions: \\ applications on \textsc{covid}-19 and cholera}
+\title[PhD Thesis: infectious disease dynamics modeling towards informed control decisions]{Modeling infectious disease \\ dynamics towards informed \\ public health interventions: \\ applications on \textsc{covid}-19 and cholera}
 
 \date{\today}
 \author[Joseph Lemaitre]{Joseph \ Lemaitre}
@@ -102,7 +102,7 @@
 \renewcommand{\maketitlepage}{%
 \begingroup%
 \setlength{\parindent}{0pt}
-{\fontsize{24}{24}\selectfont\textit{\@author}\par}
+{\fontsize{20}{20}\selectfont\textit{\@author}\par}
 
 %\vspace{1.75in}{\fontsize{36}{54}\selectfont\@title\par}
 \vspace{1.75in}{\fontsize{30}{44}\selectfont\@title\par}
@@ -428,18 +428,19 @@ textheight=690pt,
 \begin{fullwidth}\tableofcontents\listoffigures\listoftables\end{fullwidth}
 \mainmatter
 \input{introduction}
-%\input{cholera} % 1
-%\input{cholera-rainfall} % 2
-%\input{cholera-haiti-ocv} % 3
-%\input{covid-pipeline-reports} % 4
-%\input{covid-switzerland-npi} % 5
-%\input{covid-italy-ocp} % 6
-%\input{conclusions}
+%\input{matmet}
+\input{cholera} % 1
+\input{cholera-rainfall} % 2
+\input{cholera-haiti-ocv} % 3
+\input{covid-pipeline-reports} % 4
+\input{covid-switzerland-npi} % 5
+\input{covid-italy-ocp} % 6
+\input{conclusions}
 
-%\input{abbreviations}
+\input{abbreviations}
 
 \backmatter
-%\begin{appendices}\input{appendices}\input{matmet}\end{appendices}
-%\begin{fullwidth}\printbibliography\end{fullwidth}
+%\begin{appendices}\input{appendices}\end{appendices}
+\begin{fullwidth}\printbibliography\end{fullwidth}
 
 \end{document}
