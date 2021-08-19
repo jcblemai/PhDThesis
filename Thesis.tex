@@ -427,7 +427,7 @@ textheight=690pt,
 %\pdfbookmark[section]{\contentsname}{toc}
 %\begin{fullwidth}\tableofcontents\listoffigures\listoftables\end{fullwidth}
 \mainmatter
-%\input{introduction}
+\input{introduction}
 %%\input{matmet}
 %\input{cholera} % 1
 %\input{cholera-rainfall} % 2
@@ -441,6 +441,10 @@ textheight=690pt,
 
 \backmatter
 %\begin{appendices}\input{appendices}\end{appendices}
-%\begin{fullwidth}\printbibliography\end{fullwidth}
+\begin{fullwidth}\printbibliography\end{fullwidth}
+
+\addcontentsline{toc}{chapter}{C}\markboth{Curriculum Vitae}{}
+
+ \includepdf[pages=-, pagecommand={\thispagestyle{empty}}]{academic_jl.pdf}
 
 \end{document}

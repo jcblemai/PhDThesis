@@ -66,66 +66,51 @@ Pien di contento~~~~~~~~~~~~~~~~~~~~ \\ %, pien di contento \\
 \cleardoublepage
 
 \chapter*{Acknowledgements} \addcontentsline{toc}{chapter}{Acknowledgements}\markboth{Acknowledgements}{}
-The past 4 years spent studying infectious disease modeling were an incredible  learning experience. I wish to thanks Andrea Rinaldo first for welcoming me in science and for the opportunity of exploring a new subject. But also for showing me the importance of a personal contribution.  and for the freedom and trust support; the rules of the ECHO's lab applies through
+Spending 4 years to study the dynamics of cholera (and \textsc{covid}-19) was in retrospect a surprisingly good decision, as my PhD has been a challenging but incredibly rewarding journey. I am grateful to Prof. Andrea Rinaldo for warmly welcoming me in science and academia, and for giving me the opportunity of exploring a new subject that I grew to love. Thank you for giving me the freedom to pursue my interests while benefiting from your unconditional support. It made for a great inspiration and I'll take with me the rule of the ECHO lab.
+ \marginnote{
+  \begin{center}\textsc{Standing on the shoulder of giants}\end{center}
+ During this thesis, I have been fortunate to participate to the GTFCC annual meeting, to IDDConf and to SISMID. These conference were incredible experience, and I would like to thank the infectious disease modeling community for being so welcoming, inclusive and patient. I learned and still learn from many of you. 
+ This thesis is built on many datasets, from rainfall to reported cholera cases. I am very grateful to the workers all along the chain from collection to curation who have made my job possible.
+ Thanks to reviewers, co-reviewers and co-authors from whom I have learned general concepts and valuable scientific writing tips.
+ Tools shape the way you think about problems. This thesis was made possible, but also sculpted by the languages and libraries that were used. I want to acknowledge all the open-source maintainers and contributors who tirelessly make, document and maintain powerful tools, rendering difficult easy and enabling everybody to use.}
+ My sincere thanks goes to Damiano Pasetto for deeply caring about my PhD experience, at time carrying me through this thesis. I own you this thesis %I fondly remember our late evening spend the office, and for your critical eye, and . 
+Scientifically, this thesis has benefited enormously from Javier Perez-Saez. Thank you for your insights on inference and life in general, I have learnt so much.
+ Thanks you Mario Zanon for making the learning a new complicated algorithms is a pleasuret hem to you%, , and thankfully complicated math were followed by discussion and there nothing 
  
- My sincere thanks to Damiano Pasetto for deeply caring about  making me stay employed and sane, for making this enjoyable, for all the good time spend together, and for your critical eye, and carrying me through this thesis I own you this thesis.
+ Upon my arrival at the ECHO lab in 2017, I've been welcomed by wonderful people who have made this journey fun. Thanks Silvia for the best tea cookie ever, Giezi for caring so much about the lab and organizing our pastas and Luca, because sports and meta-science talks are meant to go together. From my later years at ECHO I with to thanks Mitra for many discoveries and the unique perspective on life on work; Paolo for and Cristiano: I am truly grateful to have you as an office mate
  
- Scientifically, this thesis has benefited enormously from discussion and projects with Javier Perez-Saez. Thank you for your insights on life  I have learnt so much and I am grateful
- Learning a new technolgy was a pleasure, and thanks Jacques
+ I want 
  
- Mario Jacques
+ and thanks Jacques
+ From my intense and abbreviated stay in Baltimore, I would like to thank Prof. Justin Lessler for welcoming me and for trusting me after meeting me two times ... Elizabeth, Hannah, Kyu, Shaun have been welcoming. Thanks to the \textsc{covid} Scenario pipeline team, especially to Josh.  Yeah, some people still uses emacs.
  
- Upon my arrival at the ECHO lab in 2017, I've been welcomed by wonderful people who have made this journey fun. Thanks Silvia for the best tea cookie , Giezi and Luca, because sports and meta-science talks are meant to be done near the lake. And towards my later years Mitra, Cristiano and Paolo.
+ --- 
  
- From my intense and abbreviated stay in Baltimore, I would like to thank Justin Lessler for welcoming me and for trusting me after meeting me two times ... Elizabeth, Hannah, Kyu, Shaun have been welcoming. Thanks to the \textsc{covid} Scenario pipeline team, especially to Joshua Kamiski. Yeah, some people still uses emacs.
- 
-\marginnote{I have been fortunate to participate to GTFCC, to IDDConf 2019 and to SISMID 2019, thanks for the infectious disease modeling and connected public health communities have been so welcoming, greatly explaining. I learned and still learn from many. Standing on the shoulder of giants, 
- 
- This thesis makes use of many datasets from precipitation to reported cholera cases. I am very grateful to the workers all along the chain from collection to curation who have made my job possible.
- 
- Finally, thanks to reviewers, co-reviewers and co-authors from whom I have learned general concepts and valuable scientific writing tips.
- 
- Tools shape the way you think about problems. This thesis was made possible, but also sculpted by the languages and libraries I used. I want to acknowledge all the open-source maintainers and contributors who tirelessly make, document and maintain powerful tools, making the difficult easy and enabling everybody to use.
- }
+ Merci à mes ami·e·s
 
 À famille, papa, maman, pour m'avoir ouvert au monde et changer le regard sur les choses.
 
-À Céline, Eugène et Oliver, toujours près de mon coeur.
+À Céline, Eugène et Oliver, merci pour toujours près de mon coeur, 
 
-Finalement, Marion ! Merci de m'avoir soutenue tout au long de cette incroyable voyage. Mais aussi d'avoir rendu cela serein et doux. 
+Finalement, merci Marion ! Merci de m'avoir soutenue tout au long de ce doctorat, d'y avoir donner un sens et d'avoir rendu  serein et doux. 
+ et d'avoir traverser avec moi toutes ces ép.  
  
- \chapter*{Summary} \addcontentsline{toc}{chapter}{Summary}\markboth{Summary}{}
- research problem and objectives
-
-Public-health interventions strive to spare individuals and communities from the burden in infectious disease poses on humanity. Designing effective policies is an intricate task. Infectious disease epidemics are complex phenomena that results from the interaction between pathogens, individuals, environment and societies, and only scarce and biased information is available.  Modeling offers a principled way to deal with the available evidence to reason infectious disease dynamics, which in turn allow for informed control decisions.
-
-
-
-compartmental models, diversity of models.
-
-The present thesis tackles selected infectious disease modeling topics with the aim of helping decision-makers to design effective policies. 
+ \chapter*{Summary} \addcontentsline{toc}{chapter}{Summary}\markboth{Summary}{}%research problem and objective
+  \marginnote{\paragraph{Keywords} cholera, \textsc{covid}-19, epidemiology, public health, ecohydrology, infectious disease dynamics, SIR, mathematical modeling, statistical inference, optimal control.}
+Emerging and existing infectious diseases pose a lively threat on individuals and communities across the world. In many cases, the burden of these diseases is preventable through public-health interventions to prevent transmission and  However, taking the right decisions and designing effective policies is an intricate task, as infectious disease epidemics are complex phenomena resulting from the interaction between pathogens, individuals, environment and societies, and only scarce and biased information is available.  Modeling offers a principled way to deal with the available evidence to reason infectious disease dynamics, which in turn allow for informed control decisions. The present thesis tackles selected topics in cholera and \textsc{covid}-19 modeling in order to guide decision-makers towards effective policies. These two contrasting diseases were associated in the present thesis by a twist of fate, but also through the lens of a common modeling approach based on compartmental, SIR-based models that are conditioned on the available evidence using computer-age statistical inference frameworks.
 
 %Your methods
-A set of five modeling st of infectious disease transmission is proposed, each covering a different facet of the spread and control of disease.
-Two mInitially focused on cholera, one of humanity's earliest disease, still present in many part of the world,  Model are used as representation of reality to 
-
-The emergence of covid-19 in 2019 diverted the initial research plan focused on cholera, and we present modeling work , bridging the gap between science.
-
-
-The final application of these model is within an optimal control framework, where algorithms designs the most effective SARS-CoV-2 vaccine allocation strategy
-
-
-
+A set of five modeling studies is proposed, each tackling a different facet of the spread and control of infectious disease transmission. It is aimed at understanding the mechanism behind disease transmission, at projecting future transmission under different scenarios of control measures, at assessing the effectiveness of control measures in real-time as disease unfolds; but a novel application of disease dynamics model is also developed: the formal design of control policies. Optimal control provides a rigorous framework to identify the most effective control measures under a set of operational constraints.
 
 %Your key results
-Results highlight 
-
+The results presented in this thesis range from scientific insight on the relationship between cholera and rainfall to a Scenario Pipeline that produces reports used to inform the response to COVID-19 of different governmental entities. Along this road the effectiveness of the non-pharmaceutical interventions against covid-19 in Switzerland is evaluated, and different scenarios of mass vaccination campaign are studied,  The final application of these models is within an optimal control framework, where algorithms designs the most effective SARS-CoV-2 vaccine allocation strategy.
 
 %Your conclusion
-This thesis Infectious disease modeling is a necessary, and the diversity 
- 
-\paragraph{Keywords} cholera, \textsc{covid}-19, infectious disease modeling,epidemiology, optimal control, public health, inference
- 
+This thesis shows how infectious disease modeling allow to guide decisions by projecting uncertainties under the light of the available evidence, and highlight the need to tailor model and methods to the transmissions setting and the research question. By providing report to decision maker, it bridges the gap between science and public health.
+
+Modeling provides a formal framework to design and test such approaches. It encompasses uncertainties, transmission dynamics and intervention policies. Depending on its accuracy, a cholera model might be able to reproduce, and even forecast in time and space the spread of the epidemic. a step forward in the ability for scientists to help policy makers in reducing the global cholera burden
+
+%\enlargthispage[2\baselineskip]
  
  \chapter*{Résumé} \addcontentsline{toc}{chapter}{Résumé}\markboth{Résumé}{}
  
