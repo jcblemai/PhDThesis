@@ -424,8 +424,14 @@ textheight=690pt,
 \frontmatter
 
 \input{frontmatter}
-%\pdfbookmark[section]{\contentsname}{toc}
-%\begin{fullwidth}\tableofcontents\listoffigures\listoftables\end{fullwidth}
+\begin{fullwidth}
+\pdfbookmark[chapter]{\contentsname}{toc}
+\tableofcontents
+\addcontentsline{toc}{chapter}{List of Figures}\markboth{List of Figures}{}
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Tables}\markboth{List of Tables}{}
+\listoftables
+\end{fullwidth}
 \mainmatter
 \input{introduction}
 %%\input{matmet}
@@ -440,11 +446,11 @@ textheight=690pt,
 %%input{abbreviations}
 
 \backmatter
-%\begin{appendices}\input{appendices}\end{appendices}
-\begin{fullwidth}\printbibliography\end{fullwidth}
+\begin{appendices}\input{appendices}\end{appendices}
 
-\addcontentsline{toc}{chapter}{C}\markboth{Curriculum Vitae}{}
 
- \includepdf[pages=-, pagecommand={\thispagestyle{empty}}]{academic_jl.pdf}
+\begin{fullwidth}\addcontentsline{toc}{chapter}{Bibliography}\markboth{Bibliography}{}\printbibliography\end{fullwidth}
+
+\addcontentsline{toc}{chapter}{Curriculum Vitae}\markboth{Curriculum Vitae}{}\includepdf[pages=-, pagecommand={\thispagestyle{empty}}]{academic_jl.pdf}
 
 \end{document}

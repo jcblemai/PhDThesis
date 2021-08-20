@@ -576,10 +576,10 @@ The epidemiological data is obtained from the bulletins of the Dipartimento dell
 %% ***********************************************************************************************
 Alternative strategies are created to be compared the optimal solutions. Each strategy uses a decision variable, $\mathcal{V}_i$, as a basis for the allocation of vaccines among provinces. The decision variable is one of:
 \begin{itemize}
-    \item \textsc{modelled future incidence, absolute}: the modelled total future incidence in a no-vaccination scenario. This is equivalent to the objective of the optimal control problem with no control;
-    \item \textsc{modelled future incidence, per population}: as above, but normalized by the resident population in each node;
-    \item \textsc{modelled initial susceptibility, absolute}: the modelled number of susceptibles in each province at the start of the vaccination campaign;
-    \item \textsc{modelled initial susceptibility, per population}: as above, but normalized by the resident population in each node;
+    \item \textsc{modeled future incidence, absolute}: the modeled total future incidence in a no-vaccination scenario. This is equivalent to the objective of the optimal control problem with no control;
+    \item \textsc{modeled future incidence, per population}: as above, but normalized by the resident population in each node;
+    \item \textsc{modeled initial susceptibility, absolute}: the modeled number of susceptibles in each province at the start of the vaccination campaign;
+    \item \textsc{modeled initial susceptibility, per population}: as above, but normalized by the resident population in each node;
     \item \textsc{province's population}.
 \end{itemize}
 
@@ -593,7 +593,7 @@ In the main text, the results for three alternative strategies are shown, namely
 %% ***********************************************************************************************
 \section{Additional results}
 %% ***********************************************************************************************
-The results for all these strategies is presented in tab.~\ref{table:all_strat}, and are shown side-by-side in fig.~\ref{fig:OC_comparison_all}. The optimal solutions outperforms all the others solution. In fact, for every given posterior realisation, the optimal control solution always outperforms all other allocation strategies. Even if some scatter is observed when sampling the posterior, the performances of optimal strategies are clearly separated from the rest of the alternatives.
+The results for all these strategies is presented in tab.~\ref{table:all_strat}, and are shown side-by-side in fig.~\ref{fig:OC_comparison_all}. The optimal solutions outperforms all the others solution. In fact, for every given posterior realization, the optimal control solution always outperforms all other allocation strategies. Even if some scatter is observed when sampling the posterior, the performances of optimal strategies are clearly separated from the rest of the alternatives.
 
 %A linear scatter plot of the optimal proportion of vaccinated individuals per province (sorting variable) side by side with the province population, the projected incidence without vaccination, and the proportion of susceptible individuals at the start of the simulation is presented ro further investigate the features of the optimal solution. These results are presented for the optimistic scenario in fig.~\ref{fig:OC_scatter_optimistic} and for the pessimistic scenario in fig.~\ref{fig:OC_scatter_pessimistic}. No clear visual pattern associating these covariates to the optimal proportion vaccinated is found, highlighting again that the optimal allocation uses the epidemiological variable in a non-straightforward way, different from every simple strategy designed for this exercice.
 
