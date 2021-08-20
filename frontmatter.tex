@@ -1,6 +1,5 @@
 \begin{fullwidth}
-\maketitle
-\blankpage
+   \blankpage
 \end{fullwidth}
 % r.7 dedication
 %\cleardoublepage
@@ -66,10 +65,10 @@ Pien di contento~~~~~~~~~~~~~~~~~~~~ \\ %, pien di contento \\
 \cleardoublepage
 
 \chapter*{Acknowledgements} \addcontentsline{toc}{chapter}{Acknowledgements}\markboth{Acknowledgements}{}
-Spending 4 years to study the dynamics of cholera (and \textsc{covid}-19) was in retrospect a surprisingly good decision, as my PhD has been a challenging but incredibly rewarding journey. I am grateful to Prof. Andrea Rinaldo for warmly welcoming me in science and academia, and for giving me the opportunity of exploring a new subject that I grew to love. Thank you for giving me the freedom to pursue my interests while benefiting from your unconditional support. It made for a great inspiration and I'll take with me the rule of the ECHO lab.
+Spending 4 years to study the dynamics of cholera (and \textsc{covid}-19) was in retrospect a surprisingly good decision, as my PhD has been a challenging but incredibly rewarding journey. I am grateful to Prof. Andrea Rinaldo for warmly welcoming me in science and academia, and for giving me the opportunity of exploring a new subject that I grew to love. Thank you encouraging me to pursue my own research interests while benefiting from your unconditional support. It made for a great inspiration and I'll take with me the rules of the ECHO lab.
  \marginnote{
   \begin{center}\textsc{Standing on the shoulder of giants}\end{center}
- During this thesis, I have been fortunate to participate to the GTFCC annual meeting, to IDDConf and to SISMID. These conference were incredible experience, and I would like to thank the infectious disease modeling community for being so welcoming, inclusive and patient. I learned and still learn from many of you. 
+ During this thesis, I have been fortunate to participate to the GTFCC annual meeting, to IDDConf and to SISMID. These conference were incredible learning experience, and I would like to thank the infectious disease modeling community for being so welcoming, inclusive and patient. I learned and still learn from many of you. 
  This thesis is built on many datasets, from rainfall to reported cholera cases. I am very grateful to the workers all along the chain from collection to curation who have made my job possible.
  Thanks to reviewers, co-reviewers and co-authors from whom I have learned general concepts and valuable scientific writing tips.
  Tools shape the way you think about problems. This thesis was made possible, but also sculpted by the languages and libraries that were used. I want to acknowledge all the open-source maintainers and contributors who tirelessly make, document and maintain powerful tools, rendering difficult easy and enabling everybody to use.}
@@ -86,31 +85,40 @@ Scientifically, this thesis has benefited enormously from Javier Perez-Saez. Tha
  
  --- 
  
- Merci à mes ami·e·s
+ Merci à mes ami·e·s, et à ma famille 
 
-À famille, papa, maman, pour m'avoir ouvert au monde et changer le regard sur les choses.
-
-À Céline, Eugène et Oliver, merci pour toujours près de mon coeur, 
+Merci à mes parents pour m'avoir donner l'ouverture au monde et m'avoir encourager et soutenus.
+À Céline, Eugène et Oliver, merci évidement
 
 Finalement, merci Marion ! Merci de m'avoir soutenue tout au long de ce doctorat, d'y avoir donner un sens et d'avoir rendu  serein et doux. 
  et d'avoir traverser avec moi toutes ces ép.  
  
  \chapter*{Summary} \addcontentsline{toc}{chapter}{Summary}\markboth{Summary}{}%research problem and objective
   \marginnote{\paragraph{Keywords} cholera, \textsc{covid}-19, epidemiology, public health, ecohydrology, infectious disease dynamics, SIR, mathematical modeling, statistical inference, optimal control.}
-Emerging and existing infectious diseases pose a lively threat on individuals and communities across the world. In many cases, the burden of these diseases is preventable through public-health interventions. However, taking the right decisions and designing effective policies is an intricate task: infectious disease epidemics are complex phenomena resulting from the interaction between pathogens, individuals, environment and societies. Moreover, only scarce and biased information is available. Modeling offers a principled way to reason infectious disease dynamics and to guide decision-makers towards effective policies. 
+\vspace{-.5cm}
+Emerging and existing infectious diseases pose a lively threat on individuals and communities across the world. In many cases, the burden of these diseases is preventable through public-health interventions. However, taking the right decisions and designing effective policies is an intricate task: infectious disease epidemics are complex phenomena resulting from the interaction between pathogens, individuals, environment and societies. Moreover, only scarce and biased information is available. Modeling offers a principled way to reason about infectious disease dynamics and to guide decision-makers towards effective policies. 
 
-This thesis tackles selected topics in cholera and \textsc{covid}-19 modeling towards informed public-health decisions. These two contrasting diseases were associated by a twist of fate, but also through the lens of a common modeling approach based on compartmental, SIR-based models that are conditioned on the available evidence using computer-age statistical inference framework. A set of five models is proposed, each tackling a different facet of the spread and control of infectious diseases. 
+This thesis tackles selected topics in cholera and \textsc{covid}-19 modeling towards informed public-health decisions. These two contrasting diseases were associated by a twist of fate, but also through the lens of a common modeling approach.  Compartmental, SIR-based, models are conditioned on the available evidence using computer-age statistical inference framework. A set of five models is developed, each tackling a different facet of the spread and control of infectious diseases. Each model aims at answering questions related to either the understanding of the mechanisms behind disease transmission, the projection of future dynamics under different scenarios, or the assessment the effectiveness of past interventions. Moreover, a novel application of epidemiological models to the formal design of control policies is proposed. Optimal control provides a rigorous framework to identify the most effective control measures under a set of operational constraints, providing a benchmark on what is possible to achieve with the available resources.
+
 %Your key results
-The results presented in this thesis range from scientific insight on the relationship between cholera and rainfall in Juba, South Sudan to the COVID Scenario Pipeline which produces reports used to inform the response to the \textsc{covid}-19 pandemic of different governmental entities. Along this road the effectiveness of the non-pharmaceutical interventions against \textsc{covid}-19 in Switzerland is evaluated, along with the probability of eliminating cholera from Haiti under different scenarios of mass vaccination campaign. Finally the development of an optimal control framework, where algorithms designs the most effective spatial allocation of vaccine against  SARS-CoV-2 in Italy
+The results presented in this thesis range from scientific insight on the relationship between cholera and rainfall in Juba, South Sudan to the COVID Scenario Pipeline which produces reports used to inform the response to the \textsc{covid}-19 pandemic of different governmental entities. Furthermore, the effectiveness of the non-pharmaceutical interventions against \textsc{covid}-19 in Switzerland is evaluated; and so is the probability of eliminating cholera from Haiti under different scenarios of mass vaccination campaign. Finally the development of an optimal control framework towards the effective spatial allocation of vaccine against SARS-CoV-2 in Italy closes this conversation of models.
+
 %Your conclusion
-This thesis shows how infectious disease modeling allow to guide decisions by projecting uncertainties under the light of the available evidence, and highlight the need to tailor model structure and methods to the transmissions setting and the research question. By providing report to decision maker, it bridges the gap between science and public health; highlighting how infectious disease model guide policy makers towards a reduction of the burden on communities.
-
-Successive questions related to the understanding of the mechanisms behind disease transmission, to the projection of future incidence under different scenarios of control measures, and the assessment the effectiveness of control measures are answered using models. A novel application of disease dynamics model is also proposed: the formal design of control policies. Optimal control provides a rigorous framework to identify the most effective control measures under a set of operational constraints, providing a benchmark on what is possible to achieve with available resources
-
+The present thesis demonstrates how infectious disease modeling enable informed decision-making by projecting the uncertainties under the light of the available evidence. It also highlights the effort needed to tailor the models and inference methods to the specificities of the transmissions setting and the research question considered. From insights on transmission pathways to weekly reports aimed at decision makers, it explores different applications of infectious disease modeling. Methods developed along the way may contribute to the toolbox of modelers, to guide policy decisions further towards a reduction of the burden of infectious diseases on communities.
 
 %\enlargthispage[2\baselineskip]
- 
+ \vspace{-.5cm}
  \chapter*{Résumé} \addcontentsline{toc}{chapter}{Résumé}\markboth{Résumé}{}
- 
+   \marginnote{\paragraph{Mot-clés} cholera, \textsc{covid}-19, epidemiologie, santé publique, ecohydrologie, dynamique des maladies infectieuses, SIR, modelisation mathématique, inférence statistique, control optimal.}
+\vspace{-.5cm}
+ Les maladies infectieuses émergentes et existantes constituent une menace vive pour les individus et les communautés du monde entier. Dans de nombreux cas, la charge de ces maladies peut être évitée grâce à des interventions de santé publique. Cependant, prendre les bonnes décisions et concevoir des politiques efficaces est une tâche complexe : les épidémies de maladies infectieuses sont des phénomènes complexes résultant de l'interaction entre les agents pathogènes, les individus, l'environnement et les sociétés. En outre, seules des informations rares et partiales sont disponibles. La modélisation offre un moyen raisonné de raisonner sur la dynamique des maladies infectieuses et de guider les décideurs vers des politiques efficaces. 
+
+Cette thèse aborde des sujets choisis dans la modélisation du choléra et du \textsc{covid}-19 en vue de prendre des décisions éclairées en matière de santé publique. Ces deux maladies contrastées ont été associées par un coup du sort, mais aussi par le biais d'une approche de modélisation commune.  Des modèles compartimentaux, basés sur le SIR, sont conditionnés par les preuves disponibles en utilisant le cadre d'inférence statistique de l'ère informatique. Un ensemble de cinq modèles est développé, chacun abordant une facette différente de la propagation et du contrôle des maladies infectieuses. Chaque modèle vise à répondre à des questions liées à la compréhension des mécanismes de transmission des maladies, à la projection des dynamiques futures selon différents scénarios ou à l'évaluation de l'efficacité des interventions passées. En outre, une nouvelle application des modèles épidémiologiques à la conception formelle des politiques de contrôle est proposée. Le contrôle optimal fournit un cadre rigoureux pour identifier les mesures de contrôle les plus efficaces sous un ensemble de contraintes opérationnelles, fournissant un point de référence sur ce qu'il est possible de réaliser avec les ressources disponibles.
+
+Les résultats présentés dans cette thèse vont de la compréhension scientifique de la relation entre le choléra et les précipitations à Juba, au Sud-Soudan, à la COVID Scenario Pipeline qui produit des rapports utilisés pour informer la réponse à la pandémie de \textsc{covid}-19 de différentes entités gouvernementales. En outre, l'efficacité des interventions non pharmaceutiques contre le \textsc{covid}-19 en Suisse est évaluée, de même que la probabilité d'éliminer le choléra en Haïti selon différents scénarios de campagne de vaccination de masse. Enfin, le développement d'un cadre de contrôle optimal pour l'allocation spatiale efficace du vaccin contre le SARS-CoV-2 en Italie clôt cette conversation entre modèles.
+
+La présente thèse démontre comment la modélisation des maladies infectieuses permet une prise de décision éclairée en projetant les incertitudes à la lumière des preuves disponibles. Elle souligne également l'effort nécessaire pour adapter les modèles et les méthodes d'inférence aux spécificités du contexte de transmission et de la question de recherche considérée. De la compréhension des voies de transmission aux rapports hebdomadaires destinés aux décideurs, il explore les différentes applications de la modélisation des maladies infectieuses. Les méthodes développées en cours de route peuvent contribuer à la boîte à outils des modélisateurs, afin d'orienter les décisions politiques vers une réduction de la charge des maladies infectieuses sur les communautés.
+
+
  %\pdfbookmark[section]{\contentsname}{toc}
 %\begin{fullwidth}\tableofcontents\listoffigures\listoftables\end{fullwidth}
